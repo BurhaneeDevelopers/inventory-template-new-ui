@@ -11,18 +11,27 @@ import {
   SidebarMenuSubItem,
 } from '@/components/ui/sidebar'
 import { Collapsible, CollapsibleContent, CollapsibleTrigger } from '../ui/collapsible'
+import { Link } from 'react-router'
 
 // Menu items.
 const items = [
   {
-    menu: 'Menu',
-    url: '#',
+    menu: 'Order Enquiry',
+    url: '/order-enquiry',
     icon: Home,
     isActive: true,
     items: [
       {
-        title: 'Sub-Menu',
-        url: '#',
+        title: 'Order Receipt',
+        url: '/order-enquiry/order-receipt',
+      },
+      {
+        title: 'BOM Preparation',
+        url: '/order-enquiry/bom-preparation',
+      },
+      {
+        title: 'Costing',
+        url: '/order-enquiry/costing',
       },
     ],
   },
@@ -86,9 +95,9 @@ function AppSidebar() {
                     {item.items?.map(subItem => (
                       <SidebarMenuSubItem key={subItem.title}>
                         <SidebarMenuSubButton asChild>
-                          <a href={subItem.url}>
+                          <Link to={subItem.url}>
                             <span>{subItem.title}</span>
-                          </a>
+                          </Link>
                         </SidebarMenuSubButton>
                       </SidebarMenuSubItem>
                     ))}
