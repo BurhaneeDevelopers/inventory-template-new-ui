@@ -52,3 +52,5 @@ export default tseslint.config({
   },
 })
 ```
+
+# inventory-template-new-ui

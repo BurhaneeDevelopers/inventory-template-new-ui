@@ -1,7 +1,8 @@
 import { Outlet } from 'react-router'
-import { SidebarInset, SidebarProvider, SidebarTrigger } from './ui/sidebar'
+import { SidebarInset, SidebarProvider } from './ui/sidebar'
 import AppSidebar from './section/AppSidebar'
 import { Separator } from './ui/separator'
+import { Header } from './constants/layout/Header'
 
 function Layout() {
   return (
@@ -10,14 +11,10 @@ function Layout() {
         <AppSidebar />
         <SidebarInset>
           <main>
-            <header>
-              <SidebarTrigger />
-              header
-            </header>
+            <Header />
             <Separator />
             <Outlet />
             <Separator />
-            <footer>footer</footer>
           </main>
         </SidebarInset>
       </SidebarProvider>

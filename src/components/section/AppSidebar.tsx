@@ -1,8 +1,9 @@
-import { Home, ChevronRight } from 'lucide-react'
-
+import { ChevronRight, ListCheck, WarehouseIcon } from 'lucide-react'
 import {
   Sidebar,
   SidebarContent,
+  SidebarFooter,
+  SidebarHeader,
   SidebarMenu,
   SidebarMenuButton,
   SidebarMenuItem,
@@ -12,13 +13,14 @@ import {
 } from '@/components/ui/sidebar'
 import { Collapsible, CollapsibleContent, CollapsibleTrigger } from '../ui/collapsible'
 import { Link } from 'react-router'
+import { Button } from '../ui/button'
 
 // Menu items.
 const items = [
   {
     menu: 'Order Enquiry',
     url: '/order-enquiry',
-    icon: Home,
+    icon: ListCheck,
     isActive: true,
     items: [
       {
@@ -30,41 +32,32 @@ const items = [
         url: '/order-enquiry/bom-preparation',
       },
       {
-        title: 'Costing',
+        title: 'Costing/Quotations',
         url: '/order-enquiry/costing',
       },
-    ],
-  },
-  {
-    menu: 'Menu',
-    url: '#',
-    icon: Home,
-    items: [
       {
-        title: 'Sub-Menu',
-        url: '#',
+        title: 'Material Requisition',
+        url: '/order-enquiry/mrip',
       },
     ],
   },
   {
-    menu: 'Menu',
-    url: '#',
-    icon: Home,
+    menu: 'Inventory',
+    url: '/inventory',
+    icon: WarehouseIcon,
+    isActive: true,
     items: [
       {
-        title: 'Sub-Menu',
-        url: '#',
+        title: 'Reports',
+        url: '/order-enquiry/inventory',
       },
-    ],
-  },
-  {
-    menu: 'Menu',
-    url: '#',
-    icon: Home,
-    items: [
       {
-        title: 'Sub-Menu',
-        url: '#',
+        title: 'Goods Issue Return',
+        url: '/order-enquiry/inventory',
+      },
+      {
+        title: 'Good Issue',
+        url: '/order-enquiry/inventory',
       },
     ],
   },
@@ -73,7 +66,10 @@ const items = [
 function AppSidebar() {
   return (
     <Sidebar>
-      <SidebarContent>
+      <SidebarContent className="p-2 flex flex-col gap-4 border-r border-gray-300">
+        <SidebarHeader className="flex justify-center items-center">
+          <img src="/image.png" alt="Apparel Kingdom" className="w-36 h-28" />
+        </SidebarHeader>
         <SidebarMenu>
           {items.map(item => (
             <Collapsible
@@ -85,8 +81,8 @@ function AppSidebar() {
               <SidebarMenuItem>
                 <CollapsibleTrigger asChild>
                   <SidebarMenuButton tooltip={item.menu}>
-                    {item.icon && <item.icon />}
-                    <span>{item.menu}</span>
+                    {item.icon && <item.icon size={24} color="#000" />}
+                    <span className="text-base font-semibold">{item.menu}</span>
                     <ChevronRight className="ml-auto transition-transform duration-200 group-data-[state=open]/collapsible:rotate-90" />
                   </SidebarMenuButton>
                 </CollapsibleTrigger>
@@ -96,7 +92,7 @@ function AppSidebar() {
                       <SidebarMenuSubItem key={subItem.title}>
                         <SidebarMenuSubButton asChild>
                           <Link to={subItem.url}>
-                            <span>{subItem.title}</span>
+                            <span className="">{subItem.title}</span>
                           </Link>
                         </SidebarMenuSubButton>
                       </SidebarMenuSubItem>
@@ -108,6 +104,9 @@ function AppSidebar() {
           ))}
         </SidebarMenu>
       </SidebarContent>
+      <SidebarFooter className="">
+        <Button className="border border-[#ff0000] bg-transparent text-[#ff0000]">Log Out</Button>
+      </SidebarFooter>
     </Sidebar>
   )
 }

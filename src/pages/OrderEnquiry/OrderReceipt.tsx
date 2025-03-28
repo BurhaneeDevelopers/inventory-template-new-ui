@@ -1,11 +1,22 @@
+import { DataTable } from '@/components/constants/DataTable'
+import Container from '@/components/constants/layout/Container'
+// import { CreateReceiptModal } from '@/components/order-enquiry/blocks/CreateReceiptModal'
+import Tabs from '@/components/order-enquiry/constants/Tabs'
+
 function OrderReceipt() {
   return (
-    <div className="flex flex-1 flex-col gap-4 p-4">
-      OrderReceipt
-      {Array.from({ length: 5 }).map((_, index) => (
-        <div key={index} className="aspect-video h-12 w-full rounded-lg bg-muted/50" />
-      ))}
-    </div>
+    <Container className="">
+      <Tabs />
+
+      <div className="bg-white shadow-md mt-7 flex flex-col gap-4 p-3 px-5">
+        <div className="flex justify-between items-center gap-4">
+          <h1 className="text-2xl font-medium text-zinc-700 uppercase">Order Receipts</h1>
+          {/* <CreateReceiptModal /> */}
+        </div>
+
+        <DataTable />
+      </div>
+    </Container>
   )
 }
 

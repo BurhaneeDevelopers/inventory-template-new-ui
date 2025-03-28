@@ -7,7 +7,7 @@ import Layout from './components/Layout'
 import ProtectedRoute from './components/ProtectedRoute'
 import OrderReceipt from './pages/OrderEnquiry/OrderReceipt'
 import BOMPreparation from './pages/OrderEnquiry/BOMPreparation'
-import Costing from './pages/OrderEnquiry/Costing'
+import Quotations from './pages/OrderEnquiry/Quotations'
 
 createRoot(document.getElementById('root')!).render(
   <StrictMode>
@@ -23,7 +23,7 @@ createRoot(document.getElementById('root')!).render(
             <Route path="order-enquiry">
               <Route path="order-receipt" element={<OrderReceipt />} />
               <Route path="bom-preparation" element={<BOMPreparation />} />
-              <Route path="costing" element={<Costing />} />
+              <Route path="quotations" element={<Quotations />} />
             </Route>
           </Route>
         </Route>

@@ -1,7 +1,7 @@
 import Container from '@/components/constants/layout/Container'
 import Tabs from '@/components/order-enquiry/constants/Tabs'
 
-function BOMPreparation() {
+const Quotations = () => {
   return (
     <Container className="">
       <Tabs />
@@ -9,4 +9,4 @@ function BOMPreparation() {
   )
 }
 
-export default BOMPreparation
+export default Quotations
