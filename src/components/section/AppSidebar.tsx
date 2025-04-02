@@ -1,4 +1,4 @@
-import { ChevronRight, ListCheck, WarehouseIcon } from 'lucide-react'
+import { ChevronRight, ListCheck, Users, WarehouseIcon } from 'lucide-react'
 import {
   Sidebar,
   SidebarContent,
@@ -17,6 +17,26 @@ import { Button } from '../ui/button'
 
 // Menu items.
 const items = [
+  {
+    menu: 'Inventory',
+    url: '/inventory',
+    icon: WarehouseIcon,
+    isActive: true,
+    items: [
+      {
+        title: 'Reports',
+        url: '/inventory/reports',
+      },
+      {
+        title: 'Goods Issue Return',
+        url: '/order-enquiry/inventory',
+      },
+      {
+        title: 'Good Issue',
+        url: '/order-enquiry/inventory',
+      },
+    ],
+  },
   {
     menu: 'Order Enquiry',
     url: '/order-enquiry',
@@ -42,22 +62,22 @@ const items = [
     ],
   },
   {
-    menu: 'Inventory',
-    url: '/inventory',
-    icon: WarehouseIcon,
+    menu: 'Procurement',
+    url: '/order-enquiry',
+    icon: Users,
     isActive: true,
     items: [
       {
-        title: 'Reports',
-        url: '/order-enquiry/inventory',
+        title: 'Purchase Order Generation',
+        url: '/order-enquiry/order-receipt',
       },
       {
-        title: 'Goods Issue Return',
-        url: '/order-enquiry/inventory',
+        title: 'Goods Receipt Note',
+        url: '/order-enquiry/bom-preparation',
       },
       {
-        title: 'Good Issue',
-        url: '/order-enquiry/inventory',
+        title: 'Goods Receipt Return',
+        url: '/order-enquiry/costing',
       },
     ],
   },

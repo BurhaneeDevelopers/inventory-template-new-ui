@@ -10,7 +10,7 @@ function Layout() {
       <SidebarProvider>
         <AppSidebar />
         <SidebarInset>
-          <main>
+          <main className="bg-gray-200 h-full">
             <Header />
             <Separator />
             <Outlet />
