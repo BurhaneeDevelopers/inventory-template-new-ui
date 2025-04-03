@@ -24,7 +24,7 @@ const Tabs = () => {
     },
     {
       title: 'Material Requisition Indent Preparation',
-      params: '/mrip',
+      params: '/material-requisition',
       redirectTo: '/order-enquiry/mrip',
     },
   ]

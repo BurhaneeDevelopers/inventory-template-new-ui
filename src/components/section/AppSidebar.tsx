@@ -29,11 +29,11 @@ const items = [
       },
       {
         title: 'Goods Issue Return',
-        url: '/order-enquiry/inventory',
+        url: '/inventory/goods-issue-return',
       },
       {
         title: 'Good Issue',
-        url: '/order-enquiry/inventory',
+        url: '/inventory/good-issue',
       },
     ],
   },
@@ -53,11 +53,11 @@ const items = [
       },
       {
         title: 'Costing/Quotations',
-        url: '/order-enquiry/costing',
+        url: '/order-enquiry/quotations',
       },
       {
         title: 'Material Requisition',
-        url: '/order-enquiry/mrip',
+        url: '/order-enquiry/material-requisition',
       },
     ],
   },
@@ -69,15 +69,15 @@ const items = [
     items: [
       {
         title: 'Purchase Order Generation',
-        url: '/order-enquiry/order-receipt',
+        url: '/procurement/po-generation',
       },
       {
         title: 'Goods Receipt Note',
-        url: '/order-enquiry/bom-preparation',
+        url: '/procurement/goods-receipt-note',
       },
       {
         title: 'Goods Receipt Return',
-        url: '/order-enquiry/costing',
+        url: '/procurement/goods-receipt-return',
       },
     ],
   },
