@@ -28,12 +28,12 @@ const items = [
         url: '/inventory/reports',
       },
       {
-        title: 'Goods Issue Return',
-        url: '/inventory/goods-issue-return',
-      },
-      {
         title: 'Good Issue',
         url: '/inventory/good-issue',
+      },
+      {
+        title: 'Goods Issue Return',
+        url: '/inventory/goods-issue-return',
       },
     ],
   },
