@@ -1,7 +1,7 @@
 import { DataTable } from '@/components/constants/DataTable'
 import Container from '@/components/constants/layout/Container'
 import { CreateReceiptModal } from '@/components/order-enquiry/blocks/CreateReceiptModal'
-import Tabs from '@/components/order-enquiry/constants/Tabs'
+import Tabs from '@/components/procurement/blocks/modals/Tabs'
 
 function GoodsReceiptNote() {
   return (

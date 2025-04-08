@@ -15,13 +15,15 @@ import POGeneration from './pages/Procurement/POGeneration'
 import GoodsReceiptReturn from './pages/Procurement/GoodsReceiptReturn'
 import GoodsReceiptNote from './pages/Procurement/GoodsReceiptNote'
 import GoodsIssueReturn from './pages/Inventory/GoodsIssueReturn'
+import SignIn from './pages/Auth/SignIn'
 
 createRoot(document.getElementById('root')!).render(
   <StrictMode>
     <BrowserRouter>
       <Routes>
         {/* Public routes */}
-        {/* <Route path="/signin" element={<SignIn />} /> */}
+        <Route path="/signin" element={<SignIn />} />
+
         {/* Protected routes */}
         <Route element={<ProtectedRoute />}>
           <Route element={<Layout />}>

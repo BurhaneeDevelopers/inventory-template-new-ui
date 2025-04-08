@@ -1,7 +1,8 @@
 import { DataTable } from '@/components/constants/DataTable'
 import Container from '@/components/constants/layout/Container'
-import { CreateReceiptModal } from '@/components/order-enquiry/blocks/CreateReceiptModal'
-import Tabs from '@/components/order-enquiry/constants/Tabs'
+// import { CreateReceiptModal } from '@/components/order-enquiry/blocks/CreateReceiptModal'
+import { CreatePoModal } from '@/components/procurement/blocks/modals/CreatePoModal'
+import Tabs from '@/components/procurement/blocks/modals/Tabs'
 
 function POGeneration() {
   return (
@@ -13,7 +14,7 @@ function POGeneration() {
           <h1 className="text-2xl font-medium text-zinc-700 uppercase">
             Purchase Order Generation
           </h1>
-          <CreateReceiptModal />
+          <CreatePoModal />
         </div>
 
         <DataTable />
