@@ -1,4 +1,12 @@
-import { ChevronRight, ListCheck, Users, WarehouseIcon } from 'lucide-react'
+import {
+  Building2,
+  ChevronRight,
+  Database,
+  GitGraphIcon,
+  TrendingUp,
+  Users,
+  WarehouseIcon,
+} from 'lucide-react'
 import {
   Sidebar,
   SidebarContent,
@@ -18,46 +26,60 @@ import { Button } from '../ui/button'
 // Menu items.
 const items = [
   {
-    menu: 'Inventory',
-    url: '/inventory',
-    icon: WarehouseIcon,
-    isActive: true,
+    menu: 'Master',
+    url: '/',
+    icon: Database,
     items: [
       {
-        title: 'Reports',
-        url: '/inventory/reports',
+        title: 'Items',
+        url: '/',
       },
       {
-        title: 'Good Issue',
-        url: '/inventory/good-issue',
+        title: 'Machine',
+        url: '/',
       },
       {
-        title: 'Goods Issue Return',
-        url: '/inventory/goods-issue-return',
+        title: 'Process',
+        url: '/',
+      },
+      {
+        title: 'Users/Roles/Right',
+        url: '/',
+      },
+      {
+        title: 'Design Master',
+        url: '/',
+      },
+      {
+        title: 'BOM',
+        url: '/',
+      },
+      {
+        title: 'Customer',
+        url: '/',
+      },
+      {
+        title: 'Supplier',
+        url: '/',
       },
     ],
   },
   {
-    menu: 'Order Enquiry',
-    url: '/order-enquiry',
-    icon: ListCheck,
-    isActive: true,
+    menu: 'Sales Enquiry',
+    url: '/inventory',
+    icon: WarehouseIcon,
     items: [
       {
-        title: 'Order Receipt',
-        url: '/order-enquiry/order-receipt',
+        title: 'Creation',
+        url: '/inventory/reports',
       },
       {
-        title: 'BOM Preparation',
-        url: '/order-enquiry/bom-preparation',
+        title: 'Design Creation',
+        url: '/inventory/good-issue',
       },
       {
-        title: 'Costing/Quotations',
-        url: '/order-enquiry/quotations',
-      },
-      {
-        title: 'Material Requisition',
-        url: '/order-enquiry/material-requisition',
+        title: 'Quotation',
+        url: '/inventory/goods-issue-return',
       },
     ],
   },
@@ -65,23 +87,105 @@ const items = [
     menu: 'Procurement',
     url: '/order-enquiry',
     icon: Users,
-    isActive: true,
     items: [
       {
         title: 'Purchase Order Generation',
         url: '/procurement/po-generation',
       },
       {
-        title: 'Goods Receipt Note',
+        title: 'Sales Order Generation',
         url: '/procurement/goods-receipt-note',
       },
       {
-        title: 'Goods Receipt Return',
+        title: 'Check Inventory',
         url: '/procurement/goods-receipt-return',
+      },
+      {
+        title: 'GRN',
+        url: '/procurement/goods-receipt-note',
+      },
+      {
+        title: 'Purchase Invoice',
+        url: '/procurement/goods-receipt-note',
+      },
+    ],
+  },
+  {
+    menu: 'In House Production',
+    url: '/order-enquiry',
+    icon: Building2,
+    items: [
+      {
+        title: 'Internal Order Generation',
+        url: '/order-enquiry/order-receipt',
+      },
+      {
+        title: 'Material Issue from store',
+        url: '/order-enquiry/quotations',
+      },
+      {
+        title: 'Material Requisition by Production',
+        url: '/order-enquiry/bom-preparation',
+      },
+      {
+        title: 'Job Card',
+        url: '/order-enquiry/material-requisition',
+      },
+      {
+        title: 'Production Slip',
+        url: '/order-enquiry/material-requisition',
+      },
+    ],
+  },
+  {
+    menu: 'External Production',
+    url: '/order-enquiry',
+    icon: GitGraphIcon,
+    items: [
+      {
+        title: 'Create Job Work',
+        url: '/order-enquiry/order-receipt',
+      },
+      {
+        title: 'Raw Materials',
+        url: '/order-enquiry/quotations',
+      },
+      {
+        title: 'Finished Goods',
+        url: '/order-enquiry/bom-preparation',
+      },
+      {
+        title: 'Job Work Invoice',
+        url: '/order-enquiry/material-requisition',
+      },
+    ],
+  },
+  {
+    menu: 'Sales',
+    url: '/order-enquiry',
+    icon: TrendingUp,
+    items: [
+      {
+        title: 'Packing Slip',
+        url: '/order-enquiry/order-receipt',
+      },
+      {
+        title: 'Sales Challan',
+        url: '/order-enquiry/quotations',
+      },
+      {
+        title: 'Sales Invoice',
+        url: '/order-enquiry/bom-preparation',
+      },
+      {
+        title: 'Sales Return',
+        url: '/order-enquiry/material-requisition',
       },
     ],
   },
 ]
+
+// const location = useLocation()
 
 function AppSidebar() {
   return (
@@ -91,13 +195,14 @@ function AppSidebar() {
           <img src="/image.png" alt="Apparel Kingdom" className="w-36 h-28" />
         </SidebarHeader>
         <SidebarMenu>
+          <SidebarMenuItem>
+            <SidebarMenuButton asChild>
+              {/* <MenuIcon size={24} color="#000" /> */}
+              <span className="text-base font-semibold">Dashboard</span>
+            </SidebarMenuButton>
+          </SidebarMenuItem>
           {items.map(item => (
-            <Collapsible
-              key={item.menu}
-              asChild
-              defaultOpen={item.isActive}
-              className="group/collapsible"
-            >
+            <Collapsible key={item.menu} asChild defaultOpen={false} className="group/collapsible">
               <SidebarMenuItem>
                 <CollapsibleTrigger asChild>
                   <SidebarMenuButton tooltip={item.menu}>
