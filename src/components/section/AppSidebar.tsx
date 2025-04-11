@@ -27,65 +27,65 @@ import { Button } from '../ui/button'
 const items = [
   {
     menu: 'Master',
-    url: '/',
+    url: '/master',
     icon: Database,
     items: [
       {
         title: 'Items',
-        url: '/',
+        url: '/master/items',
       },
       {
         title: 'Machine',
-        url: '/',
+        url: '/master/machine',
       },
       {
         title: 'Process',
-        url: '/',
+        url: '/master/process',
       },
       {
         title: 'Users/Roles/Right',
-        url: '/',
+        url: '/master/users-roles',
       },
       {
         title: 'Design Master',
-        url: '/',
+        url: '/master/design-master',
       },
       {
         title: 'BOM',
-        url: '/',
+        url: '/master/bom',
       },
       {
         title: 'Customer',
-        url: '/',
+        url: '/master/customer',
       },
       {
         title: 'Supplier',
-        url: '/',
+        url: '/master/supplier',
       },
     ],
   },
   {
     menu: 'Sales Enquiry',
-    url: '/inventory',
+    url: '/sales-enquiry',
     icon: WarehouseIcon,
     items: [
       {
         title: 'Creation',
-        url: '/inventory/reports',
+        url: '/sales-enquiry/creation',
       },
       {
         title: 'Design Creation',
-        url: '/inventory/good-issue',
+        url: '/sales-enquiry/design-creation',
       },
       {
         title: 'Quotation',
-        url: '/inventory/goods-issue-return',
+        url: '/sales-enquiry/quotation',
       },
     ],
   },
   {
     menu: 'Procurement',
-    url: '/order-enquiry',
+    url: '/procurement',
     icon: Users,
     items: [
       {
@@ -94,92 +94,92 @@ const items = [
       },
       {
         title: 'Sales Order Generation',
-        url: '/procurement/goods-receipt-note',
+        url: '/procurement/sales-order-generation',
       },
       {
         title: 'Check Inventory',
-        url: '/procurement/goods-receipt-return',
+        url: '/procurement/check-inventory',
       },
       {
         title: 'GRN',
-        url: '/procurement/goods-receipt-note',
+        url: '/procurement/grn',
       },
       {
         title: 'Purchase Invoice',
-        url: '/procurement/goods-receipt-note',
+        url: '/procurement/purchase-invoice',
       },
     ],
   },
   {
     menu: 'In House Production',
-    url: '/order-enquiry',
+    url: '/in-house-production',
     icon: Building2,
     items: [
       {
         title: 'Internal Order Generation',
-        url: '/order-enquiry/order-receipt',
+        url: '/in-house-production/internal-order',
       },
       {
         title: 'Material Issue from store',
-        url: '/order-enquiry/quotations',
+        url: '/in-house-production/material-issue',
       },
       {
         title: 'Material Requisition by Production',
-        url: '/order-enquiry/bom-preparation',
+        url: '/in-house-production/material-requisition',
       },
       {
         title: 'Job Card',
-        url: '/order-enquiry/material-requisition',
+        url: '/in-house-production/job-card',
       },
       {
         title: 'Production Slip',
-        url: '/order-enquiry/material-requisition',
+        url: '/in-house-production/production-slip',
       },
     ],
   },
   {
     menu: 'External Production',
-    url: '/order-enquiry',
+    url: '/external-production',
     icon: GitGraphIcon,
     items: [
       {
         title: 'Create Job Work',
-        url: '/order-enquiry/order-receipt',
+        url: '/external-production/create-job-work',
       },
       {
         title: 'Raw Materials',
-        url: '/order-enquiry/quotations',
+        url: '/external-production/raw-materials',
       },
       {
         title: 'Finished Goods',
-        url: '/order-enquiry/bom-preparation',
+        url: '/external-production/finished-goods',
       },
       {
         title: 'Job Work Invoice',
-        url: '/order-enquiry/material-requisition',
+        url: '/external-production/job-work-invoice',
       },
     ],
   },
   {
     menu: 'Sales',
-    url: '/order-enquiry',
+    url: '/sales',
     icon: TrendingUp,
     items: [
       {
         title: 'Packing Slip',
-        url: '/order-enquiry/order-receipt',
+        url: '/sales/packing-slip',
       },
       {
         title: 'Sales Challan',
-        url: '/order-enquiry/quotations',
+        url: '/sales/sales-challan',
       },
       {
         title: 'Sales Invoice',
-        url: '/order-enquiry/bom-preparation',
+        url: '/sales/sales-invoice',
       },
       {
         title: 'Sales Return',
-        url: '/order-enquiry/material-requisition',
+        url: '/sales/sales-return',
       },
     ],
   },
