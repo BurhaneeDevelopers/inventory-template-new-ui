@@ -2,7 +2,7 @@ import { ChartAreaInteractive } from '@/components/blocks/ChartAreaInteractive'
 import { SectionCards } from '@/components/blocks/SectionCards'
 import { DataTable } from '@/components/constants/DataTable'
 import Container from '@/components/constants/layout/Container'
-import data from '../../../data.json'
+import data from '../../../../data.json'
 
 const Reports = () => {
   return (
