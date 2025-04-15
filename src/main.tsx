@@ -8,6 +8,8 @@ import ProtectedRoute from './components/ProtectedRoute'
 import SignIn from './pages/Auth/SignIn'
 // import Reports from './pages/archive/Inventory/Reports'
 import PlaceholderPage from './components/PlaceholderPage'
+import Page from './components/constants/layout/Page'
+import Items from './pages/Master/Items'
 
 // import OrderReceipt from './pages/OrderEnquiry/OrderReceipt'
 // import BOMPreparation from './pages/OrderEnquiry/BOMPreparation'
@@ -23,14 +25,14 @@ import PlaceholderPage from './components/PlaceholderPage'
 const Dashboard = () => <PlaceholderPage title="Dashboard" />
 
 // Master pages
-const MasterItems = () => <PlaceholderPage title="Items" />
-const MasterMachine = () => <PlaceholderPage title="Machine" />
-const MasterProcess = () => <PlaceholderPage title="Process" />
-const MasterUsersRoles = () => <PlaceholderPage title="Users/Roles/Right" />
-const MasterDesign = () => <PlaceholderPage title="Design Master" />
-const MasterBOM = () => <PlaceholderPage title="BOM" />
-const MasterCustomer = () => <PlaceholderPage title="Customer" />
-const MasterSupplier = () => <PlaceholderPage title="Supplier" />
+const MasterItems = () => <Items />
+const MasterMachine = () => <Page title="Machine" />
+const MasterProcess = () => <Page title="Process" />
+const MasterUsersRoles = () => <Page title="Users/Roles/Right" />
+const MasterDesign = () => <Page title="Design Master" />
+const MasterBOM = () => <Page title="BOM" />
+const MasterCustomer = () => <Page title="Customer" />
+const MasterSupplier = () => <Page title="Supplier" />
 
 // Sales Enquiry pages
 const SalesEnquiryCreation = () => <PlaceholderPage title="Sales Enquiry Creation" />
