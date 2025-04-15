@@ -1,7 +1,7 @@
 import { DataTable } from '@/components/constants/DataTable'
 import Container from '@/components/constants/layout/Container'
 // import { CreateReceiptModal } from '@/components/order-enquiry/blocks/CreateReceiptModal'
-import { CreatePoModal } from '@/components/procurement/blocks/modals/CreatePoModal'
+import { CreatePoModal } from '@/components/procurement/blocks/modals/CreatePoModal.old'
 import Tabs from '@/components/procurement/blocks/modals/Tabs'
 
 function POGeneration() {
