@@ -3,34 +3,33 @@ import {
   Dialog,
   DialogContent,
   DialogDescription,
-  DialogFooter,
   DialogHeader,
   DialogTitle,
   DialogTrigger,
 } from '@/components/ui/dialog'
 
-export function FormModal({ children }: React.PropsWithChildren) {
+interface FormModalProps {
+  title: string
+  description: string
+  triggerButtonText: string
+  children: React.ReactNode
+}
+
+export function FormModal({ title, description, triggerButtonText, children }: FormModalProps) {
   return (
     <Dialog>
       <DialogTrigger asChild>
-        <Button>New Purchase Order</Button>
+        <Button>{triggerButtonText}</Button>
       </DialogTrigger>
       <DialogContent className="sm:max-w-screen-xl max-h-[90vh] overflow-y-auto">
         <div>
           <DialogHeader>
-            <DialogTitle>Create Purchase Order</DialogTitle>
-            <DialogDescription>Fill in all the details below.</DialogDescription>
+            <DialogTitle>{title}</DialogTitle>
+            <DialogDescription>{description}</DialogDescription>
           </DialogHeader>
 
-          {/* --- 1. Purchase Order Details --- */}
-          <div className="my-4 mb-7 font-semibold text-lg">Purchase Order Details</div>
-
-          {/* FORM CHILDREN HERE  */}
-          <div className="">{children}</div>
-
-          <DialogFooter className="mt-6">
-            <Button type="submit">Save Purchase Order</Button>
-          </DialogFooter>
+          {/* Form content goes here */}
+          <div className="mt-4">{children}</div>
         </div>
       </DialogContent>
     </Dialog>
