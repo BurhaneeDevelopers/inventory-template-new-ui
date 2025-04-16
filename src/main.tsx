@@ -12,6 +12,7 @@ import PlaceholderPage from './components/PlaceholderPage'
 import Page from './components/constants/layout/Page'
 import Items from './pages/Master/Items'
 import Machine from './pages/Master/Machine'
+import Customer from './pages/Master/Customer'
 
 // import OrderReceipt from './pages/OrderEnquiry/OrderReceipt'
 // import BOMPreparation from './pages/OrderEnquiry/BOMPreparation'
@@ -36,8 +37,6 @@ const MasterUsersRoles = () => <Page title="Users/Roles/Right" />
 const MasterDesign = () => <Page title="Design Master" />
 // eslint-disable-next-line react-refresh/only-export-components
 const MasterBOM = () => <Page title="BOM" />
-// eslint-disable-next-line react-refresh/only-export-components
-const MasterCustomer = () => <Page title="Customer" />
 // eslint-disable-next-line react-refresh/only-export-components
 const MasterSupplier = () => <Page title="Supplier" />
 
@@ -116,7 +115,7 @@ createRoot(document.getElementById('root')!).render(
             <Route path="/master/users-roles" element={<MasterUsersRoles />} />
             <Route path="/master/design-master" element={<MasterDesign />} />
             <Route path="/master/bom" element={<MasterBOM />} />
-            <Route path="/master/customer" element={<MasterCustomer />} />
+            <Route path="/master/customer" element={<Customer />} />
             <Route path="/master/supplier" element={<MasterSupplier />} />
 
             {/* Sales Enquiry module */}
