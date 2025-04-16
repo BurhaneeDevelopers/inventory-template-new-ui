@@ -1,0 +1,114 @@
+import React from 'react'
+import { useFormik } from 'formik'
+import { Input } from '@/components/ui/input'
+import { Textarea } from '@/components/ui/textarea'
+import { Label } from '@/components/ui/label'
+import {
+  Select,
+  SelectContent,
+  SelectItem,
+  SelectTrigger,
+  SelectValue,
+} from '@/components/ui/select'
+import { Button } from '@/components/ui/button'
+import { type FieldConfig } from '@/pages/Master/ItemsConfig'
+import { generateInitialValues, generateValidationSchema } from '@/lib/helperFunctions'
+// import { FormItem, FormLabel, FormControl, FormMessage, Form } from '@/components/ui/form';
+
+interface DynamicFormProps {
+  title: string
+  fieldConfig: FieldConfig[]
+  // onSubmit: (values: any) => void
+  submitButtonText?: string
+}
+
+export function DynamicForm({
+  title,
+  fieldConfig,
+  // onSubmit,
+  submitButtonText = 'Submit',
+}: DynamicFormProps) {
+  // Formik setup with initialValues and validationSchema
+  const formik = useFormik({
+    initialValues: generateInitialValues(fieldConfig),
+    validationSchema: generateValidationSchema(fieldConfig),
+    onSubmit: values => {
+      console.log('Item Data:', values)
+      alert('Item Submitted')
+    },
+  })
+
+  return (
+    <div>
+      <h2 className="text-lg font-semibold mb-4">{title}</h2>
+      <form onSubmit={formik.handleSubmit} className="space-y-6">
+        <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-4">
+          {fieldConfig.map(field => (
+            <div key={field.id} className="space-y-2">
+              <Label htmlFor={field.id}>
+                {field.label} {field.required && <span className="text-red-500">*</span>}
+              </Label>
+
+              {field.type === 'text' && (
+                <Input
+                  id={field.id}
+                  name={field.id}
+                  value={formik.values[field.id]?.toString() || ''}
+                  onChange={formik.handleChange}
+                  onBlur={formik.handleBlur}
+                />
+              )}
+
+              {field.type === 'number' && (
+                <Input
+                  id={field.id}
+                  name={field.id}
+                  type="number"
+                  value={formik.values[field.id]?.toString() || ''}
+                  onChange={formik.handleChange}
+                  onBlur={formik.handleBlur}
+                />
+              )}
+
+              {field.type === 'textarea' && (
+                <Textarea
+                  id={field.id}
+                  name={field.id}
+                  value={formik.values[field.id]?.toString() || ''}
+                  onChange={formik.handleChange}
+                  onBlur={formik.handleBlur}
+                />
+              )}
+
+              {field.type === 'select' && field.options && (
+                <Select
+                  onValueChange={value => formik.setFieldValue(field.id, value)}
+                  defaultValue={formik.values[field.id]?.toString()}
+                >
+                  <SelectTrigger>
+                    <SelectValue placeholder={`Select ${field.label}`} />
+                  </SelectTrigger>
+                  <SelectContent>
+                    {field.options.map(option => (
+                      <SelectItem key={option} value={option}>
+                        {option}
+                      </SelectItem>
+                    ))}
+                  </SelectContent>
+                </Select>
+              )}
+
+              {formik.touched[field.id] && formik.errors[field.id] ? (
+                <div className="text-red-500 text-sm">{formik.errors[field.id]}</div>
+              ) : null}
+            </div>
+          ))}
+        </div>
+
+        <div className="flex justify-end">
+          <Button type="submit">{submitButtonText}</Button>
+        </div>
+      </form>
+    </div>
+  )
+}
