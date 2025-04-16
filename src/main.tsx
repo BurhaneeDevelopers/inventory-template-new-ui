@@ -23,49 +23,79 @@ import Items from './pages/Master/Items'
 // import GoodsIssueReturn from './pages/Inventory/GoodsIssueReturn'
 
 // Dashboard
+// eslint-disable-next-line react-refresh/only-export-components
 const Dashboard = () => <PlaceholderPage title="Dashboard" />
 
 // Master pages
+// eslint-disable-next-line react-refresh/only-export-components
 const MasterItems = () => <Items />
+// eslint-disable-next-line react-refresh/only-export-components
 const MasterMachine = () => <Page title="Machine" />
+// eslint-disable-next-line react-refresh/only-export-components
 const MasterProcess = () => <Page title="Process" />
+// eslint-disable-next-line react-refresh/only-export-components
 const MasterUsersRoles = () => <Page title="Users/Roles/Right" />
+// eslint-disable-next-line react-refresh/only-export-components
 const MasterDesign = () => <Page title="Design Master" />
+// eslint-disable-next-line react-refresh/only-export-components
 const MasterBOM = () => <Page title="BOM" />
+// eslint-disable-next-line react-refresh/only-export-components
 const MasterCustomer = () => <Page title="Customer" />
+// eslint-disable-next-line react-refresh/only-export-components
 const MasterSupplier = () => <Page title="Supplier" />
 
 // Sales Enquiry pages
+// eslint-disable-next-line react-refresh/only-export-components
 const SalesEnquiryCreation = () => <PlaceholderPage title="Sales Enquiry Creation" />
+// eslint-disable-next-line react-refresh/only-export-components
 const SalesEnquiryDesignCreation = () => <PlaceholderPage title="Design Creation" />
+// eslint-disable-next-line react-refresh/only-export-components
 const SalesEnquiryQuotation = () => <PlaceholderPage title="Quotation" />
 
 // Procurement pages
+// eslint-disable-next-line react-refresh/only-export-components
 const ProcurementPOGeneration = () => <PlaceholderPage title="Purchase Order Generation" />
+// eslint-disable-next-line react-refresh/only-export-components
 const ProcurementSalesOrderGeneration = () => <PlaceholderPage title="Sales Order Generation" />
+// eslint-disable-next-line react-refresh/only-export-components
 const ProcurementCheckInventory = () => <PlaceholderPage title="Check Inventory" />
+// eslint-disable-next-line react-refresh/only-export-components
 const ProcurementGRN = () => <PlaceholderPage title="GRN" />
+// eslint-disable-next-line react-refresh/only-export-components
 const ProcurementPurchaseInvoice = () => <PlaceholderPage title="Purchase Invoice" />
 
 // In House Production pages
+// eslint-disable-next-line react-refresh/only-export-components
 const InHouseInternalOrder = () => <PlaceholderPage title="Internal Order Generation" />
+// eslint-disable-next-line react-refresh/only-export-components
 const InHouseMaterialIssue = () => <PlaceholderPage title="Material Issue from store" />
+// eslint-disable-next-line react-refresh/only-export-components
 const InHouseMaterialRequisition = () => (
   <PlaceholderPage title="Material Requisition by Production" />
 )
+// eslint-disable-next-line react-refresh/only-export-components
 const InHouseJobCard = () => <PlaceholderPage title="Job Card" />
+// eslint-disable-next-line react-refresh/only-export-components
 const InHouseProductionSlip = () => <PlaceholderPage title="Production Slip" />
 
 // External Production pages
+// eslint-disable-next-line react-refresh/only-export-components
 const ExternalJobWork = () => <PlaceholderPage title="Create Job Work" />
+// eslint-disable-next-line react-refresh/only-export-components
 const ExternalRawMaterials = () => <PlaceholderPage title="Raw Materials" />
+// eslint-disable-next-line react-refresh/only-export-components
 const ExternalFinishedGoods = () => <PlaceholderPage title="Finished Goods" />
+// eslint-disable-next-line react-refresh/only-export-components
 const ExternalJobWorkInvoice = () => <PlaceholderPage title="Job Work Invoice" />
 
 // Sales pages
+// eslint-disable-next-line react-refresh/only-export-components
 const SalesPackingSlip = () => <PlaceholderPage title="Packing Slip" />
+// eslint-disable-next-line react-refresh/only-export-components
 const SalesChallan = () => <PlaceholderPage title="Sales Challan" />
+// eslint-disable-next-line react-refresh/only-export-components
 const SalesInvoice = () => <PlaceholderPage title="Sales Invoice" />
+// eslint-disable-next-line react-refresh/only-export-components
 const SalesReturn = () => <PlaceholderPage title="Sales Return" />
 
 createRoot(document.getElementById('root')!).render(
