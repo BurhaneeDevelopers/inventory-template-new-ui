@@ -1,98 +1,29 @@
-import { useFormik } from 'formik'
-import React from 'react'
-import * as Yup from 'yup'
-
-import PageWapper from '@/components/constants/layout/PageWapper'
 import { FormModal } from '@/components/constants/custom/FormModal'
 import { DataTable } from '@/components/constants/DataTable'
 import PageTitileBar from '@/components/constants/layout/PageTitileBar'
+import PageWapper from '@/components/constants/layout/PageWapper'
+import itemFieldsConfig from './ItemsConfig'
+import { DynamicForm } from '@/components/constants/custom/DynamicForm'
 
 const Items = () => {
   // Categorized array for form fields
-  // eslint-disable-next-line @typescript-eslint/no-unused-vars
-  const categorizedArray = [
-    ['itemType', 'Item Type'],
-    ['itemCode', 'Item Code'],
-    ['itemName', 'Item Name'],
-    ['description', 'Description'],
-    ['brand', 'Brand'],
-    ['category', 'Category'],
-    ['subCategory', 'Sub Category'],
-    ['color', 'Color'],
-    ['size', 'Size'],
-    ['itemGroup', 'Item Group'],
-    ['unitOfMeasurement', 'Unit of Measurement'],
-    ['basePrice', 'Base Price'],
-    ['hsnSacCode', 'HSN/SAC Code'],
-    ['minimumQuoteQty', 'Minimum Quote Qty'],
-    ['minimumStockLevel', 'Minimum Stock Level'],
-    ['maximumStockLevel', 'Maximum Stock Level'],
-    ['shelfLife', 'Shelf Life'],
-    ['qualityParameters', 'Quality Parameters'],
-    ['barcodeQrCode', 'Barcode/QR Code'],
-    ['storageRequirements', 'Storage Requirements'],
-    ['packagingRequirements', 'Packaging Requirements'],
-  ]
 
-  // Formik setup with initialValues and validationSchema
-  // eslint-disable-next-line @typescript-eslint/no-unused-vars
-  const formik = useFormik({
-    initialValues: {
-      id: '',
-      itemType: '',
-      itemCode: '',
-      itemName: '',
-      description: '',
-      brand: '',
-      category: '',
-      subCategory: '',
-      color: '',
-      size: '',
-      itemGroup: '',
-      unitOfMeasurement: '',
-      basePrice: '',
-      hsnSacCode: '',
-      minimumQuoteQty: '',
-      minimumStockLevel: '',
-      maximumStockLevel: '',
-      shelfLife: '',
-      qualityParameters: '',
-      barcodeQrCode: '',
-      storageRequirements: '',
-      packagingRequirements: '',
-    },
-    validationSchema: Yup.object({
-      itemType: Yup.string().required('Required'),
-      itemCode: Yup.string().required('Required'),
-      itemName: Yup.string().required('Required'),
-      description: Yup.string(),
-      brand: Yup.string(),
-      category: Yup.string().required('Required'),
-      subCategory: Yup.string(),
-      color: Yup.string(),
-      size: Yup.string(),
-      itemGroup: Yup.string(),
-      unitOfMeasurement: Yup.string().required('Required'),
-      basePrice: Yup.number().positive('Must be positive').required('Required'),
-      hsnSacCode: Yup.string().required('Required'),
-      minimumQuoteQty: Yup.number().min(0, 'Must be non-negative'),
-      minimumStockLevel: Yup.number().min(0, 'Must be non-negative'),
-      maximumStockLevel: Yup.number().min(0, 'Must be non-negative'),
-      shelfLife: Yup.string(),
-      qualityParameters: Yup.string(),
-      barcodeQrCode: Yup.string(),
-      storageRequirements: Yup.string(),
-      packagingRequirements: Yup.string(),
-    }),
-    onSubmit: values => {
-      console.log('Item Data:', values)
-      alert('Item Submitted')
-    },
-  })
   return (
     <PageWapper>
       <PageTitileBar title="Items">
-        <FormModal children={<></>} />
+        <FormModal
+          title="Create New Item"
+          description="Fill in all the details to create a new inventory item"
+          triggerButtonText="Add New Item"
+          // onSubmit={handleSubmit}
+        >
+          <DynamicForm
+            title="Item Details"
+            fieldConfig={itemFieldsConfig}
+            // onSubmit={handleSubmit}
+            submitButtonText="Save Item"
+          />
+        </FormModal>
       </PageTitileBar>
       <DataTable />
     </PageWapper>
