@@ -1,10 +1,15 @@
-import Page from '@/components/constants/layout/Page'
 import { useFormik } from 'formik'
 import React from 'react'
 import * as Yup from 'yup'
 
+import PageWapper from '@/components/constants/layout/PageWapper'
+import { FormModal } from '@/components/constants/custom/FormModal'
+import { DataTable } from '@/components/constants/DataTable'
+import PageTitileBar from '@/components/constants/layout/PageTitileBar'
+
 const Items = () => {
   // Categorized array for form fields
+  // eslint-disable-next-line @typescript-eslint/no-unused-vars
   const categorizedArray = [
     ['itemType', 'Item Type'],
     ['itemCode', 'Item Code'],
@@ -30,6 +35,7 @@ const Items = () => {
   ]
 
   // Formik setup with initialValues and validationSchema
+  // eslint-disable-next-line @typescript-eslint/no-unused-vars
   const formik = useFormik({
     initialValues: {
       id: '',
@@ -83,7 +89,14 @@ const Items = () => {
       alert('Item Submitted')
     },
   })
-  return <Page title="Items" formik={formik} categorizedArray={categorizedArray} />
+  return (
+    <PageWapper>
+      <PageTitileBar title="Items">
+        <FormModal children={<></>} />
+      </PageTitileBar>
+      <DataTable />
+    </PageWapper>
+  )
 }
 
 export default Items
