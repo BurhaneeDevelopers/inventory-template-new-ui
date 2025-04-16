@@ -80,6 +80,17 @@ export function DynamicForm({
                 />
               )}
 
+              {field.type === 'date' && (
+                <Input
+                  id={field.id}
+                  name={field.id}
+                  type="date"
+                  value={formik.values[field.id]?.toString() || ''}
+                  onChange={formik.handleChange}
+                  onBlur={formik.handleBlur}
+                />
+              )}
+
               {field.type === 'select' && field.options && (
                 <Select
                   onValueChange={value => formik.setFieldValue(field.id, value)}
