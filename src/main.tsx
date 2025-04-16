@@ -11,6 +11,7 @@ import SignIn from './pages/Auth/SignIn'
 import PlaceholderPage from './components/PlaceholderPage'
 import Page from './components/constants/layout/Page'
 import Items from './pages/Master/Items'
+import Machine from './pages/Master/Machine'
 
 // import OrderReceipt from './pages/OrderEnquiry/OrderReceipt'
 // import BOMPreparation from './pages/OrderEnquiry/BOMPreparation'
@@ -27,10 +28,6 @@ import Items from './pages/Master/Items'
 const Dashboard = () => <PlaceholderPage title="Dashboard" />
 
 // Master pages
-// eslint-disable-next-line react-refresh/only-export-components
-const MasterItems = () => <Items />
-// eslint-disable-next-line react-refresh/only-export-components
-const MasterMachine = () => <Page title="Machine" />
 // eslint-disable-next-line react-refresh/only-export-components
 const MasterProcess = () => <Page title="Process" />
 // eslint-disable-next-line react-refresh/only-export-components
@@ -113,8 +110,8 @@ createRoot(document.getElementById('root')!).render(
 
             {/* Master module */}
             <Route path="/master" element={<PlaceholderPage title="Master" />} />
-            <Route path="/master/items" element={<MasterItems />} />
-            <Route path="/master/machine" element={<MasterMachine />} />
+            <Route path="/master/items" element={<Items />} />
+            <Route path="/master/machine" element={<Machine />} />
             <Route path="/master/process" element={<MasterProcess />} />
             <Route path="/master/users-roles" element={<MasterUsersRoles />} />
             <Route path="/master/design-master" element={<MasterDesign />} />
