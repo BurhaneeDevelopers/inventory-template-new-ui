@@ -1,0 +1,212 @@
+import * as Yup from 'yup'
+
+export type FieldType = 'text' | 'number' | 'textarea' | 'select' | 'date' | 'checkbox'
+
+export interface FieldConfig {
+  id: string
+  label: string
+  type: FieldType
+  required: boolean
+  options?: string[]
+  initialValue: string | number | boolean
+  validation: Yup.AnySchema
+}
+
+const supplierFieldsConfig: FieldConfig[] = [
+  {
+    id: 'supplierName',
+    label: 'Supplier Name',
+    type: 'text',
+    required: true,
+    initialValue: '',
+    validation: Yup.string().required('Supplier Name is required'),
+  },
+  {
+    id: 'contactPerson',
+    label: 'Contact Person',
+    type: 'text',
+    required: true,
+    initialValue: '',
+    validation: Yup.string().required('Contact Person is required'),
+  },
+  {
+    id: 'email',
+    label: 'Email Address',
+    type: 'text',
+    required: true,
+    initialValue: '',
+    validation: Yup.string().email('Invalid email address').required('Email is required'),
+  },
+  {
+    id: 'phoneNumber',
+    label: 'Phone Number',
+    type: 'text',
+    required: true,
+    initialValue: '',
+    validation: Yup.string().required('Phone Number is required'),
+  },
+  {
+    id: 'alternateContact',
+    label: 'Alternate Contact',
+    type: 'text',
+    required: false,
+    initialValue: '',
+    validation: Yup.string(),
+  },
+  {
+    id: 'billingAddress',
+    label: 'Billing Address',
+    type: 'textarea',
+    required: true,
+    initialValue: '',
+    validation: Yup.string().required('Billing Address is required'),
+  },
+  {
+    id: 'city',
+    label: 'City',
+    type: 'text',
+    required: true,
+    initialValue: '',
+    validation: Yup.string().required('City is required'),
+  },
+  {
+    id: 'state',
+    label: 'State',
+    type: 'text',
+    required: true,
+    initialValue: '',
+    validation: Yup.string().required('State is required'),
+  },
+  {
+    id: 'country',
+    label: 'Country',
+    type: 'text',
+    required: true,
+    initialValue: 'India',
+    validation: Yup.string().required('Country is required'),
+  },
+  {
+    id: 'pincode',
+    label: 'Pincode',
+    type: 'text',
+    required: true,
+    initialValue: '',
+    validation: Yup.string().required('Pincode is required'),
+  },
+  {
+    id: 'supplierCategory',
+    label: 'Supplier Category',
+    type: 'select',
+    required: true,
+    options: [
+      'Raw Material',
+      'Packaging Material',
+      'Service Provider',
+      'Equipment',
+      'Consumables',
+      'Other',
+    ],
+    initialValue: '',
+    validation: Yup.string().required('Supplier Category is required'),
+  },
+  {
+    id: 'bankName',
+    label: 'Bank Name',
+    type: 'text',
+    required: true,
+    initialValue: '',
+    validation: Yup.string().required('Bank Name is required'),
+  },
+  {
+    id: 'accountNumber',
+    label: 'Account Number',
+    type: 'text',
+    required: true,
+    initialValue: '',
+    validation: Yup.string().required('Account Number is required'),
+  },
+  {
+    id: 'ifscCode',
+    label: 'IFSC Code',
+    type: 'text',
+    required: true,
+    initialValue: '',
+    validation: Yup.string().required('IFSC Code is required'),
+  },
+  {
+    id: 'accountHolderName',
+    label: 'Account Holder Name',
+    type: 'text',
+    required: true,
+    initialValue: '',
+    validation: Yup.string().required('Account Holder Name is required'),
+  },
+  {
+    id: 'taxInformation',
+    label: 'GST/VAT Number',
+    type: 'text',
+    required: true,
+    initialValue: '',
+    validation: Yup.string().required('GST/VAT Number is required'),
+  },
+  {
+    id: 'panNumber',
+    label: 'PAN Number',
+    type: 'text',
+    required: true,
+    initialValue: '',
+    validation: Yup.string().required('PAN Number is required'),
+  },
+  {
+    id: 'creditPeriod',
+    label: 'Credit Period (Days)',
+    type: 'number',
+    required: false,
+    initialValue: 30,
+    validation: Yup.number().min(0, 'Credit Period must be non-negative'),
+  },
+  {
+    id: 'leadTime',
+    label: 'Lead Time (Days)',
+    type: 'number',
+    required: false,
+    initialValue: '',
+    validation: Yup.number().min(0, 'Lead Time must be non-negative'),
+  },
+  {
+    id: 'minimumOrderValue',
+    label: 'Minimum Order Value',
+    type: 'number',
+    required: false,
+    initialValue: '',
+    validation: Yup.number().min(0, 'Minimum Order Value must be non-negative'),
+  },
+  {
+    id: 'supplierRating',
+    label: 'Supplier Rating',
+    type: 'select',
+    required: false,
+    options: ['1', '2', '3', '4', '5'],
+    initialValue: '',
+    validation: Yup.string(),
+  },
+  {
+    id: 'status',
+    label: 'Status',
+    type: 'select',
+    required: true,
+    options: ['Active', 'Inactive', 'On Hold', 'Blacklisted'],
+    initialValue: 'Active',
+    validation: Yup.string().required('Status is required'),
+  },
+  {
+    id: 'notes',
+    label: 'Notes',
+    type: 'textarea',
+    required: false,
+    initialValue: '',
+    validation: Yup.string(),
+  },
+]
+
+export default supplierFieldsConfig

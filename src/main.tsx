@@ -12,6 +12,8 @@ import PlaceholderPage from './components/PlaceholderPage'
 import Page from './components/constants/layout/Page'
 import Items from './pages/Master/Items'
 import Machine from './pages/Master/Machine'
+import Customer from './pages/Master/Customer'
+import Supplier from './pages/Master/Supplier'
 import Process from './pages/Master/Process'
 import Users from './pages/Master/Users'
 import DesignMaster from './pages/Master/DesignMaster'
@@ -33,10 +35,6 @@ const Dashboard = () => <PlaceholderPage title="Dashboard" />
 // Master pages
 // eslint-disable-next-line react-refresh/only-export-components
 const MasterBOM = () => <Page title="BOM" />
-// eslint-disable-next-line react-refresh/only-export-components
-const MasterCustomer = () => <Page title="Customer" />
-// eslint-disable-next-line react-refresh/only-export-components
-const MasterSupplier = () => <Page title="Supplier" />
 
 // Sales Enquiry pages
 // eslint-disable-next-line react-refresh/only-export-components
@@ -113,8 +111,8 @@ createRoot(document.getElementById('root')!).render(
             <Route path="/master/users-roles" element={<Users />} />
             <Route path="/master/design-master" element={<DesignMaster />} />
             <Route path="/master/bom" element={<MasterBOM />} />
-            <Route path="/master/customer" element={<MasterCustomer />} />
-            <Route path="/master/supplier" element={<MasterSupplier />} />
+            <Route path="/master/customer" element={<Customer />} />
+            <Route path="/master/supplier" element={<Supplier />} />
 
             {/* Sales Enquiry module */}
             <Route path="/sales-enquiry" element={<PlaceholderPage title="Sales Enquiry" />} />
