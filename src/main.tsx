@@ -12,6 +12,9 @@ import PlaceholderPage from './components/PlaceholderPage'
 import Page from './components/constants/layout/Page'
 import Items from './pages/Master/Items'
 import Machine from './pages/Master/Machine'
+import Process from './pages/Master/Process'
+import Users from './pages/Master/Users'
+import DesignMaster from './pages/Master/DesignMaster'
 
 // import OrderReceipt from './pages/OrderEnquiry/OrderReceipt'
 // import BOMPreparation from './pages/OrderEnquiry/BOMPreparation'
@@ -28,12 +31,6 @@ import Machine from './pages/Master/Machine'
 const Dashboard = () => <PlaceholderPage title="Dashboard" />
 
 // Master pages
-// eslint-disable-next-line react-refresh/only-export-components
-const MasterProcess = () => <Page title="Process" />
-// eslint-disable-next-line react-refresh/only-export-components
-const MasterUsersRoles = () => <Page title="Users/Roles/Right" />
-// eslint-disable-next-line react-refresh/only-export-components
-const MasterDesign = () => <Page title="Design Master" />
 // eslint-disable-next-line react-refresh/only-export-components
 const MasterBOM = () => <Page title="BOM" />
 // eslint-disable-next-line react-refresh/only-export-components
@@ -112,9 +109,9 @@ createRoot(document.getElementById('root')!).render(
             <Route path="/master" element={<PlaceholderPage title="Master" />} />
             <Route path="/master/items" element={<Items />} />
             <Route path="/master/machine" element={<Machine />} />
-            <Route path="/master/process" element={<MasterProcess />} />
-            <Route path="/master/users-roles" element={<MasterUsersRoles />} />
-            <Route path="/master/design-master" element={<MasterDesign />} />
+            <Route path="/master/process" element={<Process />} />
+            <Route path="/master/users-roles" element={<Users />} />
+            <Route path="/master/design-master" element={<DesignMaster />} />
             <Route path="/master/bom" element={<MasterBOM />} />
             <Route path="/master/customer" element={<MasterCustomer />} />
             <Route path="/master/supplier" element={<MasterSupplier />} />

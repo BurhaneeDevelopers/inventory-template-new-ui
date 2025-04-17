@@ -1,0 +1,95 @@
+import * as Yup from 'yup'
+import { FieldConfig } from './ItemsConfig'
+
+const usersFieldsConfig: FieldConfig[] = [
+  {
+    id: 'name',
+    label: 'Name',
+    type: 'text',
+    required: true,
+    initialValue: '',
+    validation: Yup.string().required('Name is required'),
+  },
+  {
+    id: 'department',
+    label: 'Department',
+    type: 'text',
+    required: true,
+    initialValue: '',
+    validation: Yup.string().required('Department Field is required'),
+  },
+  {
+    id: 'designation',
+    label: 'Designation',
+    type: 'text',
+    required: true,
+    initialValue: '',
+    validation: Yup.string().required('Designation is required'),
+  },
+  {
+    id: 'contactInformation',
+    label: 'Contact Information',
+    type: 'text',
+    required: true,
+    initialValue: '',
+    validation: Yup.string().required('Contact Info is required'),
+  },
+  {
+    id: 'address',
+    label: 'Address',
+    type: 'text',
+    required: true,
+    initialValue: '',
+    validation: Yup.string().required('Address is required'),
+  },
+  {
+    id: 'dob',
+    label: 'DOB',
+    type: 'date',
+    required: true,
+    initialValue: '',
+    validation: Yup.date().required('DOB is required'),
+  },
+  {
+    id: 'dateOfJoining',
+    label: 'Date of Joining',
+    type: 'date',
+    required: true,
+    initialValue: '',
+    validation: Yup.date().required('This field is required'),
+  },
+  {
+    id: 'userId',
+    label: 'User Id',
+    type: 'text',
+    required: true,
+    initialValue: '',
+    validation: Yup.string().required("User's Id is required"),
+  },
+  {
+    id: 'userPwd',
+    label: 'User Password',
+    type: 'text',
+    required: true,
+    initialValue: '',
+    validation: Yup.string().required("User's Password is required"),
+  },
+  {
+    id: 'emergencyContact',
+    label: 'Emergency Contact',
+    type: 'text',
+    required: false,
+    initialValue: '',
+    validation: Yup.string(),
+  },
+  {
+    id: 'dateOfLeaving',
+    label: 'Date of Leaving',
+    type: 'date',
+    required: true,
+    initialValue: '',
+    validation: Yup.date().required('This field is required'),
+  },
+]
+
+export default usersFieldsConfig

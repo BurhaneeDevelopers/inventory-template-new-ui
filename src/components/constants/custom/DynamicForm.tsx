@@ -44,9 +44,10 @@ export function DynamicForm({
       <form onSubmit={formik.handleSubmit} className="space-y-6">
         <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-4">
           {fieldConfig.map(field => (
-            <div key={field.id} className="space-y-2">
-              <Label htmlFor={field.id}>
-                {field.label} {field.required && <span className="text-red-500">*</span>}
+            <div key={field.id} className="flex flex-col gap-2">
+              <Label htmlFor={field.id} className="flex gap-1">
+                <span>{field.label}</span>
+                <span>{field.required && <span className="text-red-500">*</span>}</span>
               </Label>
 
               {field.type === 'text' && (
@@ -56,6 +57,7 @@ export function DynamicForm({
                   value={formik.values[field.id]?.toString() || ''}
                   onChange={formik.handleChange}
                   onBlur={formik.handleBlur}
+                  className="!border-gray-300"
                 />
               )}
 
@@ -67,6 +69,7 @@ export function DynamicForm({
                   value={formik.values[field.id]?.toString() || ''}
                   onChange={formik.handleChange}
                   onBlur={formik.handleBlur}
+                  className="!border-gray-300"
                 />
               )}
 
@@ -77,6 +80,7 @@ export function DynamicForm({
                   value={formik.values[field.id]?.toString() || ''}
                   onChange={formik.handleChange}
                   onBlur={formik.handleBlur}
+                  className="!border-gray-300"
                 />
               )}
 
@@ -88,6 +92,19 @@ export function DynamicForm({
                   value={formik.values[field.id]?.toString() || ''}
                   onChange={formik.handleChange}
                   onBlur={formik.handleBlur}
+                  className="!border-gray-300"
+                />
+              )}
+
+              {field.type === 'file' && (
+                <Input
+                  id={field.id}
+                  name={field.id}
+                  type="file"
+                  value={formik.values[field.id]?.toString() || ''}
+                  onChange={formik.handleChange}
+                  onBlur={formik.handleBlur}
+                  className="!border-gray-300"
                 />
               )}
 
@@ -96,7 +113,7 @@ export function DynamicForm({
                   onValueChange={value => formik.setFieldValue(field.id, value)}
                   defaultValue={formik.values[field.id]?.toString()}
                 >
-                  <SelectTrigger>
+                  <SelectTrigger className="w-full !border-gray-300">
                     <SelectValue placeholder={`Select ${field.label}`} />
                   </SelectTrigger>
                   <SelectContent>

@@ -1,6 +1,6 @@
 import * as Yup from 'yup'
 
-export type FieldType = 'text' | 'number' | 'textarea' | 'select' | 'date' | 'checkbox'
+export type FieldType = 'text' | 'number' | 'textarea' | 'select' | 'date' | 'checkbox' | 'file'
 
 export interface FieldConfig {
   id: string
