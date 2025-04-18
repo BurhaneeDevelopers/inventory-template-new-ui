@@ -38,6 +38,9 @@ const currentEnv: keyof Environments =
 
 // API endpoints
 export const ENDPOINTS = {
+  AUTH: {
+    LOGIN: '/login',
+  },
   // Auth endpoints
   // Customer endpoints
   // JOB: {
