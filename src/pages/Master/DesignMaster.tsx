@@ -4,6 +4,24 @@ import { DataTable } from '@/components/constants/DataTable'
 import PageTitileBar from '@/components/constants/layout/PageTitileBar'
 import PageWapper from '@/components/constants/layout/PageWapper'
 import designMasterFieldsConfig from './DesignMasterConfig'
+import { ColumnDef } from '@tanstack/react-table'
+import { Button } from '@/components/ui/button'
+import { ArrowUpDown } from 'lucide-react'
+
+type DesignRow = {
+  [K in (typeof designMasterFieldsConfig)[number] as K['id']]: string
+}
+
+const columns: ColumnDef<DesignRow>[] = designMasterFieldsConfig.map(field => ({
+  accessorKey: field.id,
+  header: ({ column }) => (
+    <Button variant="ghost" onClick={() => column.toggleSorting(column.getIsSorted() === 'asc')}>
+      {field.label}
+      <ArrowUpDown className="ml-2 h-4 w-4" />
+    </Button>
+  ),
+  cell: ({ row }) => <div>{row.getValue(field.id)}</div>,
+}))
 
 const DesignMaster = () => {
   // Categorized array for form fields
@@ -24,7 +42,7 @@ const DesignMaster = () => {
           />
         </FormModal>
       </PageTitileBar>
-      <DataTable />
+      <DataTable data={[]} columns={columns} />
     </PageWapper>
   )
 }

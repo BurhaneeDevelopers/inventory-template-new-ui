@@ -12,6 +12,7 @@ export interface FieldConfig {
   validation: Yup.AnySchema
 }
 
+// FOR FORMS
 const itemFieldsConfig: FieldConfig[] = [
   {
     id: 'itemType',

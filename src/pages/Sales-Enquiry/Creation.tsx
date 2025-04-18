@@ -1,9 +1,7 @@
 import { DynamicForm } from '@/components/constants/custom/DynamicForm'
-import { FormModal } from '@/components/constants/custom/FormModal'
-import { DataTable } from '@/components/constants/DataTable'
-import PageTitileBar from '@/components/constants/layout/PageTitileBar'
 import PageWapper from '@/components/constants/layout/PageWapper'
-import processFieldsConfig from './ProcessConfig'
+import processFieldsConfig from '../Master/ProcessConfig'
+import { DataTable } from '@/components/constants/DataTable'
 import { Button } from '@/components/ui/button'
 import { ColumnDef } from '@tanstack/react-table'
 import { ArrowUpDown } from 'lucide-react'
@@ -23,28 +21,30 @@ const columns: ColumnDef<ProcessRow>[] = processFieldsConfig.map(field => ({
   cell: ({ row }) => <div>{row.getValue(field.id)}</div>,
 }))
 
-const Process = () => {
+const Creation = () => {
   // Categorized array for form fields
   return (
-    <PageWapper>
-      <PageTitileBar title="Process">
-        <FormModal
-          title="Add New Process"
-          description="Fill in all the details to add a new process"
-          triggerButtonText="Add New Process"
-          // onSubmit={handleSubmit}
-        >
+    <PageWapper className="!bg-transparent !shadow-none">
+      <div className="flex justify-between gap-4">
+        <div className="flex flex-col gap-4 bg-white p-4 rounded-lg h-fit">
+          <h1 className="text-2xl font-medium text-zinc-700 uppercase">Enquiries</h1>
+
+          <DataTable data={[]} columns={columns} />
+        </div>
+
+        <div className="flex flex-col justify-between items-center gap-4 bg-white p-4 rounded-lg flex-grow">
+          <h1 className="text-2xl font-medium text-zinc-700 uppercase">Sales Enquiry Creation</h1>
+
           <DynamicForm
             title="Process Details"
             fieldConfig={processFieldsConfig}
             // onSubmit={handleSubmit}
             submitButtonText="Save Process"
           />
-        </FormModal>
-      </PageTitileBar>
-      <DataTable data={[]} columns={columns} />
+        </div>
+      </div>
     </PageWapper>
   )
 }
 
-export default Process
+export default Creation

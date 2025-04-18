@@ -17,6 +17,7 @@ import Supplier from './pages/Master/Supplier'
 import Process from './pages/Master/Process'
 import Users from './pages/Master/Users'
 import DesignMaster from './pages/Master/DesignMaster'
+import Creation from './pages/Sales-Enquiry/Creation'
 
 // import OrderReceipt from './pages/OrderEnquiry/OrderReceipt'
 // import BOMPreparation from './pages/OrderEnquiry/BOMPreparation'
@@ -37,8 +38,6 @@ const Dashboard = () => <PlaceholderPage title="Dashboard" />
 const MasterBOM = () => <Page title="BOM" />
 
 // Sales Enquiry pages
-// eslint-disable-next-line react-refresh/only-export-components
-const SalesEnquiryCreation = () => <PlaceholderPage title="Sales Enquiry Creation" />
 // eslint-disable-next-line react-refresh/only-export-components
 const SalesEnquiryDesignCreation = () => <PlaceholderPage title="Design Creation" />
 // eslint-disable-next-line react-refresh/only-export-components
@@ -116,7 +115,7 @@ createRoot(document.getElementById('root')!).render(
 
             {/* Sales Enquiry module */}
             <Route path="/sales-enquiry" element={<PlaceholderPage title="Sales Enquiry" />} />
-            <Route path="/sales-enquiry/creation" element={<SalesEnquiryCreation />} />
+            <Route path="/sales-enquiry/creation" element={<Creation />} />
             <Route path="/sales-enquiry/design-creation" element={<SalesEnquiryDesignCreation />} />
             <Route path="/sales-enquiry/quotation" element={<SalesEnquiryQuotation />} />
 
