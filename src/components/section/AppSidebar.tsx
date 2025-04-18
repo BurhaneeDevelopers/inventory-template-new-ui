@@ -4,6 +4,7 @@ import {
   Database,
   GitGraphIcon,
   TrendingUp,
+  User,
   Users,
   WarehouseIcon,
 } from 'lucide-react'
@@ -42,10 +43,10 @@ const items = [
         title: 'Process',
         url: '/master/process',
       },
-      {
-        title: 'Users/Roles/Right',
-        url: '/master/users-roles',
-      },
+      // {
+      //   title: 'Users/Roles/Right',
+      //   url: '/master/users-roles',
+      // },
       {
         title: 'Design Master',
         url: '/master/design-master',
@@ -183,6 +184,21 @@ const items = [
       },
     ],
   },
+  {
+    menu: 'Administration',
+    url: '/master',
+    icon: User,
+    items: [
+      {
+        title: 'User Management',
+        url: '/master/users-roles',
+      },
+      {
+        title: 'Settings',
+        url: '/',
+      },
+    ],
+  },
 ]
 
 // const location = useLocation()
@@ -196,10 +212,12 @@ function AppSidebar() {
         </SidebarHeader>
         <SidebarMenu>
           <SidebarMenuItem>
-            <SidebarMenuButton asChild>
-              {/* <MenuIcon size={24} color="#000" /> */}
-              <span className="text-base font-semibold">Dashboard</span>
-            </SidebarMenuButton>
+            <Link to={'/'}>
+              <SidebarMenuButton asChild>
+                {/* <MenuIcon size={24} color="#000" /> */}
+                <span className="text-base font-semibold">Dashboard</span>
+              </SidebarMenuButton>
+            </Link>
           </SidebarMenuItem>
           {items.map(item => (
             <Collapsible key={item.menu} asChild defaultOpen={false} className="group/collapsible">

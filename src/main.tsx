@@ -18,6 +18,7 @@ import Users from './pages/Master/Users'
 import DesignMaster from './pages/Master/DesignMaster'
 import Creation from './pages/Sales-Enquiry/Creation'
 import BOM from './pages/Master/BOM'
+import Reports from './pages/archive/Inventory/Reports'
 
 // import OrderReceipt from './pages/OrderEnquiry/OrderReceipt'
 // import BOMPreparation from './pages/OrderEnquiry/BOMPreparation'
@@ -31,7 +32,7 @@ import BOM from './pages/Master/BOM'
 
 // Dashboard
 // eslint-disable-next-line react-refresh/only-export-components
-const Dashboard = () => <PlaceholderPage title="Dashboard" />
+const Dashboard = () => <Reports />
 
 // Master pages
 

@@ -18,23 +18,24 @@ import { generateInitialValues, generateValidationSchema } from '@/lib/helperFun
 interface DynamicFormProps {
   title: string
   fieldConfig: FieldConfig[]
-  // onSubmit: (values: any) => void
+  onSubmit?: (values: { [key: string]: string | number | boolean }) => void
   submitButtonText?: string
 }
 
 export function DynamicForm({
   title,
   fieldConfig,
-  // onSubmit,
+  onSubmit,
   submitButtonText = 'Submit',
 }: DynamicFormProps) {
   // Formik setup with initialValues and validationSchema
   const formik = useFormik({
     initialValues: generateInitialValues(fieldConfig),
     validationSchema: generateValidationSchema(fieldConfig),
-    onSubmit: values => {
-      console.log('Item Data:', values)
-      alert('Item Submitted')
+    onSubmit: async values => {
+      if (onSubmit) {
+        onSubmit(values)
+      }
     },
   })
 

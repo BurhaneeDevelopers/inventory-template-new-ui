@@ -1,8 +1,8 @@
 import { ChartAreaInteractive } from '@/components/blocks/ChartAreaInteractive'
 import { SectionCards } from '@/components/blocks/SectionCards'
-import { DataTable } from '@/components/constants/DataTable'
+// import { DataTable } from '@/components/constants/DataTable'
 import Container from '@/components/constants/layout/Container'
-import data from '../../../../data.json'
+// import data from '../../../../data.json'
 
 const Reports = () => {
   return (
@@ -13,9 +13,9 @@ const Reports = () => {
           <div className="px-4 lg:px-6 flex flex-col gap-4">
             <ChartAreaInteractive />
 
-            <div className="bg-white p-4 rounded-xl shadow-xl">
-              <DataTable data={data} />
-            </div>
+            {/* <div className="bg-white p-4 rounded-xl shadow-xl">
+              <DataTable data={data} columns={} />
+            </div> */}
           </div>
         </div>
       </div>

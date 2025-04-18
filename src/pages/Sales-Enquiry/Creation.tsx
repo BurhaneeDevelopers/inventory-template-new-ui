@@ -3,14 +3,36 @@ import PageWapper from '@/components/constants/layout/PageWapper'
 import { DataTable } from '@/components/constants/DataTable'
 import { Button } from '@/components/ui/button'
 import { ColumnDef } from '@tanstack/react-table'
-import { ArrowUpDown } from 'lucide-react'
+import { ArrowUpDown, Edit, Trash2 } from 'lucide-react'
 import SubTabs from '@/components/constants/SubTabs'
 import { useState } from 'react'
 import { CreationDetailsConfig, CreationMasterConfig } from './CreationConfig'
+import {
+  Table,
+  TableBody,
+  TableCell,
+  TableHead,
+  TableHeader,
+  TableRow,
+} from '@/components/ui/table'
 
 interface Section {
   title: string
   key: string
+}
+
+type Item = {
+  [key: string]: string | number | undefined
+  ItemType: string
+  ItemDescription: string
+  Quantity: number
+  UnitOfMeasure: string
+  UnitPrice: number
+  DiscountPercentage?: number
+  TaxPercentage?: number
+  TotalPrice?: number
+  DeliveryDate?: string
+  LotNumber?: string
 }
 
 type CreationRow = {
@@ -35,7 +57,18 @@ const Creation = () => {
   ]
 
   const [activeTab, setActiveTab] = useState<string>('listing')
+  const [items, setItems] = useState<Item[]>([])
 
+  const handleAddItem = (newItem: Item) => {
+    setItems(prev => [...prev, newItem])
+  }
+
+  const handleDeleteItem = (index: number) => {
+    setItems(prev => prev.filter((_, i) => i !== index))
+  }
+
+  const totalQuantity = items.reduce((sum, item) => sum + Number(item.Quantity || 0), 0)
+  const totalPrice = items.reduce((sum, item) => sum + Number(item.TotalPrice || 0), 0)
   return (
     <PageWapper className="!bg-transparent !shadow-none">
       <SubTabs sections={sections} activeTab={activeTab} onTabChange={setActiveTab} />
@@ -66,9 +99,60 @@ const Creation = () => {
             <DynamicForm
               title="Process Details"
               fieldConfig={CreationDetailsConfig}
-              // onSubmit={handleSubmit}
-              submitButtonText="Save Process"
+              onSubmit={handleAddItem}
+              submitButtonText="Add Item"
             />
+          </div>
+
+          <div className="">
+            {items.length > 0 && (
+              <div className="bg-white p-4 rounded-lg">
+                <h2 className="text-xl font-semibold mb-4">Added Items</h2>
+                <Table>
+                  <TableHeader>
+                    <TableRow>
+                      {CreationDetailsConfig.map(field => (
+                        <TableHead key={field.id}>{field.label}</TableHead>
+                      ))}
+                      {/* <TableHead>Edit</TableHead> */}
+                      <TableHead>Actions</TableHead>
+                    </TableRow>
+                  </TableHeader>
+                  <TableBody>
+                    {items.map((item, index) => (
+                      <TableRow key={index}>
+                        {CreationDetailsConfig.map(field => (
+                          <TableCell key={field.id}>{item[field.id]}</TableCell>
+                        ))}
+                        <TableCell className="space-x-4">
+                          <Button size="icon" className="bg-indigo-500">
+                            <Edit className="w-4 h-4" />
+                          </Button>
+                          <Button
+                            variant="destructive"
+                            size="icon"
+                            onClick={() => handleDeleteItem(index)}
+                          >
+                            <Trash2 className="w-4 h-4" />
+                          </Button>
+                        </TableCell>
+                      </TableRow>
+                    ))}
+                  </TableBody>
+                </Table>
+              </div>
+            )}
+
+            <div className="flex flex-row ml-auto p-4 gap-4 bg-white mt-4 w-fit rounded-lg">
+              <div className="flex items-end gap-2">
+                <h4 className="text-base">Total QTY:</h4>
+                <h3 className="text-2xl font-medium">{totalQuantity}</h3>
+              </div>
+              <div className="flex items-end gap-2">
+                <h4 className="text-base">Total Price:</h4>
+                <h3 className="text-2xl font-medium">{totalPrice}</h3>
+              </div>
+            </div>
           </div>
         </div>
       )}

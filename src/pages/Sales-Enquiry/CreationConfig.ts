@@ -67,7 +67,7 @@ export const CreationDetailsConfig: FieldConfig[] = [
   {
     id: 'Quantity',
     label: 'Quantity',
-    type: 'text',
+    type: 'number',
     required: true,
     initialValue: '',
     validation: Yup.string().required('Quantity is required'),
@@ -75,7 +75,7 @@ export const CreationDetailsConfig: FieldConfig[] = [
   {
     id: 'UnitOfMeasure',
     label: 'UOM',
-    type: 'text',
+    type: 'select',
     required: false,
     options: ['KG', 'Box'],
     initialValue: 'KG',
@@ -84,7 +84,7 @@ export const CreationDetailsConfig: FieldConfig[] = [
   {
     id: 'UnitPrice',
     label: 'Unit Price',
-    type: 'text',
+    type: 'number',
     required: false,
     initialValue: '',
     validation: Yup.string(),
@@ -108,7 +108,7 @@ export const CreationDetailsConfig: FieldConfig[] = [
   {
     id: 'TotalPrice',
     label: 'Total Price',
-    type: 'text',
+    type: 'number',
     required: false,
     initialValue: '',
     validation: Yup.string(),
@@ -116,10 +116,10 @@ export const CreationDetailsConfig: FieldConfig[] = [
   {
     id: 'DeliveryDate',
     label: 'Delivery Date',
-    type: 'text',
+    type: 'date',
     required: false,
     initialValue: '',
-    validation: Yup.string(),
+    validation: Yup.date(),
   },
   {
     id: 'LotNumber',
