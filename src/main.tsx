@@ -18,6 +18,7 @@ import Process from './pages/Master/Process'
 import Users from './pages/Master/Users'
 import DesignMaster from './pages/Master/DesignMaster'
 import Creation from './pages/Sales-Enquiry/Creation'
+import BOM from './pages/Master/BOM'
 
 // import OrderReceipt from './pages/OrderEnquiry/OrderReceipt'
 // import BOMPreparation from './pages/OrderEnquiry/BOMPreparation'
@@ -35,7 +36,6 @@ const Dashboard = () => <PlaceholderPage title="Dashboard" />
 
 // Master pages
 // eslint-disable-next-line react-refresh/only-export-components
-const MasterBOM = () => <Page title="BOM" />
 
 // Sales Enquiry pages
 // eslint-disable-next-line react-refresh/only-export-components
@@ -109,7 +109,7 @@ createRoot(document.getElementById('root')!).render(
             <Route path="/master/process" element={<Process />} />
             <Route path="/master/users-roles" element={<Users />} />
             <Route path="/master/design-master" element={<DesignMaster />} />
-            <Route path="/master/bom" element={<MasterBOM />} />
+            <Route path="/master/bom" element={<BOM />} />
             <Route path="/master/customer" element={<Customer />} />
             <Route path="/master/supplier" element={<Supplier />} />
 
