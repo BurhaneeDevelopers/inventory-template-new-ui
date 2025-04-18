@@ -9,7 +9,6 @@ import ProtectedRoute from './components/ProtectedRoute'
 import SignIn from './pages/Auth/SignIn'
 // import Reports from './pages/archive/Inventory/Reports'
 import PlaceholderPage from './components/PlaceholderPage'
-import Page from './components/constants/layout/Page'
 import Items from './pages/Master/Items'
 import Machine from './pages/Master/Machine'
 import Customer from './pages/Master/Customer'
@@ -35,7 +34,6 @@ import BOM from './pages/Master/BOM'
 const Dashboard = () => <PlaceholderPage title="Dashboard" />
 
 // Master pages
-// eslint-disable-next-line react-refresh/only-export-components
 
 // Sales Enquiry pages
 // eslint-disable-next-line react-refresh/only-export-components
