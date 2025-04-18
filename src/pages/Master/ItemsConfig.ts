@@ -10,6 +10,7 @@ export interface FieldConfig {
   options?: string[]
   initialValue: string | number | boolean
   validation: Yup.AnySchema
+  readOnly?: boolean
 }
 
 // FOR FORMS

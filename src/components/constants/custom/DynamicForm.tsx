@@ -57,7 +57,8 @@ export function DynamicForm({
                   value={formik.values[field.id]?.toString() || ''}
                   onChange={formik.handleChange}
                   onBlur={formik.handleBlur}
-                  className="!border-gray-300 min-w-72"
+                  className={`!border-gray-300 min-w-72 ${field.readOnly ? 'bg-gray-200' : ''}`}
+                  disabled={field.readOnly}
                 />
               )}
 
@@ -113,7 +114,7 @@ export function DynamicForm({
                   onValueChange={value => formik.setFieldValue(field.id, value)}
                   defaultValue={formik.values[field.id]?.toString()}
                 >
-                  <SelectTrigger className="w-full !border-gray-300">
+                  <SelectTrigger className="w-full !border-gray-300 min-w-72">
                     <SelectValue placeholder={`Select ${field.label}`} />
                   </SelectTrigger>
                   <SelectContent>

@@ -1,23 +1,23 @@
 import { DynamicForm } from '@/components/constants/custom/DynamicForm'
 import PageWapper from '@/components/constants/layout/PageWapper'
-import processFieldsConfig from '../Master/ProcessConfig'
 import { DataTable } from '@/components/constants/DataTable'
 import { Button } from '@/components/ui/button'
 import { ColumnDef } from '@tanstack/react-table'
 import { ArrowUpDown } from 'lucide-react'
 import SubTabs from '@/components/constants/SubTabs'
 import { useState } from 'react'
+import { CreationDetailsConfig, CreationMasterConfig } from './CreationConfig'
 
 interface Section {
   title: string
   key: string
 }
 
-type ProcessRow = {
-  [K in (typeof processFieldsConfig)[number] as K['id']]: string
+type CreationRow = {
+  [K in (typeof CreationMasterConfig)[number] as K['id']]: string
 }
 
-const columns: ColumnDef<ProcessRow>[] = processFieldsConfig.map(field => ({
+const columns: ColumnDef<CreationRow>[] = CreationMasterConfig.map(field => ({
   accessorKey: field.id,
   header: ({ column }) => (
     <Button variant="ghost" onClick={() => column.toggleSorting(column.getIsSorted() === 'asc')}>
@@ -53,8 +53,8 @@ const Creation = () => {
             <h1 className="text-2xl font-medium text-zinc-700 uppercase">Transaction Master</h1>
 
             <DynamicForm
-              title="Process Details"
-              fieldConfig={processFieldsConfig}
+              title="Enquiry Creation"
+              fieldConfig={CreationMasterConfig}
               // onSubmit={handleSubmit}
               submitButtonText="Save Process"
             />
@@ -65,7 +65,7 @@ const Creation = () => {
 
             <DynamicForm
               title="Process Details"
-              fieldConfig={processFieldsConfig}
+              fieldConfig={CreationDetailsConfig}
               // onSubmit={handleSubmit}
               submitButtonText="Save Process"
             />
