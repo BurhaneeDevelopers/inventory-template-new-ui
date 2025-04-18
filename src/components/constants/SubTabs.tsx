@@ -1,52 +1,32 @@
 import React from 'react'
-import { Link, useLocation } from 'react-router'
 
 interface Section {
   title: string
-  redirectTo: string
-  params: string
+  key: string
 }
 
-interface ChildComponentProps {
+interface SubTabsProps {
   sections: Section[]
+  activeTab: string
+  onTabChange: (key: string) => void
 }
 
-const SubTabs: React.FC<ChildComponentProps> = ({ sections }) => {
-  const location = useLocation()
-
+const SubTabs: React.FC<SubTabsProps> = ({ sections, activeTab, onTabChange }) => {
   return (
-    <div className="bg-white shadow-sm flex flex-row w-full">
+    <div className="bg-white shadow-sm flex w-full">
       {sections.map(section => (
-        <TabItem
-          key={section.title}
-          title={section.title}
-          redirectTo={section.redirectTo}
-          active={location.pathname.includes(section.params)}
-        />
+        <button
+          key={section.key}
+          onClick={() => onTabChange(section.key)}
+          className={`flex-grow text-center capitalize p-2 transition-colors duration-200 ${
+            activeTab === section.key ? 'bg-zinc-800 text-white' : 'bg-white text-zinc-800'
+          }`}
+        >
+          {section.title}
+        </button>
       ))}
     </div>
   )
 }
 
 export default SubTabs
-
-const TabItem = ({
-  active,
-  title,
-  redirectTo,
-}: {
-  active: boolean
-  title: string
-  redirectTo: string
-}) => {
-  return (
-    <Link
-      to={redirectTo}
-      className={`text-center capitalize flex-grow p-2 ${
-        active ? 'bg-zinc-800 text-white' : 'bg-white'
-      }`}
-    >
-      {title}
-    </Link>
-  )
-}

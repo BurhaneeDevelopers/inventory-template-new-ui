@@ -42,7 +42,7 @@ export function DynamicForm({
     <div>
       <h2 className="text-lg font-semibold mb-4">{title}</h2>
       <form onSubmit={formik.handleSubmit} className="space-y-6">
-        <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-4">
+        <div className="flex flex-wrap gap-4">
           {fieldConfig.map(field => (
             <div key={field.id} className="flex flex-col gap-2">
               <Label htmlFor={field.id} className="flex gap-1">
@@ -57,7 +57,7 @@ export function DynamicForm({
                   value={formik.values[field.id]?.toString() || ''}
                   onChange={formik.handleChange}
                   onBlur={formik.handleBlur}
-                  className="!border-gray-300"
+                  className="!border-gray-300 min-w-72"
                 />
               )}
 
@@ -69,7 +69,7 @@ export function DynamicForm({
                   value={formik.values[field.id]?.toString() || ''}
                   onChange={formik.handleChange}
                   onBlur={formik.handleBlur}
-                  className="!border-gray-300"
+                  className="!border-gray-300 min-w-72"
                 />
               )}
 
@@ -80,7 +80,7 @@ export function DynamicForm({
                   value={formik.values[field.id]?.toString() || ''}
                   onChange={formik.handleChange}
                   onBlur={formik.handleBlur}
-                  className="!border-gray-300"
+                  className="!border-gray-300 min-w-72"
                 />
               )}
 
@@ -92,7 +92,7 @@ export function DynamicForm({
                   value={formik.values[field.id]?.toString() || ''}
                   onChange={formik.handleChange}
                   onBlur={formik.handleBlur}
-                  className="!border-gray-300"
+                  className="!border-gray-300 min-w-72"
                 />
               )}
 
@@ -104,7 +104,7 @@ export function DynamicForm({
                   value={formik.values[field.id]?.toString() || ''}
                   onChange={formik.handleChange}
                   onBlur={formik.handleBlur}
-                  className="!border-gray-300"
+                  className="!border-gray-300 min-w-72"
                 />
               )}
 

@@ -5,6 +5,13 @@ import { DataTable } from '@/components/constants/DataTable'
 import { Button } from '@/components/ui/button'
 import { ColumnDef } from '@tanstack/react-table'
 import { ArrowUpDown } from 'lucide-react'
+import SubTabs from '@/components/constants/SubTabs'
+import { useState } from 'react'
+
+interface Section {
+  title: string
+  key: string
+}
 
 type ProcessRow = {
   [K in (typeof processFieldsConfig)[number] as K['id']]: string
@@ -22,27 +29,49 @@ const columns: ColumnDef<ProcessRow>[] = processFieldsConfig.map(field => ({
 }))
 
 const Creation = () => {
-  // Categorized array for form fields
+  const sections: Section[] = [
+    { title: 'Enquiry Listing', key: 'listing' },
+    { title: 'Enquiry Creation', key: 'creation' },
+  ]
+
+  const [activeTab, setActiveTab] = useState<string>('listing')
+
   return (
     <PageWapper className="!bg-transparent !shadow-none">
-      <div className="flex justify-between gap-4">
+      <SubTabs sections={sections} activeTab={activeTab} onTabChange={setActiveTab} />
+      {activeTab === 'listing' && (
         <div className="flex flex-col gap-4 bg-white p-4 rounded-lg h-fit">
           <h1 className="text-2xl font-medium text-zinc-700 uppercase">Enquiries</h1>
 
           <DataTable data={[]} columns={columns} />
         </div>
+      )}
 
-        <div className="flex flex-col justify-between items-center gap-4 bg-white p-4 rounded-lg flex-grow">
-          <h1 className="text-2xl font-medium text-zinc-700 uppercase">Sales Enquiry Creation</h1>
+      {activeTab === 'creation' && (
+        <div className="flex flex-col gap-7">
+          <div className="flex flex-col justify-between items-center gap-4 bg-white p-4 rounded-lg flex-grow">
+            <h1 className="text-2xl font-medium text-zinc-700 uppercase">Transaction Master</h1>
 
-          <DynamicForm
-            title="Process Details"
-            fieldConfig={processFieldsConfig}
-            // onSubmit={handleSubmit}
-            submitButtonText="Save Process"
-          />
+            <DynamicForm
+              title="Process Details"
+              fieldConfig={processFieldsConfig}
+              // onSubmit={handleSubmit}
+              submitButtonText="Save Process"
+            />
+          </div>
+
+          <div className="flex flex-col justify-between items-center gap-4 bg-white p-4 rounded-lg flex-grow">
+            <h1 className="text-2xl font-medium text-zinc-700 uppercase">Transaction Details</h1>
+
+            <DynamicForm
+              title="Process Details"
+              fieldConfig={processFieldsConfig}
+              // onSubmit={handleSubmit}
+              submitButtonText="Save Process"
+            />
+          </div>
         </div>
-      </div>
+      )}
     </PageWapper>
   )
 }

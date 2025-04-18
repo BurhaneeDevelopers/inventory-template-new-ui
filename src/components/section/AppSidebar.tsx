@@ -192,7 +192,7 @@ function AppSidebar() {
     <Sidebar>
       <SidebarContent className="p-2 flex flex-col gap-4 border-r border-gray-300">
         <SidebarHeader className="flex justify-center items-center">
-          <img src="/image.png" alt="Apparel Kingdom" className="w-36 h-28" />
+          <img src="/logo.png" alt="Apparel Kingdom" className="w-36 h-24" />
         </SidebarHeader>
         <SidebarMenu>
           <SidebarMenuItem>
