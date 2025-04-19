@@ -6,9 +6,9 @@ import { Button } from '@/components/ui/button'
 import { Card, CardContent, CardDescription, CardHeader, CardTitle } from '@/components/ui/card'
 import { Input } from '@/components/ui/input'
 import { Label } from '@/components/ui/label'
+import { Field, Form, Formik } from 'formik'
 
 // Validation schema
-// eslint-disable-next-line @typescript-eslint/no-unused-vars
 const SignInSchema = Yup.object().shape({
   username: Yup.string().required('Username is required'),
   password: Yup.string()
@@ -17,21 +17,18 @@ const SignInSchema = Yup.object().shape({
 })
 
 export default function Signin({ className, ...props }: React.ComponentPropsWithoutRef<'div'>) {
-  // eslint-disable-next-line @typescript-eslint/no-unused-vars
   const [isSubmitting, setIsSubmitting] = useState(false)
-  // eslint-disable-next-line @typescript-eslint/no-unused-vars
   const initialValues: LoginData = {
     username: '',
     password: '',
   }
 
-  // eslint-disable-next-line @typescript-eslint/no-unused-vars
   const handleSubmit = async (values: LoginData) => {
     setIsSubmitting(true)
     try {
       // TODO: Implement your authentication logic here
       console.log('Form values:', values)
-      // await authService.login(values.email, values.password)
+      // await authService.login(values.username, values.password)
     } catch (error) {
       console.error('Login error:', error)
     } finally {
@@ -53,38 +50,49 @@ export default function Signin({ className, ...props }: React.ComponentPropsWith
           </CardDescription>
         </CardHeader>
         <CardContent className="w-96">
-          <form>
-            <div className="flex flex-col gap-6">
-              <div className="grid gap-2">
-                <Label htmlFor="username">Username</Label>
-                <Input id="username" type="text" placeholder="m@example.com" required />
-              </div>
-              <div className="grid gap-2">
-                <div className="flex items-center">
-                  <Label htmlFor="password">Password</Label>
-                  <a
-                    href="#"
-                    className="ml-auto inline-block text-sm underline-offset-4 hover:underline"
-                  >
-                    Forgot your password?
-                  </a>
+          <Formik
+            initialValues={initialValues}
+            validationSchema={SignInSchema}
+            onSubmit={handleSubmit}
+          >
+            {({ errors, touched }) => (
+              <Form className="flex flex-col gap-6">
+                <div className="grid gap-2">
+                  <Label htmlFor="username">Username</Label>
+                  <Field
+                    as={Input}
+                    id="username"
+                    name="username"
+                    type="username"
+                    placeholder="m@example.com"
+                  />
+                  {errors.username && touched.username && (
+                    <div className="text-sm text-red-500">{errors.username}</div>
+                  )}
                 </div>
-                <Input id="password" type="password" required />
-              </div>
-              <Button type="submit" className="w-full">
-                Login
-              </Button>
-              {/* <Button variant="outline" className="w-full">
-                Login with Google
-              </Button> */}
-            </div>
-            {/* <div className="mt-4 text-center text-sm">
-              Don&apos;t have an account?{" "}
-              <a href="#" className="underline underline-offset-4">
-                Sign up
-              </a>
-            </div> */}
-          </form>
+
+                <div className="grid gap-2">
+                  <div className="flex items-center">
+                    <Label htmlFor="password">Password</Label>
+                    <a
+                      href="#"
+                      className="ml-auto inline-block text-sm underline-offset-4 hover:underline"
+                    >
+                      Forgot your password?
+                    </a>
+                  </div>
+                  <Field as={Input} id="password" name="password" type="password" />
+                  {errors.password && touched.password && (
+                    <div className="text-sm text-red-500">{errors.password}</div>
+                  )}
+                </div>
+
+                <Button type="submit" className="w-full" disabled={isSubmitting}>
+                  {isSubmitting ? 'Logging in...' : 'Login'}
+                </Button>
+              </Form>
+            )}
+          </Formik>
         </CardContent>
       </Card>
     </div>
