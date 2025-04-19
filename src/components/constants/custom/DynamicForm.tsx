@@ -13,12 +13,17 @@ import {
 import { Button } from '@/components/ui/button'
 import { type FieldConfig } from '@/pages/Master/ItemsConfig'
 import { generateInitialValues, generateValidationSchema } from '@/lib/helperFunctions'
-// import { FormItem, FormLabel, FormControl, FormMessage, Form } from '@/components/ui/form';
+import { toast } from 'sonner'
+import { formModalAtom } from '../../../../jotai/jotaiStore'
+import { useAtom } from 'jotai'
 
 interface DynamicFormProps {
   title: string
   fieldConfig: FieldConfig[]
   onSubmit?: (values: { [key: string]: string | number | boolean }) => void
+  handleSubmit: (values: { [key: string]: string | number | boolean }) => void
+  fetchDataAfterSubmit: () => void
+  initialFields?: { [key: string]: string | number | boolean | undefined }
   submitButtonText?: string
 }
 
@@ -26,15 +31,24 @@ export function DynamicForm({
   title,
   fieldConfig,
   onSubmit,
+  handleSubmit,
+  fetchDataAfterSubmit,
+  initialFields,
   submitButtonText = 'Submit',
 }: DynamicFormProps) {
   // Formik setup with initialValues and validationSchema
+  const [, setOpen] = useAtom(formModalAtom)
   const formik = useFormik({
-    initialValues: generateInitialValues(fieldConfig),
+    initialValues: generateInitialValues(fieldConfig, initialFields),
     validationSchema: generateValidationSchema(fieldConfig),
     onSubmit: async values => {
       if (onSubmit) {
         onSubmit(values)
+      } else if (handleSubmit) {
+        handleSubmit(values)
+        fetchDataAfterSubmit()
+        toast('Task Done Successfully')
+        setOpen(false)
       }
     },
   })
@@ -121,7 +135,7 @@ export function DynamicForm({
                   <SelectContent>
                     {field.options.map(option => (
                       <SelectItem key={option} value={option}>
-                        {option}
+                        {option === true ? 'Yes' : option === false ? 'No' : option}
                       </SelectItem>
                     ))}
                   </SelectContent>

@@ -3,6 +3,7 @@ import { SidebarInset, SidebarProvider } from './ui/sidebar'
 import AppSidebar from './section/AppSidebar'
 import { Separator } from './ui/separator'
 import { Header } from './constants/layout/Header'
+import { Toaster } from './ui/sonner'
 
 function Layout() {
   return (
@@ -15,6 +16,7 @@ function Layout() {
             <Separator />
             <Outlet />
             <Separator />
+            <Toaster />
           </main>
         </SidebarInset>
       </SidebarProvider>

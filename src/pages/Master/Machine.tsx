@@ -7,6 +7,8 @@ import machineFieldsConfig from './MachineConfig'
 import { ColumnDef } from '@tanstack/react-table'
 import { Button } from '@/components/ui/button'
 import { ArrowUpDown } from 'lucide-react'
+import { apiService } from './../../apiService/apiService'
+import { useEffect, useState } from 'react'
 
 type MachineRow = {
   [K in (typeof machineFieldsConfig)[number] as K['id']]: string
@@ -24,7 +26,33 @@ const columns: ColumnDef<MachineRow>[] = machineFieldsConfig.map(field => ({
 }))
 
 const Machine = () => {
-  // Categorized array for form fields
+  const [data, setData] = useState([])
+
+  const fetchDataFromDB = async () => {
+    try {
+      const response = await apiService.post(apiService.v1 + '/machine-master/get-all', {})
+
+      if (response) {
+        setData(response)
+      }
+    } catch (error) {
+      console.log(error)
+    }
+  }
+
+  const createMachineInDb = async (values: { [key: string]: string | number | boolean }) => {
+    try {
+      const response = await apiService.post(apiService.v1 + '/machine-master/save', values)
+
+      return response
+    } catch (error) {
+      console.log(error)
+    }
+  }
+
+  useEffect(() => {
+    fetchDataFromDB()
+  }, [])
 
   return (
     <PageWapper>
@@ -38,12 +66,13 @@ const Machine = () => {
           <DynamicForm
             title="Machine Details"
             fieldConfig={machineFieldsConfig}
-            // onSubmit={handleSubmit}
+            handleSubmit={createMachineInDb}
+            fetchDataAfterSubmit={fetchDataFromDB}
             submitButtonText="Save Machine"
           />
         </FormModal>
       </PageTitileBar>
-      <DataTable data={[]} columns={columns} />
+      <DataTable data={data} columns={columns} />
     </PageWapper>
   )
 }

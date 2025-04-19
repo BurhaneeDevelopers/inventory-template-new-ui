@@ -5,6 +5,24 @@ import PageTitileBar from '@/components/constants/layout/PageTitileBar'
 import PageWapper from '@/components/constants/layout/PageWapper'
 
 import bomFieldsConfig from './BOMConfig'
+import { Button } from '@/components/ui/button'
+import { ArrowUpDown } from 'lucide-react'
+import { ColumnDef } from '@tanstack/react-table'
+
+type BOMRow = {
+  [K in (typeof bomFieldsConfig)[number] as K['id']]: string
+}
+
+const columns: ColumnDef<BOMRow>[] = bomFieldsConfig.map(field => ({
+  accessorKey: field.id,
+  header: ({ column }) => (
+    <Button variant="ghost" onClick={() => column.toggleSorting(column.getIsSorted() === 'asc')}>
+      {field.label}
+      <ArrowUpDown className="ml-2 h-4 w-4" />
+    </Button>
+  ),
+  cell: ({ row }) => <div>{row.getValue(field.id)}</div>,
+}))
 
 const BOM = () => {
   // Categorized array for form fields
@@ -26,7 +44,7 @@ const BOM = () => {
           />
         </FormModal>
       </PageTitileBar>
-      <DataTable />
+      <DataTable data={[]} columns={columns} />
     </PageWapper>
   )
 }

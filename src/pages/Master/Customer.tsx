@@ -7,6 +7,8 @@ import customerFieldsConfig from './CustomerConfig'
 import { Button } from '@/components/ui/button'
 import { ArrowUpDown } from 'lucide-react'
 import { ColumnDef } from '@tanstack/react-table'
+import { useEffect, useState } from 'react'
+import { apiService } from './../../apiService/apiService'
 
 type CustomerRow = {
   [K in (typeof customerFieldsConfig)[number] as K['id']]: string
@@ -24,7 +26,34 @@ const columns: ColumnDef<CustomerRow>[] = customerFieldsConfig.map(field => ({
 }))
 
 const Customer = () => {
-  // Categorized array for form fields
+  const [data, setData] = useState([])
+
+  const fetchDataFromDB = async () => {
+    try {
+      const response = await apiService.post(apiService.v1 + '/customer-master/get-all', {})
+      console.log(response)
+
+      if (response) {
+        setData(response)
+      }
+    } catch (error) {
+      console.log(error)
+    }
+  }
+
+  const createCsutomerInDb = async (values: { [key: string]: string | number | boolean }) => {
+    try {
+      const response = await apiService.post(apiService.v1 + '/customer-master/save', values)
+
+      return response
+    } catch (error) {
+      console.log(error)
+    }
+  }
+
+  useEffect(() => {
+    fetchDataFromDB()
+  }, [])
 
   return (
     <PageWapper>
@@ -38,12 +67,13 @@ const Customer = () => {
           <DynamicForm
             title="Customer Details"
             fieldConfig={customerFieldsConfig}
-            // onSubmit={handleSubmit}
+            handleSubmit={createCsutomerInDb}
+            fetchDataAfterSubmit={fetchDataFromDB}
             submitButtonText="Save Customer"
           />
         </FormModal>
       </PageTitileBar>
-      <DataTable data={[]} columns={columns} />
+      <DataTable data={data} columns={columns} />
     </PageWapper>
   )
 }

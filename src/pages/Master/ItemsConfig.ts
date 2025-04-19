@@ -7,7 +7,7 @@ export interface FieldConfig {
   label: string
   type: FieldType
   required: boolean
-  options?: string[]
+  options?: string[] | boolean[]
   initialValue: string | number | boolean
   validation: Yup.AnySchema
   readOnly?: boolean
@@ -61,7 +61,7 @@ const itemFieldsConfig: FieldConfig[] = [
     label: 'Category',
     type: 'select',
     required: true,
-    options: [], // Should be populated from API
+    options: ['other'], // Should be populated from API
     initialValue: '',
     validation: Yup.string().required('Category is required'),
   },
@@ -119,7 +119,7 @@ const itemFieldsConfig: FieldConfig[] = [
       .required('Base Price is required'),
   },
   {
-    id: 'hsnSacCode',
+    id: 'hsn_sac_code',
     label: 'HSN/SAC Code',
     type: 'text',
     required: true,

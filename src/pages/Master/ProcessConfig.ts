@@ -21,7 +21,7 @@ const processFieldsConfig: FieldConfig[] = [
   {
     id: 'inputQty',
     label: 'Input Quantity',
-    type: 'text',
+    type: 'number',
     required: true,
     initialValue: '',
     validation: Yup.string().required('Input Quantity is required'),
@@ -37,7 +37,7 @@ const processFieldsConfig: FieldConfig[] = [
   {
     id: 'outputQty',
     label: 'Output Quantity',
-    type: 'text',
+    type: 'number',
     required: true,
     initialValue: '',
     validation: Yup.string().required('Output Quantity is required'),
@@ -51,17 +51,17 @@ const processFieldsConfig: FieldConfig[] = [
     validation: Yup.string().required('Output UOM is required'),
   },
   {
-    id: 'cycleTimePerUnit',
+    id: 'cycleTimePerUnit_Mins',
     label: 'Cycle Time Per Unit (in Mins)',
-    type: 'text',
+    type: 'number',
     required: true,
     initialValue: '',
     validation: Yup.string().required('Cycle Time Per Unit is required'),
   },
   {
-    id: 'processWastage',
+    id: 'processWastagePercent',
     label: 'Process Wastage (%)',
-    type: 'text',
+    type: 'number',
     required: true,
     initialValue: '',
     validation: Yup.string().required('This Field is required'),
@@ -69,7 +69,7 @@ const processFieldsConfig: FieldConfig[] = [
   {
     id: 'machineId',
     label: 'Machine Id',
-    type: 'text',
+    type: 'number',
     required: true,
     initialValue: '',
     validation: Yup.string().required('Machine Id is required'),
@@ -81,7 +81,16 @@ const processFieldsConfig: FieldConfig[] = [
     required: false,
     options: ['Active', 'InActive'],
     initialValue: 'Active',
-    validation: Yup.string().required('Status is required'),
+    validation: Yup.string(),
+  },
+  {
+    id: 'subContract',
+    label: 'Sub Contract',
+    type: 'select',
+    required: false,
+    options: [true, false],
+    initialValue: 'true',
+    validation: Yup.string(),
   },
 ]
 

@@ -7,6 +7,8 @@ import { DynamicForm } from '@/components/constants/custom/DynamicForm'
 import { ColumnDef } from '@tanstack/react-table'
 import { Button } from '@/components/ui/button'
 import { ArrowUpDown } from 'lucide-react'
+import { apiService } from './../../apiService/apiService'
+import { useEffect, useState } from 'react'
 
 type ItemRow = {
   [K in (typeof itemFieldsConfig)[number] as K['id']]: string
@@ -24,7 +26,34 @@ const columns: ColumnDef<ItemRow>[] = itemFieldsConfig.map(field => ({
 }))
 
 const Items = () => {
-  // Categorized array for form fields
+  const [data, setData] = useState([])
+
+  const fetchDataFromDB = async () => {
+    try {
+      const response = await apiService.post(apiService.v1 + '/item/get-all', {})
+      console.log(response)
+
+      if (response) {
+        setData(response)
+      }
+    } catch (error) {
+      console.log(error)
+    }
+  }
+
+  const createItemInDb = async (values: { [key: string]: string | number | boolean }) => {
+    try {
+      const response = await apiService.post(apiService.v1 + '/item/save', values)
+
+      return response
+    } catch (error) {
+      console.log(error)
+    }
+  }
+
+  useEffect(() => {
+    fetchDataFromDB()
+  }, [])
 
   return (
     <PageWapper>
@@ -38,13 +67,14 @@ const Items = () => {
           <DynamicForm
             title="Item Details"
             fieldConfig={itemFieldsConfig}
-            // onSubmit={handleSubmit}
+            handleSubmit={createItemInDb}
+            fetchDataAfterSubmit={fetchDataFromDB}
             submitButtonText="Save Item"
           />
         </FormModal>
       </PageTitileBar>
 
-      <DataTable data={[]} columns={columns} />
+      <DataTable data={data} columns={columns} />
     </PageWapper>
   )
 }

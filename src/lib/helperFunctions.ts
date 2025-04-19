@@ -2,8 +2,11 @@ import { FieldConfig } from '@/pages/Master/ItemsConfig'
 import * as Yup from 'yup'
 
 // Helper functions to generate initialValues and validationSchema
-export const generateInitialValues = (fieldConfig: FieldConfig[] = []) => {
-  const initialValues: Record<string, string | number | boolean> = { id: '' }
+export const generateInitialValues = (
+  fieldConfig: FieldConfig[] = [],
+  initialFields: string | number | boolean,
+) => {
+  const initialValues: Record<string, string | number | boolean> = { initialFields }
   fieldConfig.forEach(field => {
     initialValues[field.id] = field.initialValue
   })

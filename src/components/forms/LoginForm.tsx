@@ -2,10 +2,13 @@ import { useState } from 'react'
 import * as Yup from 'yup'
 import { ErrorMessage, Field, Form, Formik } from 'formik'
 import { LoginData } from '@/api/services/service.types'
-
 import { Input } from '@/components/ui/input'
 import { Label } from '@/components/ui/label'
 import { Button } from '@/components/ui/button'
+import { apiService } from './../../apiService/apiService'
+import { userAtom } from '../../../jotai/jotaiStore'
+import { useAtom } from 'jotai'
+import { useNavigate } from 'react-router'
 
 // Validation schema
 const SignInSchema = Yup.object().shape({
@@ -17,17 +20,28 @@ const SignInSchema = Yup.object().shape({
 
 const LoginForm = () => {
   const [isSubmitting, setIsSubmitting] = useState(false)
+  const [, setUser] = useAtom(userAtom)
   const initialValues: LoginData = {
     username: '',
     password: '',
   }
+  const navigate = useNavigate()
 
   const handleSubmit = async (values: LoginData) => {
     setIsSubmitting(true)
     try {
-      // TODO: Implement your authentication logic here
-      console.log('Form values:', values)
-      // await authService.login(values.username, values.password)
+      const response = await apiService.post(apiService.v1 + '/login', values)
+
+      if (response) {
+        // Assuming response contains accessToken and refreshToken
+        const { AccessToken, RefreshToken } = response
+
+        localStorage.setItem('accessToken', AccessToken)
+        localStorage.setItem('refreshToken', RefreshToken)
+
+        setUser(response) // from your userAtom
+        navigate('/')
+      }
     } catch (error) {
       console.error('Login error:', error)
     } finally {

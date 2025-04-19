@@ -7,6 +7,8 @@ import processFieldsConfig from './ProcessConfig'
 import { Button } from '@/components/ui/button'
 import { ColumnDef } from '@tanstack/react-table'
 import { ArrowUpDown } from 'lucide-react'
+import { useEffect, useState } from 'react'
+import { apiService } from './../../apiService/apiService'
 
 type ProcessRow = {
   [K in (typeof processFieldsConfig)[number] as K['id']]: string
@@ -24,7 +26,33 @@ const columns: ColumnDef<ProcessRow>[] = processFieldsConfig.map(field => ({
 }))
 
 const Process = () => {
-  // Categorized array for form fields
+  const [data, setData] = useState([])
+
+  const fetchDataFromDB = async () => {
+    try {
+      const response = await apiService.post(apiService.v1 + '/process-master/get-all', {})
+
+      if (response) {
+        setData(response)
+      }
+    } catch (error) {
+      console.log(error)
+    }
+  }
+
+  const createProcessInDb = async (values: { [key: string]: string | number | boolean }) => {
+    try {
+      const response = await apiService.post(apiService.v1 + '/process-master/save', values)
+
+      return response
+    } catch (error) {
+      console.log(error)
+    }
+  }
+
+  useEffect(() => {
+    fetchDataFromDB()
+  }, [])
   return (
     <PageWapper>
       <PageTitileBar title="Process">
@@ -32,17 +60,17 @@ const Process = () => {
           title="Add New Process"
           description="Fill in all the details to add a new process"
           triggerButtonText="Add New Process"
-          // onSubmit={handleSubmit}
         >
           <DynamicForm
             title="Process Details"
             fieldConfig={processFieldsConfig}
-            // onSubmit={handleSubmit}
+            handleSubmit={createProcessInDb}
+            fetchDataAfterSubmit={fetchDataFromDB}
             submitButtonText="Save Process"
           />
         </FormModal>
       </PageTitileBar>
-      <DataTable data={[]} columns={columns} />
+      <DataTable data={data} columns={columns} />
     </PageWapper>
   )
 }

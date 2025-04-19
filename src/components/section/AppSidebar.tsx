@@ -21,7 +21,7 @@ import {
   SidebarMenuSubItem,
 } from '@/components/ui/sidebar'
 import { Collapsible, CollapsibleContent, CollapsibleTrigger } from '../ui/collapsible'
-import { Link } from 'react-router'
+import { Link, useNavigate } from 'react-router'
 import { Button } from '../ui/button'
 
 // Menu items.
@@ -204,6 +204,8 @@ const items = [
 // const location = useLocation()
 
 function AppSidebar() {
+  const navigate = useNavigate()
+
   return (
     <Sidebar>
       <SidebarContent className="p-2 flex flex-col gap-4 border-r border-gray-300">
@@ -248,7 +250,16 @@ function AppSidebar() {
         </SidebarMenu>
       </SidebarContent>
       <SidebarFooter className="">
-        <Button className="border border-[#ff0000] bg-transparent text-[#ff0000]">Log Out</Button>
+        <Button
+          className="border border-[#ff0000] bg-transparent text-[#ff0000]"
+          onClick={() => {
+            localStorage.removeItem('accessToken')
+            localStorage.removeItem('refreshToken')
+            navigate('/signin')
+          }}
+        >
+          Log Out
+        </Button>
       </SidebarFooter>
     </Sidebar>
   )

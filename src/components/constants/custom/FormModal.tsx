@@ -7,6 +7,8 @@ import {
   DialogTitle,
   DialogTrigger,
 } from '@/components/ui/dialog'
+import { useAtom } from 'jotai'
+import { formModalAtom } from '../../../../jotai/jotaiStore'
 
 interface FormModalProps {
   title: string
@@ -16,10 +18,11 @@ interface FormModalProps {
 }
 
 export function FormModal({ title, description, triggerButtonText, children }: FormModalProps) {
+  const [open, setOpen] = useAtom(formModalAtom)
   return (
-    <Dialog>
+    <Dialog open={open} onOpenChange={setOpen}>
       <DialogTrigger asChild>
-        <Button>{triggerButtonText}</Button>
+        <Button onClick={() => setOpen(true)}>{triggerButtonText}</Button>
       </DialogTrigger>
       <DialogContent className="sm:max-w-screen-xl max-h-[90vh] overflow-y-auto">
         <div>
