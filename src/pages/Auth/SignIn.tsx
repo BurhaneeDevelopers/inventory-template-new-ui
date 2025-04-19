@@ -1,9 +1,19 @@
 import { type LoginData } from '@/api/services/service.types'
+import * as Yup from 'yup'
 
 import { Button } from '@/components/ui/button'
 import { Card, CardContent, CardDescription, CardHeader, CardTitle } from '@/components/ui/card'
 import { Input } from '@/components/ui/input'
 import { Label } from '@/components/ui/label'
+
+// Validation schema
+// eslint-disable-next-line @typescript-eslint/no-unused-vars
+const SignInSchema = Yup.object().shape({
+  username: Yup.string().required('Username is required'),
+  password: Yup.string()
+    .required('Password is required')
+    .min(6, 'Password must be at least 6 characters'),
+})
 
 export default function Signin({ className, ...props }: React.ComponentPropsWithoutRef<'div'>) {
   // eslint-disable-next-line @typescript-eslint/no-unused-vars
