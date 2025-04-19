@@ -1,6 +1,6 @@
 import { useState } from 'react'
 import * as Yup from 'yup'
-import { Field, Form, Formik } from 'formik'
+import { ErrorMessage, Field, Form, Formik } from 'formik'
 import { LoginData } from '@/api/services/service.types'
 
 import { Input } from '@/components/ui/input'
@@ -36,7 +36,7 @@ const LoginForm = () => {
   }
   return (
     <Formik initialValues={initialValues} validationSchema={SignInSchema} onSubmit={handleSubmit}>
-      {({ errors, touched }) => (
+      {({ isSubmitting: formSubmitting }) => (
         <Form className="flex flex-col gap-6">
           <div className="grid gap-2">
             <Label htmlFor="username">Username</Label>
@@ -47,9 +47,7 @@ const LoginForm = () => {
               type="username"
               placeholder="m@example.com"
             />
-            {errors.username && touched.username && (
-              <div className="text-sm text-red-500">{errors.username}</div>
-            )}
+            <ErrorMessage name="username" component="div" className="text-sm text-red-500" />
           </div>
 
           <div className="grid gap-2">
@@ -63,12 +61,10 @@ const LoginForm = () => {
               </a>
             </div>
             <Field as={Input} id="password" name="password" type="password" />
-            {errors.password && touched.password && (
-              <div className="text-sm text-red-500">{errors.password}</div>
-            )}
+            <ErrorMessage name="password" component="div" className="text-sm text-red-500" />
           </div>
 
-          <Button type="submit" className="w-full" disabled={isSubmitting}>
+          <Button type="submit" className="w-full" disabled={isSubmitting || formSubmitting}>
             {isSubmitting ? 'Logging in...' : 'Login'}
           </Button>
         </Form>
