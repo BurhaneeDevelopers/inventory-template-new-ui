@@ -13,7 +13,7 @@ const SignInSchema = Yup.object().shape({
   username: Yup.string().required('Username is required'),
   password: Yup.string()
     .required('Password is required')
-    .min(6, 'Password must be at least 6 characters'),
+    .min(4, 'Password must be at least 4 characters'),
 })
 
 export default function Signin({ className, ...props }: React.ComponentPropsWithoutRef<'div'>) {
