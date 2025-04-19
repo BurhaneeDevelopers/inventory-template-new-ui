@@ -1,5 +1,6 @@
-import { type LoginData } from '@/api/services/service.types'
+import { useState } from 'react'
 import * as Yup from 'yup'
+import { type LoginData } from '@/api/services/service.types'
 
 import { Button } from '@/components/ui/button'
 import { Card, CardContent, CardDescription, CardHeader, CardTitle } from '@/components/ui/card'
@@ -17,9 +18,25 @@ const SignInSchema = Yup.object().shape({
 
 export default function Signin({ className, ...props }: React.ComponentPropsWithoutRef<'div'>) {
   // eslint-disable-next-line @typescript-eslint/no-unused-vars
+  const [isSubmitting, setIsSubmitting] = useState(false)
+  // eslint-disable-next-line @typescript-eslint/no-unused-vars
   const initialValues: LoginData = {
     username: '',
     password: '',
+  }
+
+  // eslint-disable-next-line @typescript-eslint/no-unused-vars
+  const handleSubmit = async (values: LoginData) => {
+    setIsSubmitting(true)
+    try {
+      // TODO: Implement your authentication logic here
+      console.log('Form values:', values)
+      // await authService.login(values.email, values.password)
+    } catch (error) {
+      console.error('Login error:', error)
+    } finally {
+      setIsSubmitting(false)
+    }
   }
 
   return (
