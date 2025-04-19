@@ -1,9 +1,17 @@
+import { type LoginData } from '@/api/services/service.types'
+
 import { Button } from '@/components/ui/button'
 import { Card, CardContent, CardDescription, CardHeader, CardTitle } from '@/components/ui/card'
 import { Input } from '@/components/ui/input'
 import { Label } from '@/components/ui/label'
 
 export default function Signin({ className, ...props }: React.ComponentPropsWithoutRef<'div'>) {
+  // eslint-disable-next-line @typescript-eslint/no-unused-vars
+  const initialValues: LoginData = {
+    username: '',
+    password: '',
+  }
+
   return (
     <div
       className={`flex flex-col !h-screen justify-center items-center gap-6 ${className}`}
@@ -14,15 +22,15 @@ export default function Signin({ className, ...props }: React.ComponentPropsWith
           <img src="/logo.png" alt="Bay 53" className="w-44 h-32 translate-x-7" />
           <CardTitle className="text-3xl">Login</CardTitle>
           <CardDescription className="mb-5 text-gray-400">
-            Enter your email below to login to your account
+            Enter your username below to login to your account
           </CardDescription>
         </CardHeader>
         <CardContent className="w-96">
           <form>
             <div className="flex flex-col gap-6">
               <div className="grid gap-2">
-                <Label htmlFor="email">Email</Label>
-                <Input id="email" type="email" placeholder="m@example.com" required />
+                <Label htmlFor="username">Username</Label>
+                <Input id="username" type="text" placeholder="m@example.com" required />
               </div>
               <div className="grid gap-2">
                 <div className="flex items-center">
