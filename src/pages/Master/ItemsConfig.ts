@@ -1,14 +1,22 @@
 import * as Yup from 'yup'
 
-export type FieldType = 'text' | 'number' | 'textarea' | 'select' | 'date' | 'checkbox' | 'file'
+export type FieldType =
+  | 'text'
+  | 'number'
+  | 'textarea'
+  | 'select'
+  | 'date'
+  | 'checkbox'
+  | 'file'
+  | 'object'
 
 export interface FieldConfig {
   id: string
   label: string
   type: FieldType
   required: boolean
-  options?: string[] | boolean[]
-  initialValue: string | number | boolean
+  options?: string[] | (() => Promise<string[]>)
+  initialValue: string | number | boolean | object
   validation: Yup.AnySchema
   readOnly?: boolean
 }
@@ -153,7 +161,7 @@ const itemFieldsConfig: FieldConfig[] = [
   {
     id: 'shelfLife',
     label: 'Shelf Life',
-    type: 'text',
+    type: 'number',
     required: false,
     initialValue: '',
     validation: Yup.string(),
@@ -167,7 +175,7 @@ const itemFieldsConfig: FieldConfig[] = [
     validation: Yup.string(),
   },
   {
-    id: 'barcodeQrCode',
+    id: 'barcodeOrQRCode',
     label: 'Barcode/QR Code',
     type: 'text',
     required: false,

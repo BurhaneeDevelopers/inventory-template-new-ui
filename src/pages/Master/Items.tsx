@@ -7,7 +7,7 @@ import { DynamicForm } from '@/components/constants/custom/DynamicForm'
 import { ColumnDef } from '@tanstack/react-table'
 import { Button } from '@/components/ui/button'
 import { ArrowUpDown } from 'lucide-react'
-import { apiService } from './../../apiService/apiService'
+import { apiService } from '../../apiService/apiService'
 import { useEffect, useState } from 'react'
 
 type ItemRow = {

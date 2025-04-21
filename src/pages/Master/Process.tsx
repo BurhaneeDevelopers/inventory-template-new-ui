@@ -8,7 +8,7 @@ import { Button } from '@/components/ui/button'
 import { ColumnDef } from '@tanstack/react-table'
 import { ArrowUpDown } from 'lucide-react'
 import { useEffect, useState } from 'react'
-import { apiService } from './../../apiService/apiService'
+import { apiService } from '../../apiService/apiService'
 
 type ProcessRow = {
   [K in (typeof processFieldsConfig)[number] as K['id']]: string

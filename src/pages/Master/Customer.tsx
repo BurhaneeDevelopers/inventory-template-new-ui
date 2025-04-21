@@ -8,7 +8,7 @@ import { Button } from '@/components/ui/button'
 import { ArrowUpDown } from 'lucide-react'
 import { ColumnDef } from '@tanstack/react-table'
 import { useEffect, useState } from 'react'
-import { apiService } from './../../apiService/apiService'
+import { apiService } from '../../apiService/apiService'
 
 type CustomerRow = {
   [K in (typeof customerFieldsConfig)[number] as K['id']]: string

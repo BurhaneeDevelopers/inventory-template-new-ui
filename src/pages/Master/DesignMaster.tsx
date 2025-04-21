@@ -7,6 +7,8 @@ import designMasterFieldsConfig from './DesignMasterConfig'
 import { ColumnDef } from '@tanstack/react-table'
 import { Button } from '@/components/ui/button'
 import { ArrowUpDown } from 'lucide-react'
+import { apiService } from '@/apiService/apiService'
+import { useEffect, useState } from 'react'
 
 type DesignRow = {
   [K in (typeof designMasterFieldsConfig)[number] as K['id']]: string
@@ -24,7 +26,33 @@ const columns: ColumnDef<DesignRow>[] = designMasterFieldsConfig.map(field => ({
 }))
 
 const DesignMaster = () => {
-  // Categorized array for form fields
+  const [data, setData] = useState([])
+
+  const fetchDataFromDB = async () => {
+    try {
+      const response = await apiService.post(apiService.v1 + '/design-master/get-all', {})
+
+      if (response) {
+        setData(response)
+      }
+    } catch (error) {
+      console.log(error)
+    }
+  }
+
+  const createDesignInDb = async (values: { [key: string]: string | number | boolean }) => {
+    try {
+      const response = await apiService.post(apiService.v1 + '/design-master/save', values)
+
+      return response
+    } catch (error) {
+      console.log(error)
+    }
+  }
+
+  useEffect(() => {
+    fetchDataFromDB()
+  }, [])
   return (
     <PageWapper>
       <PageTitileBar title="Design Master">
@@ -37,12 +65,13 @@ const DesignMaster = () => {
           <DynamicForm
             title="Design Details"
             fieldConfig={designMasterFieldsConfig}
-            // onSubmit={handleSubmit}
+            handleSubmit={createDesignInDb}
+            fetchDataAfterSubmit={fetchDataFromDB}
             submitButtonText="Save Design"
           />
         </FormModal>
       </PageTitileBar>
-      <DataTable data={[]} columns={columns} />
+      <DataTable data={data} columns={columns} />
     </PageWapper>
   )
 }

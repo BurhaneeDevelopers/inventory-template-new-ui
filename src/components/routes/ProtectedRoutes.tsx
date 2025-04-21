@@ -15,13 +15,13 @@ import BOM from '@/pages/Master/BOM'
 import Customer from '@/pages/Master/Customer'
 import Supplier from '@/pages/Master/Supplier'
 import Creation from '@/pages/Sales-Enquiry/Creation'
+import DesignCreation from '@/pages/Sales-Enquiry/DesignCreation'
 // import { apiService } from './../../apiService/apiService';
 
 // Dashboard
 const Dashboard = () => <Reports />
 
 // Sales Enquiry pages
-const SalesEnquiryDesignCreation = () => <PlaceholderPage title="Design Creation" />
 const SalesEnquiryQuotation = () => <PlaceholderPage title="Quotation" />
 
 // Procurement pages
@@ -99,10 +99,7 @@ const ProtectedRoutes = () => {
               {/* Sales Enquiry module */}
               <Route path="/sales-enquiry" element={<PlaceholderPage title="Sales Enquiry" />} />
               <Route path="/sales-enquiry/creation" element={<Creation />} />
-              <Route
-                path="/sales-enquiry/design-creation"
-                element={<SalesEnquiryDesignCreation />}
-              />
+              <Route path="/sales-enquiry/design-creation" element={<DesignCreation />} />
               <Route path="/sales-enquiry/quotation" element={<SalesEnquiryQuotation />} />
 
               {/* Procurement module */}

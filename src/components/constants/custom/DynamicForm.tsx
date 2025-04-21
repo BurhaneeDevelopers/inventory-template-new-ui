@@ -20,9 +20,9 @@ import { useAtom } from 'jotai'
 interface DynamicFormProps {
   title: string
   fieldConfig: FieldConfig[]
-  onSubmit?: (values: { [key: string]: string | number | boolean }) => void
-  handleSubmit: (values: { [key: string]: string | number | boolean }) => void
-  fetchDataAfterSubmit: () => void
+  onSubmit?: (values: { [key: string]: string | number | boolean }) => unknown
+  handleSubmit?: (values: { [key: string]: string | number | boolean }) => Promise<unknown>
+  fetchDataAfterSubmit?: () => void
   initialFields?: { [key: string]: string | number | boolean | undefined }
   submitButtonText?: string
 }
@@ -33,22 +33,35 @@ export function DynamicForm({
   onSubmit,
   handleSubmit,
   fetchDataAfterSubmit,
-  initialFields,
+  // initialFields,
   submitButtonText = 'Submit',
 }: DynamicFormProps) {
   // Formik setup with initialValues and validationSchema
   const [, setOpen] = useAtom(formModalAtom)
   const formik = useFormik({
-    initialValues: generateInitialValues(fieldConfig, initialFields),
+    initialValues: generateInitialValues(fieldConfig),
     validationSchema: generateValidationSchema(fieldConfig),
     onSubmit: async values => {
       if (onSubmit) {
         onSubmit(values)
       } else if (handleSubmit) {
-        handleSubmit(values)
-        fetchDataAfterSubmit()
-        toast('Task Done Successfully')
-        setOpen(false)
+        // IF VALUE IS YES THEN IT SHOULD PASS TRUE BOOLEAN VICE VERCA
+        const res = await handleSubmit(
+          Object.fromEntries(
+            Object.entries(values).map(([k, v]) => [
+              k,
+              v === 'Yes' ? true : v === 'No' ? false : v,
+            ]),
+          ),
+        )
+
+        if (res) {
+          if (fetchDataAfterSubmit) {
+            fetchDataAfterSubmit()
+          }
+          toast('Task Done Successfully')
+          setOpen(false)
+        }
       }
     },
   })
@@ -135,7 +148,7 @@ export function DynamicForm({
                   <SelectContent>
                     {field.options.map(option => (
                       <SelectItem key={option} value={option}>
-                        {option === true ? 'Yes' : option === false ? 'No' : option}
+                        {option}
                       </SelectItem>
                     ))}
                   </SelectContent>

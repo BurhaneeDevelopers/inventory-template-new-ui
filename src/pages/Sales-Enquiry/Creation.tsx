@@ -82,8 +82,10 @@ const Creation = () => {
 
       {activeTab === 'creation' && (
         <div className="flex flex-col gap-7">
-          <div className="flex flex-col justify-between items-center gap-4 bg-white p-4 rounded-lg flex-grow">
-            <h1 className="text-2xl font-medium text-zinc-700 uppercase">Transaction Master</h1>
+          <div className="flex flex-col justify-between gap-4 bg-white p-4 rounded-lg flex-grow">
+            <h1 className="text-2xl font-medium text-zinc-700 text-center uppercase">
+              Creation Master
+            </h1>
 
             <DynamicForm
               title="Enquiry Creation"
@@ -93,8 +95,10 @@ const Creation = () => {
             />
           </div>
 
-          <div className="flex flex-col justify-between items-center gap-4 bg-white p-4 rounded-lg flex-grow">
-            <h1 className="text-2xl font-medium text-zinc-700 uppercase">Transaction Details</h1>
+          <div className="flex flex-col justify-between gap-4 bg-white p-4 rounded-lg flex-grow">
+            <h1 className="text-2xl font-medium text-zinc-700 text-center uppercase">
+              Creation Details
+            </h1>
 
             <DynamicForm
               title="Process Details"

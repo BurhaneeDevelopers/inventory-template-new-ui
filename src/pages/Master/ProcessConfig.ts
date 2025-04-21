@@ -88,8 +88,8 @@ const processFieldsConfig: FieldConfig[] = [
     label: 'Sub Contract',
     type: 'select',
     required: false,
-    options: [true, false],
-    initialValue: 'true',
+    options: ['Yes', 'No'],
+    initialValue: 'Yes',
     validation: Yup.string(),
   },
 ]

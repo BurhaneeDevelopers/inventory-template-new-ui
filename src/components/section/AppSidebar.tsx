@@ -11,7 +11,6 @@ import {
 import {
   Sidebar,
   SidebarContent,
-  SidebarFooter,
   SidebarHeader,
   SidebarMenu,
   SidebarMenuButton,
@@ -21,8 +20,7 @@ import {
   SidebarMenuSubItem,
 } from '@/components/ui/sidebar'
 import { Collapsible, CollapsibleContent, CollapsibleTrigger } from '../ui/collapsible'
-import { Link, useNavigate } from 'react-router'
-import { Button } from '../ui/button'
+import { Link } from 'react-router'
 
 // Menu items.
 const items = [
@@ -204,7 +202,7 @@ const items = [
 // const location = useLocation()
 
 function AppSidebar() {
-  const navigate = useNavigate()
+  // const navigate = useNavigate()
 
   return (
     <Sidebar>
@@ -249,7 +247,7 @@ function AppSidebar() {
           ))}
         </SidebarMenu>
       </SidebarContent>
-      <SidebarFooter className="">
+      {/* <SidebarFooter className="">
         <Button
           className="border border-[#ff0000] bg-transparent text-[#ff0000]"
           onClick={() => {
@@ -260,7 +258,7 @@ function AppSidebar() {
         >
           Log Out
         </Button>
-      </SidebarFooter>
+      </SidebarFooter> */}
     </Sidebar>
   )
 }

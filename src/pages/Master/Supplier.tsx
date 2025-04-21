@@ -7,6 +7,8 @@ import supplierFieldsConfig from './SupplierConfig'
 import { Button } from '@/components/ui/button'
 import { ArrowUpDown } from 'lucide-react'
 import { ColumnDef } from '@tanstack/react-table'
+import { apiService } from '@/apiService/apiService'
+import { useEffect, useState } from 'react'
 
 type SupplierRow = {
   [K in (typeof supplierFieldsConfig)[number] as K['id']]: string
@@ -24,7 +26,33 @@ const columns: ColumnDef<SupplierRow>[] = supplierFieldsConfig.map(field => ({
 }))
 
 const Supplier = () => {
-  // Categorized array for form fields
+  const [data, setData] = useState([])
+
+  const fetchDataFromDB = async () => {
+    try {
+      const response = await apiService.post(apiService.v1 + '/supplier-master/get-all', {})
+
+      if (response) {
+        setData(response)
+      }
+    } catch (error) {
+      console.log(error)
+    }
+  }
+
+  const createSupplierInDb = async (values: { [key: string]: string | number | boolean }) => {
+    try {
+      const response = await apiService.post(apiService.v1 + '/supplier-master/save', values)
+
+      return response
+    } catch (error) {
+      console.log(error)
+    }
+  }
+
+  useEffect(() => {
+    fetchDataFromDB()
+  }, [])
 
   return (
     <PageWapper>
@@ -38,12 +66,13 @@ const Supplier = () => {
           <DynamicForm
             title="Supplier Details"
             fieldConfig={supplierFieldsConfig}
-            // onSubmit={handleSubmit}
+            handleSubmit={createSupplierInDb}
+            fetchDataAfterSubmit={fetchDataFromDB}
             submitButtonText="Save Supplier"
           />
         </FormModal>
       </PageTitileBar>
-      <DataTable data={[]} columns={columns} />
+      <DataTable data={data} columns={columns} />
     </PageWapper>
   )
 }

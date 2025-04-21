@@ -7,8 +7,8 @@ import machineFieldsConfig from './MachineConfig'
 import { ColumnDef } from '@tanstack/react-table'
 import { Button } from '@/components/ui/button'
 import { ArrowUpDown } from 'lucide-react'
-import { apiService } from './../../apiService/apiService'
 import { useEffect, useState } from 'react'
+import { apiService } from '../../apiService/apiService'
 
 type MachineRow = {
   [K in (typeof machineFieldsConfig)[number] as K['id']]: string

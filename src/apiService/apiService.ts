@@ -15,7 +15,7 @@ const apiClient = axios.create({
 // Request interceptor (optional, e.g., add token)
 apiClient.interceptors.request.use(
   async config => {
-    if (!config.url.includes('/login') && !config.url.includes('/register')) {
+    if (!config.url?.includes('/login') && !config.url?.includes('/register')) {
       //   const sessionInfo = localStorage.getItem('session-info')
       try {
         // const parsedInfo = sessionInfo ? JSON.parse(sessionInfo) : {}
@@ -43,11 +43,16 @@ apiClient.interceptors.response.use(
   },
 )
 
-// Unified API methods
 export const apiService = {
-  get: (endpoint, params = {}) => apiClient.get(endpoint, { params }),
-  post: (endpoint, data, headers = {}) => apiClient.post(endpoint, data, { headers }),
-  put: (endpoint, data) => apiClient.put(endpoint, data),
-  delete: endpoint => apiClient.delete(endpoint),
+  get: (endpoint: string, params: Record<string, unknown> = {}) =>
+    apiClient.get(endpoint, { params }),
+
+  post: (endpoint: string, data: unknown, headers: Record<string, unknown> = {}) =>
+    apiClient.post(endpoint, data, { headers }),
+
+  put: (endpoint: string, data: unknown) => apiClient.put(endpoint, data),
+
+  delete: (endpoint: string) => apiClient.delete(endpoint),
+
   v1: API_V1,
 }
