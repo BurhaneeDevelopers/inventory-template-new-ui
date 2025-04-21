@@ -1,7 +1,7 @@
 import axios from 'axios'
 
 // Base configuration
-const API_BASE_URL = 'http://52.172.96.142:11053/api'
+const API_BASE_URL = 'https://erpakapi.bay53.com/api'
 const API_V1 = '/1'
 
 const apiClient = axios.create({
