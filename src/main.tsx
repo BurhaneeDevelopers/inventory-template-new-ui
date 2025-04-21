@@ -1,6 +1,8 @@
 /** eslint-disable react-refresh/only-export-components */
 import { StrictMode } from 'react'
 import { createRoot } from 'react-dom/client'
+import { QueryClient, QueryClientProvider } from '@tanstack/react-query'
+const queryClient = new QueryClient()
 import { BrowserRouter, Route, Routes } from 'react-router'
 
 import './index.css'
@@ -90,84 +92,101 @@ const SalesReturn = () => <PlaceholderPage title="Sales Return" />
 
 createRoot(document.getElementById('root')!).render(
   <StrictMode>
-    <BrowserRouter>
-      <Routes>
-        {/* Public routes */}
-        <Route path="/signin" element={<SignIn />} />
+    <QueryClientProvider client={queryClient}>
+      <BrowserRouter>
+        <Routes>
+          {/* Public routes */}
+          <Route path="/signin" element={<SignIn />} />
 
-        {/* Protected routes */}
-        <Route element={<ProtectedRoute />}>
-          <Route element={<Layout />}>
-            {/* Dashboard */}
-            <Route path="/" element={<Dashboard />} />
+          {/* Protected routes */}
+          <Route element={<ProtectedRoute />}>
+            <Route element={<Layout />}>
+              {/* Dashboard */}
+              <Route path="/" element={<Dashboard />} />
 
-            {/* Master module */}
-            <Route path="/master" element={<PlaceholderPage title="Master" />} />
-            <Route path="/master/items" element={<Items />} />
-            <Route path="/master/machine" element={<Machine />} />
-            <Route path="/master/process" element={<Process />} />
-            <Route path="/master/users-roles" element={<Users />} />
-            <Route path="/master/design-master" element={<DesignMaster />} />
-            <Route path="/master/bom" element={<BOM />} />
-            <Route path="/master/customer" element={<Customer />} />
-            <Route path="/master/supplier" element={<Supplier />} />
+              {/* Master module */}
+              <Route path="/master" element={<PlaceholderPage title="Master" />} />
+              <Route path="/master/items" element={<Items />} />
+              <Route path="/master/machine" element={<Machine />} />
+              <Route path="/master/process" element={<Process />} />
+              <Route path="/master/users-roles" element={<Users />} />
+              <Route path="/master/design-master" element={<DesignMaster />} />
+              <Route path="/master/bom" element={<BOM />} />
+              <Route path="/master/customer" element={<Customer />} />
+              <Route path="/master/supplier" element={<Supplier />} />
 
-            {/* Sales Enquiry module */}
-            <Route path="/sales-enquiry" element={<PlaceholderPage title="Sales Enquiry" />} />
-            <Route path="/sales-enquiry/creation" element={<Creation />} />
-            <Route path="/sales-enquiry/design-creation" element={<SalesEnquiryDesignCreation />} />
-            <Route path="/sales-enquiry/quotation" element={<SalesEnquiryQuotation />} />
+              {/* Sales Enquiry module */}
+              <Route path="/sales-enquiry" element={<PlaceholderPage title="Sales Enquiry" />} />
+              <Route path="/sales-enquiry/creation" element={<Creation />} />
+              <Route
+                path="/sales-enquiry/design-creation"
+                element={<SalesEnquiryDesignCreation />}
+              />
+              <Route path="/sales-enquiry/quotation" element={<SalesEnquiryQuotation />} />
 
-            {/* Procurement module */}
-            <Route path="/procurement" element={<PlaceholderPage title="Procurement" />} />
-            <Route path="/procurement/po-generation" element={<ProcurementPOGeneration />} />
-            <Route
-              path="/procurement/sales-order-generation"
-              element={<ProcurementSalesOrderGeneration />}
-            />
-            <Route path="/procurement/check-inventory" element={<ProcurementCheckInventory />} />
-            <Route path="/procurement/grn" element={<ProcurementGRN />} />
-            <Route path="/procurement/purchase-invoice" element={<ProcurementPurchaseInvoice />} />
+              {/* Procurement module */}
+              <Route path="/procurement" element={<PlaceholderPage title="Procurement" />} />
+              <Route path="/procurement/po-generation" element={<ProcurementPOGeneration />} />
+              <Route
+                path="/procurement/sales-order-generation"
+                element={<ProcurementSalesOrderGeneration />}
+              />
+              <Route path="/procurement/check-inventory" element={<ProcurementCheckInventory />} />
+              <Route path="/procurement/grn" element={<ProcurementGRN />} />
+              <Route
+                path="/procurement/purchase-invoice"
+                element={<ProcurementPurchaseInvoice />}
+              />
 
-            {/* In-house Production module */}
-            <Route
-              path="/in-house-production"
-              element={<PlaceholderPage title="In House Production" />}
-            />
-            <Route path="/in-house-production/internal-order" element={<InHouseInternalOrder />} />
-            <Route path="/in-house-production/material-issue" element={<InHouseMaterialIssue />} />
-            <Route
-              path="/in-house-production/material-requisition"
-              element={<InHouseMaterialRequisition />}
-            />
-            <Route path="/in-house-production/job-card" element={<InHouseJobCard />} />
-            <Route
-              path="/in-house-production/production-slip"
-              element={<InHouseProductionSlip />}
-            />
+              {/* In-house Production module */}
+              <Route
+                path="/in-house-production"
+                element={<PlaceholderPage title="In House Production" />}
+              />
+              <Route
+                path="/in-house-production/internal-order"
+                element={<InHouseInternalOrder />}
+              />
+              <Route
+                path="/in-house-production/material-issue"
+                element={<InHouseMaterialIssue />}
+              />
+              <Route
+                path="/in-house-production/material-requisition"
+                element={<InHouseMaterialRequisition />}
+              />
+              <Route path="/in-house-production/job-card" element={<InHouseJobCard />} />
+              <Route
+                path="/in-house-production/production-slip"
+                element={<InHouseProductionSlip />}
+              />
 
-            {/* External Production module */}
-            <Route
-              path="/external-production"
-              element={<PlaceholderPage title="External Production" />}
-            />
-            <Route path="/external-production/create-job-work" element={<ExternalJobWork />} />
-            <Route path="/external-production/raw-materials" element={<ExternalRawMaterials />} />
-            <Route path="/external-production/finished-goods" element={<ExternalFinishedGoods />} />
-            <Route
-              path="/external-production/job-work-invoice"
-              element={<ExternalJobWorkInvoice />}
-            />
+              {/* External Production module */}
+              <Route
+                path="/external-production"
+                element={<PlaceholderPage title="External Production" />}
+              />
+              <Route path="/external-production/create-job-work" element={<ExternalJobWork />} />
+              <Route path="/external-production/raw-materials" element={<ExternalRawMaterials />} />
+              <Route
+                path="/external-production/finished-goods"
+                element={<ExternalFinishedGoods />}
+              />
+              <Route
+                path="/external-production/job-work-invoice"
+                element={<ExternalJobWorkInvoice />}
+              />
 
-            {/* Sales module */}
-            <Route path="/sales" element={<PlaceholderPage title="Sales" />} />
-            <Route path="/sales/packing-slip" element={<SalesPackingSlip />} />
-            <Route path="/sales/sales-challan" element={<SalesChallan />} />
-            <Route path="/sales/sales-invoice" element={<SalesInvoice />} />
-            <Route path="/sales/sales-return" element={<SalesReturn />} />
+              {/* Sales module */}
+              <Route path="/sales" element={<PlaceholderPage title="Sales" />} />
+              <Route path="/sales/packing-slip" element={<SalesPackingSlip />} />
+              <Route path="/sales/sales-challan" element={<SalesChallan />} />
+              <Route path="/sales/sales-invoice" element={<SalesInvoice />} />
+              <Route path="/sales/sales-return" element={<SalesReturn />} />
+            </Route>
           </Route>
-        </Route>
-      </Routes>
-    </BrowserRouter>
+        </Routes>
+      </BrowserRouter>
+    </QueryClientProvider>
   </StrictMode>,
 )
