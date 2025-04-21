@@ -5,7 +5,7 @@ import { Button } from '@/components/ui/button'
 import { ColumnDef } from '@tanstack/react-table'
 import { ArrowUpDown, Edit, Trash2 } from 'lucide-react'
 import SubTabs from '@/components/constants/SubTabs'
-import { useEffect, useState } from 'react'
+import { useState } from 'react'
 import {
   Table,
   TableBody,
@@ -14,8 +14,7 @@ import {
   TableHeader,
   TableRow,
 } from '@/components/ui/table'
-import bomFieldsConfig, { bomDetailFieldsConfig } from './BOMConfig'
-import { apiService } from '@/apiService/apiService'
+import { SODetailsConfig, SOMasterConfig } from './SOConfig'
 
 interface Section {
   title: string
@@ -36,11 +35,11 @@ type Item = {
   LotNumber?: string
 }
 
-type BOMRow = {
-  [K in (typeof bomFieldsConfig)[number] as K['id']]: string
+type SORow = {
+  [K in (typeof SOMasterConfig)[number] as K['id']]: string
 }
 
-const columns: ColumnDef<BOMRow>[] = bomFieldsConfig.map(field => ({
+const columns: ColumnDef<SORow>[] = SOMasterConfig.map(field => ({
   accessorKey: field.id,
   header: ({ column }) => (
     <Button variant="ghost" onClick={() => column.toggleSorting(column.getIsSorted() === 'asc')}>
@@ -51,10 +50,10 @@ const columns: ColumnDef<BOMRow>[] = bomFieldsConfig.map(field => ({
   cell: ({ row }) => <div>{row.getValue(field.id)}</div>,
 }))
 
-const Creation = () => {
+const SOGeneration = () => {
   const sections: Section[] = [
-    { title: 'BOM Listing', key: 'listing' },
-    { title: 'BOM Creation', key: 'creation' },
+    { title: 'Purchase Order Listing', key: 'listing' },
+    { title: 'Purchase Order Creation', key: 'creation' },
   ]
 
   const [activeTab, setActiveTab] = useState<string>('listing')
@@ -68,76 +67,40 @@ const Creation = () => {
     setItems(prev => prev.filter((_, i) => i !== index))
   }
 
-  const totalQuantity = items.reduce((sum, item) => sum + Number(item.inputQty || 0), 0)
-
-  const [data, setData] = useState([])
-
-  const fetchDataFromDB = async () => {
-    try {
-      const response = await apiService.post(apiService.v1 + '/bom-master/get-all', {})
-
-      if (response) {
-        setData(response)
-      }
-    } catch (error) {
-      console.log(error)
-    }
-  }
-
-  const createBOMInDb = async (
-    values: { [key: string]: string | number | boolean } & { detail: Item[] },
-  ) => {
-    try {
-      const payload = {
-        ...values,
-        detail: items,
-      }
-      const response = await apiService.post(apiService.v1 + '/bom-master/save', payload)
-      setActiveTab('listing')
-      return response
-    } catch (error) {
-      console.log(error)
-    }
-  }
-
-  useEffect(() => {
-    fetchDataFromDB()
-  }, [])
+  const totalQuantity = items.reduce((sum, item) => sum + Number(item.Quantity || 0), 0)
+  const totalPrice = items.reduce((sum, item) => sum + Number(item.TotalPrice || 0), 0)
   return (
     <PageWapper className="!bg-transparent !shadow-none">
       <SubTabs sections={sections} activeTab={activeTab} onTabChange={setActiveTab} />
       {activeTab === 'listing' && (
         <div className="flex flex-col gap-4 bg-white p-4 rounded-lg h-fit">
-          <h1 className="text-2xl font-medium text-zinc-700 uppercase">BOM</h1>
+          <h1 className="text-2xl font-medium text-zinc-700 uppercase">
+            Purchase Order Generation
+          </h1>
 
-          <DataTable data={data} columns={columns} />
+          <DataTable data={[]} columns={columns} />
         </div>
       )}
 
       {activeTab === 'creation' && (
         <div className="flex flex-col gap-7">
           <div className="flex flex-col justify-between gap-4 bg-white p-4 rounded-lg flex-grow">
-            <h1 className="text-2xl font-medium text-zinc-700 uppercase text-center">
-              Add new BOM
-            </h1>
+            <h1 className="text-2xl font-medium text-zinc-700 text-center uppercase">Create SO</h1>
 
             <DynamicForm
-              title="BOM Creation"
-              fieldConfig={bomFieldsConfig}
-              handleSubmit={createBOMInDb}
-              fetchDataAfterSubmit={fetchDataFromDB}
-              submitButtonText="Save BOM"
+              title="Enquiry Creation"
+              fieldConfig={SOMasterConfig}
+              // onSubmit={handleSubmit}
+              submitButtonText="Save Process"
             />
           </div>
 
           <div className="flex flex-col justify-between gap-4 bg-white p-4 rounded-lg flex-grow">
-            <h1 className="text-2xl font-medium text-zinc-700 uppercase text-center">
-              BOM Details
-            </h1>
+            <h1 className="text-2xl font-medium text-zinc-700 text-center uppercase">SO Details</h1>
 
             <DynamicForm
               title="Process Details"
-              fieldConfig={bomDetailFieldsConfig}
+              fieldConfig={SODetailsConfig}
               onSubmit={handleAddItem}
               submitButtonText="Add Item"
             />
@@ -150,7 +113,7 @@ const Creation = () => {
                 <Table>
                   <TableHeader>
                     <TableRow>
-                      {bomDetailFieldsConfig.map(field => (
+                      {SODetailsConfig.map(field => (
                         <TableHead key={field.id}>{field.label}</TableHead>
                       ))}
                       {/* <TableHead>Edit</TableHead> */}
@@ -160,7 +123,7 @@ const Creation = () => {
                   <TableBody>
                     {items.map((item, index) => (
                       <TableRow key={index}>
-                        {bomDetailFieldsConfig.map(field => (
+                        {SODetailsConfig.map(field => (
                           <TableCell key={field.id}>{item[field.id]}</TableCell>
                         ))}
                         <TableCell className="space-x-4">
@@ -187,10 +150,10 @@ const Creation = () => {
                 <h4 className="text-base">Total QTY:</h4>
                 <h3 className="text-2xl font-medium">{totalQuantity}</h3>
               </div>
-              {/* <div className="flex items-end gap-2">
+              <div className="flex items-end gap-2">
                 <h4 className="text-base">Total Price:</h4>
                 <h3 className="text-2xl font-medium">{totalPrice}</h3>
-              </div> */}
+              </div>
             </div>
           </div>
         </div>
@@ -199,4 +162,4 @@ const Creation = () => {
   )
 }
 
-export default Creation
+export default SOGeneration

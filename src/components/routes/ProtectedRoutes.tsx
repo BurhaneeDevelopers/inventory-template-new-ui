@@ -16,20 +16,16 @@ import Customer from '@/pages/Master/Customer'
 import Supplier from '@/pages/Master/Supplier'
 import Creation from '@/pages/Sales-Enquiry/Creation'
 import DesignCreation from '@/pages/Sales-Enquiry/DesignCreation'
+import Quotation from '@/pages/Sales-Enquiry/Quotation'
+import POGeneration from '@/pages/Procurement/POGeneration'
+import SOGeneration from '@/pages/Procurement/SOGeneration'
+import CheckInventory from '@/pages/Procurement/CheckInventory'
+import GRN from '@/pages/Procurement/GRN'
+// import PurchaseInvoice from '@/pages/Procurement/PurchaseInvoice'
 // import { apiService } from './../../apiService/apiService';
 
 // Dashboard
 const Dashboard = () => <Reports />
-
-// Sales Enquiry pages
-const SalesEnquiryQuotation = () => <PlaceholderPage title="Quotation" />
-
-// Procurement pages
-const ProcurementPOGeneration = () => <PlaceholderPage title="Purchase Order Generation" />
-const ProcurementSalesOrderGeneration = () => <PlaceholderPage title="Sales Order Generation" />
-const ProcurementCheckInventory = () => <PlaceholderPage title="Check Inventory" />
-const ProcurementGRN = () => <PlaceholderPage title="GRN" />
-const ProcurementPurchaseInvoice = () => <PlaceholderPage title="Purchase Invoice" />
 
 // In House Production pages
 const InHouseInternalOrder = () => <PlaceholderPage title="Internal Order Generation" />
@@ -100,21 +96,18 @@ const ProtectedRoutes = () => {
               <Route path="/sales-enquiry" element={<PlaceholderPage title="Sales Enquiry" />} />
               <Route path="/sales-enquiry/creation" element={<Creation />} />
               <Route path="/sales-enquiry/design-creation" element={<DesignCreation />} />
-              <Route path="/sales-enquiry/quotation" element={<SalesEnquiryQuotation />} />
+              <Route path="/sales-enquiry/quotation" element={<Quotation />} />
 
               {/* Procurement module */}
               <Route path="/procurement" element={<PlaceholderPage title="Procurement" />} />
-              <Route path="/procurement/po-generation" element={<ProcurementPOGeneration />} />
-              <Route
-                path="/procurement/sales-order-generation"
-                element={<ProcurementSalesOrderGeneration />}
-              />
-              <Route path="/procurement/check-inventory" element={<ProcurementCheckInventory />} />
-              <Route path="/procurement/grn" element={<ProcurementGRN />} />
-              <Route
+              <Route path="/procurement/po-generation" element={<POGeneration />} />
+              <Route path="/procurement/sales-order-generation" element={<SOGeneration />} />
+              <Route path="/procurement/check-inventory" element={<CheckInventory />} />
+              <Route path="/procurement/grn" element={<GRN />} />
+              {/* <Route
                 path="/procurement/purchase-invoice"
-                element={<ProcurementPurchaseInvoice />}
-              />
+                element={<PurchaseInvoice />}
+              /> */}
 
               {/* In-house Production module */}
               <Route

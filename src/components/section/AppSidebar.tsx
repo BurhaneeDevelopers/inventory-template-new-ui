@@ -95,10 +95,10 @@ const items = [
         title: 'Sales Order Generation',
         url: '/procurement/sales-order-generation',
       },
-      {
-        title: 'Check Inventory',
-        url: '/procurement/check-inventory',
-      },
+      // {
+      //   title: 'Check Inventory',
+      //   url: '/procurement/check-inventory',
+      // },
       {
         title: 'GRN',
         url: '/procurement/grn',
