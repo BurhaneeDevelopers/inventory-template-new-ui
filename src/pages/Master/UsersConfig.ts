@@ -11,6 +11,15 @@ const usersFieldsConfig: FieldConfig[] = [
     validation: Yup.string().required('Name is required'),
   },
   {
+    id: 'role',
+    label: 'Role',
+    type: 'select',
+    required: true,
+    initialValue: 1,
+    options: [],
+    validation: Yup.string().required('Role is required'),
+  },
+  {
     id: 'department',
     label: 'Department',
     type: 'text',
@@ -27,53 +36,53 @@ const usersFieldsConfig: FieldConfig[] = [
     validation: Yup.string().required('Designation is required'),
   },
   {
-    id: 'contactInformation',
-    label: 'Contact Information',
+    id: 'contactPhoneNumber',
+    label: 'Contact Phone Number',
+    type: 'text',
+    required: false,
+    initialValue: '',
+    validation: Yup.string()
+  },
+  {
+    id: 'contactEmail',
+    label: 'Contact Email',
     type: 'text',
     required: true,
     initialValue: '',
-    validation: Yup.string().required('Contact Info is required'),
+    validation: Yup.string().required('Email is required'),
   },
   {
     id: 'address',
     label: 'Address',
     type: 'text',
-    required: true,
+    required: false,
     initialValue: '',
-    validation: Yup.string().required('Address is required'),
+    validation: Yup.string()
   },
   {
-    id: 'dob',
+    id: 'dateOfBirth',
     label: 'DOB',
     type: 'date',
-    required: true,
+    required: false,
     initialValue: '',
-    validation: Yup.date().required('DOB is required'),
+    validation: Yup.date()
   },
   {
     id: 'dateOfJoining',
     label: 'Date of Joining',
     type: 'date',
-    required: true,
+    required: false,
     initialValue: '',
-    validation: Yup.date().required('This field is required'),
+    validation: Yup.date()
   },
-  {
-    id: 'userId',
-    label: 'User Id',
-    type: 'text',
-    required: true,
-    initialValue: '',
-    validation: Yup.string().required("User's Id is required"),
-  },
-  {
-    id: 'userPwd',
-    label: 'User Password',
-    type: 'text',
-    required: true,
-    initialValue: '',
-    validation: Yup.string().required("User's Password is required"),
-  },
+  // {
+  //   id: 'userId',
+  //   label: 'User Id',
+  //   type: 'text',
+  //   required: true,
+  //   initialValue: '',
+  //   validation: Yup.string().required("User's Id is required"),
+  // },
   {
     id: 'emergencyContact',
     label: 'Emergency Contact',
@@ -86,9 +95,9 @@ const usersFieldsConfig: FieldConfig[] = [
     id: 'dateOfLeaving',
     label: 'Date of Leaving',
     type: 'date',
-    required: true,
+    required: false,
     initialValue: '',
-    validation: Yup.date().required('This field is required'),
+    validation: Yup.date()
   },
 ]
 

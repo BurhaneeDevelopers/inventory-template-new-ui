@@ -1,4 +1,4 @@
-import React from 'react'
+import React, { useEffect } from 'react'
 import { useFormik } from 'formik'
 import { Input } from '@/components/ui/input'
 import { Textarea } from '@/components/ui/textarea'
@@ -20,7 +20,7 @@ import { useAtom } from 'jotai'
 interface DynamicFormProps {
   title: string
   fieldConfig: FieldConfig[]
-  onSubmit?: (values: { [key: string]: string | number | boolean }) => unknown
+  onSubmit?: (values: any) => Promise<unknown>
   handleSubmit?: (values: { [key: string]: string | number | boolean }) => Promise<unknown>
   fetchDataAfterSubmit?: () => void
   initialFields?: { [key: string]: string | number | boolean | undefined }
@@ -33,13 +33,13 @@ export function DynamicForm({
   onSubmit,
   handleSubmit,
   fetchDataAfterSubmit,
-  // initialFields,
+  initialFields,
   submitButtonText = 'Submit',
 }: DynamicFormProps) {
   // Formik setup with initialValues and validationSchema
   const [, setOpen] = useAtom(formModalAtom)
   const formik = useFormik({
-    initialValues: generateInitialValues(fieldConfig),
+    initialValues: generateInitialValues(fieldConfig, initialFields),
     validationSchema: generateValidationSchema(fieldConfig),
     onSubmit: async values => {
       if (onSubmit) {
@@ -66,13 +66,33 @@ export function DynamicForm({
     },
   })
 
+  useEffect(() => {
+    const quantity = Number(formik.values.quantity)
+    const unitPrice = Number(formik.values.unitPrice)
+    const discountPercentage = Number(formik.values.discountPercentage)
+    const taxPercentage = Number(formik.values.taxPercentage)
+
+    if (formik.values.quantity) {
+      const discountedPricePerUnit = unitPrice * (1 - Number(discountPercentage) / 100);
+      const subtotal = discountedPricePerUnit * quantity;
+      const taxAmount = Number((subtotal * (Number(taxPercentage) / 100)).toFixed(2));
+      const totalPrice = Number((subtotal + taxAmount).toFixed(0));
+
+      formik.setFieldValue("taxAmount", taxAmount)
+      formik.setFieldValue("totalPrice", totalPrice)
+    }
+
+    // eslint-disable-next-line react-hooks/exhaustive-deps
+  }, [formik.values])
+
+
   return (
     <div>
       <h2 className="text-lg font-semibold mb-4">{title}</h2>
       <form onSubmit={formik.handleSubmit} className="space-y-6">
         <div className="flex flex-wrap gap-4">
           {fieldConfig.map(field => (
-            <div key={field.id} className="flex flex-col gap-2">
+            <div key={field.id} className={`flex flex-col gap-2 ${field.hidden ? 'hidden' : ''}`}>
               <Label htmlFor={field.id} className="flex gap-1">
                 <span>{field.label}</span>
                 <span>{field.required && <span className="text-red-500">*</span>}</span>
@@ -98,7 +118,8 @@ export function DynamicForm({
                   value={formik.values[field.id]?.toString() || ''}
                   onChange={formik.handleChange}
                   onBlur={formik.handleBlur}
-                  className="!border-gray-300 min-w-72"
+                  className={`!border-gray-300 min-w-72 ${field.readOnly ? 'bg-gray-200' : ''}`}
+                  disabled={field.readOnly}
                 />
               )}
 
@@ -139,16 +160,24 @@ export function DynamicForm({
 
               {field.type === 'select' && field.options && (
                 <Select
-                  onValueChange={value => formik.setFieldValue(field.id, value)}
+                  onValueChange={(value) => {
+                    const parsedValue = isNaN(Number(value)) ? value : Number(value);
+                    formik.setFieldValue(field.id, parsedValue);
+                  }}
                   defaultValue={formik.values[field.id]?.toString()}
                 >
                   <SelectTrigger className="w-full !border-gray-300 min-w-72">
                     <SelectValue placeholder={`Select ${field.label}`} />
                   </SelectTrigger>
                   <SelectContent>
+                    {/* CONVERT THE VALUE TO STRING  */}
+                    {/* CHECK WEATHER THE VALUE IS SIMPLE ARRAY WITH JUST STRINGS OR ARRAY OF OBJECTS  */}
                     {field.options.map(option => (
-                      <SelectItem key={option} value={option}>
-                        {option}
+                      <SelectItem
+                        key={typeof option === 'string' ? option : (option?.value ?? '').toString()}
+                        value={typeof option === 'string' ? option : (option?.value ?? '').toString()}
+                      >
+                        {typeof option === 'string' ? option : (option.label ?? '')}
                       </SelectItem>
                     ))}
                   </SelectContent>
@@ -162,7 +191,7 @@ export function DynamicForm({
           ))}
         </div>
 
-        <div className="flex justify-end">
+        <div className="flex">
           <Button type="submit">{submitButtonText}</Button>
         </div>
       </form>

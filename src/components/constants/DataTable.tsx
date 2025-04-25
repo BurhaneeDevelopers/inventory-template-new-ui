@@ -1,7 +1,6 @@
-'use client'
-
 import * as React from 'react'
 import {
+  ColumnDef,
   ColumnFiltersState,
   SortingState,
   VisibilityState,
@@ -12,8 +11,7 @@ import {
   getSortedRowModel,
   useReactTable,
 } from '@tanstack/react-table'
-import { ChevronDown } from 'lucide-react'
-
+import { ChevronDown, } from 'lucide-react'
 import { Button } from '@/components/ui/button'
 import {
   DropdownMenu,
@@ -30,8 +28,16 @@ import {
   TableHeader,
   TableRow,
 } from '@/components/ui/table'
+import EditMasterPopUp from '../blocks/master/EditMasterPopUp'
+import { DeletePopUp } from '../blocks/master/DeletePopUp'
 
-export function DataTable({ columns, data }) {
+interface DataTableProps<TData> {
+  columns: ColumnDef<TData, unknown>[]
+  data: TData[]
+  fieldConfig: object
+}
+
+export function DataTable<TData>({ columns, data, fieldConfig }: DataTableProps<TData>) {
   const [sorting, setSorting] = React.useState<SortingState>([])
   const [columnFilters, setColumnFilters] = React.useState<ColumnFiltersState>([])
   const [columnVisibility, setColumnVisibility] = React.useState<VisibilityState>(
@@ -101,13 +107,16 @@ export function DataTable({ columns, data }) {
               <TableRow key={headerGroup.id}>
                 {headerGroup.headers.map(header => {
                   return (
-                    <TableHead key={header.id}>
+                    <TableHead key={header.id} className='-translate-x-3'>
                       {header.isPlaceholder
                         ? null
                         : flexRender(header.column.columnDef.header, header.getContext())}
                     </TableHead>
                   )
                 })}
+                <TableHead>
+                  Actions
+                </TableHead>
               </TableRow>
             ))}
           </TableHeader>
@@ -120,6 +129,11 @@ export function DataTable({ columns, data }) {
                       {flexRender(cell.column.columnDef.cell, cell.getContext())}
                     </TableCell>
                   ))}
+
+                  <TableCell key={row.id} className='flex gap-2'>
+                    <EditMasterPopUp data={row.original} fieldConfig={fieldConfig} />
+                    <DeletePopUp id={row.original.id} />
+                  </TableCell>
                 </TableRow>
               ))
             ) : (

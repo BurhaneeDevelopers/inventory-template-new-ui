@@ -6,9 +6,9 @@ const bomDetailFieldsConfig: FieldConfig[] = [
   {
     id: 'itemId',
     label: 'Material Item',
-    type: 'number',
+    type: 'select',
     required: true,
-    // options: [], // Should be populated from API with RM, Yarn, Trim, SFG items
+    options: [], // Should be populated from API with RM, Yarn, Trim, SFG items
     initialValue: '',
     validation: Yup.string().required('Material Item is required'),
   },
@@ -81,18 +81,18 @@ const bomFieldsConfig: FieldConfig[] = [
   {
     id: 'itemId',
     label: 'Finished Good Item',
-    type: 'number',
+    type: 'select',
     required: true,
-    // options: [], // Should be populated from API with FG items
+    options: [], // Should be populated from API with FG items
     initialValue: '',
     validation: Yup.string().required('Finished Good Item is required'),
   },
   {
     id: 'designId',
     label: 'Design',
-    type: 'number',
+    type: 'select',
     required: true,
-    // options: [], // Should be populated from API with designs
+    options: [], // Should be populated from API with designs
     initialValue: '',
     validation: Yup.string().required('Design is required'),
   },
@@ -100,28 +100,19 @@ const bomFieldsConfig: FieldConfig[] = [
     id: 'sizes',
     label: 'Sizes',
     type: 'select',
-    required: true,
+    required: false,
     options: ['XS', 'S', 'M', 'L', 'XL', 'XXL', 'Custom'],
     initialValue: '',
-    validation: Yup.string().required('Size is required'),
+    validation: Yup.string()
   },
   {
     id: 'category',
     label: 'Category',
     type: 'select',
-    required: true,
+    required: false,
     options: ['Client', 'master', 'self', 'other'],
     initialValue: 'other',
-    validation: Yup.string().required('Category is required'),
-  },
-  {
-    id: 'season',
-    label: 'Season',
-    type: 'select',
-    required: true,
-    options: ['Spring/Summer', 'Fall/Winter', 'All Season', 'Holiday', 'Custom'],
-    initialValue: '',
-    validation: Yup.string().required('Season is required'),
+    validation: Yup.string()
   },
   {
     id: 'artName',
@@ -145,8 +136,8 @@ const bomFieldsConfig: FieldConfig[] = [
     label: 'Approval Status',
     type: 'select',
     required: true,
-    options: ['Draft', 'Pending Approval', 'Approved', 'Rejected', 'Revised'],
-    initialValue: 'Draft',
+    options: ['Yes', 'No'],
+    initialValue: '',
     validation: Yup.string().required('Approval Status is required'),
   },
   {

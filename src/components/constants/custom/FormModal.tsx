@@ -1,3 +1,4 @@
+import React, { useState } from 'react'
 import { Button } from '@/components/ui/button'
 import {
   Dialog,
@@ -11,18 +12,27 @@ import { useAtom } from 'jotai'
 import { formModalAtom } from '../../../../jotai/jotaiStore'
 
 interface FormModalProps {
+  useGlobalAtom?: boolean
   title: string
   description: string
   triggerButtonText: string
+  Trigger?: any
   children: React.ReactNode
 }
 
-export function FormModal({ title, description, triggerButtonText, children }: FormModalProps) {
-  const [open, setOpen] = useAtom(formModalAtom)
+export function FormModal({ useGlobalAtom = true, title, description, triggerButtonText, Trigger, children }: FormModalProps) {
+  const [globalOpen, setGlobalOpen] = useAtom(formModalAtom)
+  const [localOpen, setLocalOpen] = useState(false)
+
+  const open = useGlobalAtom ? globalOpen : localOpen
+  const setOpen = useGlobalAtom ? setGlobalOpen : setLocalOpen
   return (
     <Dialog open={open} onOpenChange={setOpen}>
       <DialogTrigger asChild>
-        <Button onClick={() => setOpen(true)}>{triggerButtonText}</Button>
+        {Trigger ? React.cloneElement(Trigger, { onClick: () => setOpen(true) }) : (
+          <Button onClick={() => setOpen(true)}>{triggerButtonText}</Button>
+        )}
+        {/* <Button onClick={() => setOpen(true)}>{triggerButtonText}</Button> */}
       </DialogTrigger>
       <DialogContent className="sm:max-w-screen-xl max-h-[90vh] overflow-y-auto">
         <div>

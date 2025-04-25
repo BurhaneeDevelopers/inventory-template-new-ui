@@ -1,11 +1,10 @@
-import { DynamicForm } from '@/components/constants/custom/DynamicForm'
 import PageWapper from '@/components/constants/layout/PageWapper'
 import { DataTable } from '@/components/constants/DataTable'
 import { Button } from '@/components/ui/button'
 import { ColumnDef } from '@tanstack/react-table'
 import { ArrowUpDown, Edit, Trash2 } from 'lucide-react'
 import SubTabs from '@/components/constants/SubTabs'
-import { useState } from 'react'
+import { useEffect, useState } from 'react'
 import {
   Table,
   TableBody,
@@ -14,32 +13,14 @@ import {
   TableHeader,
   TableRow,
 } from '@/components/ui/table'
-import { GRNDetailsConfig, GRNMasterConfig } from './GRNConfig'
+import { apiService } from '@/apiService/apiService'
+import { createTransactionInDb, handleManipulateDropdown } from '@/apiService/services'
+import MasterBox from '@/components/constants/Transactions/MasterBox'
+import DetailBox from '@/components/constants/Transactions/DetailBox'
+import { TransactionDetailsConfig, TransactionMasterConfig } from '../Global/TransactionConfig'
+import { Item, Row, Section } from '../Sales-Enquiry/Creation'
 
-interface Section {
-  title: string
-  key: string
-}
-
-type Item = {
-  [key: string]: string | number | undefined
-  ItemType: string
-  ItemDescription: string
-  Quantity: number
-  UnitOfMeasure: string
-  UnitPrice: number
-  DiscountPercentage?: number
-  TaxPercentage?: number
-  TotalPrice?: number
-  DeliveryDate?: string
-  LotNumber?: string
-}
-
-type GRNRow = {
-  [K in (typeof GRNMasterConfig)[number] as K['id']]: string
-}
-
-const columns: ColumnDef<GRNRow>[] = GRNMasterConfig.map(field => ({
+const columns: ColumnDef<Row>[] = TransactionMasterConfig.map(field => ({
   accessorKey: field.id,
   header: ({ column }) => (
     <Button variant="ghost" onClick={() => column.toggleSorting(column.getIsSorted() === 'asc')}>
@@ -58,17 +39,35 @@ const GRN = () => {
 
   const [activeTab, setActiveTab] = useState<string>('listing')
   const [items, setItems] = useState<Item[]>([])
+  const [data, setData] = useState([])
+
+  const fetchDataFromDB = async () => {
+    try {
+      const response = await apiService.post(apiService.v1 + '/transaction-master/get-all', {})
+
+      if (response) {
+        setData(response)
+      }
+    } catch (error) {
+      console.log(error)
+    }
+  }
+
+  useEffect(() => {
+    handleManipulateDropdown(3, true)
+    fetchDataFromDB()
+  }, [])
 
   const handleAddItem = (newItem: Item) => {
-    setItems(prev => [...prev, newItem])
+    setItems(prev => [...prev, { ...newItem, sourceReferenceID: null }])
   }
 
   const handleDeleteItem = (index: number) => {
     setItems(prev => prev.filter((_, i) => i !== index))
   }
 
-  const totalQuantity = items.reduce((sum, item) => sum + Number(item.Quantity || 0), 0)
-  const totalPrice = items.reduce((sum, item) => sum + Number(item.TotalPrice || 0), 0)
+  const totalQuantity = items.reduce((sum, item) => sum + Number(item.quantity || 0), 0)
+  const totalPrice = items.reduce((sum, item) => sum + Number(item.totalPrice || 0), 0)
   return (
     <PageWapper className="!bg-transparent !shadow-none">
       <SubTabs sections={sections} activeTab={activeTab} onTabChange={setActiveTab} />
@@ -76,35 +75,14 @@ const GRN = () => {
         <div className="flex flex-col gap-4 bg-white p-4 rounded-lg h-fit">
           <h1 className="text-2xl font-medium text-zinc-700 uppercase">GRN</h1>
 
-          <DataTable data={[]} columns={columns} />
+          <DataTable data={data} columns={columns} />
         </div>
       )}
 
       {activeTab === 'creation' && (
         <div className="flex flex-col gap-7">
-          <div className="flex flex-col justify-between gap-4 bg-white p-4 rounded-lg flex-grow">
-            <h1 className="text-2xl font-medium text-zinc-700 text-center uppercase">Create GRN</h1>
-
-            <DynamicForm
-              title="GRN Creation"
-              fieldConfig={GRNMasterConfig}
-              // onSubmit={handleSubmit}
-              submitButtonText="Save Process"
-            />
-          </div>
-
-          <div className="flex flex-col justify-between gap-4 bg-white p-4 rounded-lg flex-grow">
-            <h1 className="text-2xl font-medium text-zinc-700 text-center uppercase">
-              GRN Details
-            </h1>
-
-            <DynamicForm
-              title="Process Details"
-              fieldConfig={GRNDetailsConfig}
-              onSubmit={handleAddItem}
-              submitButtonText="Add Item"
-            />
-          </div>
+          <MasterBox title='GRN Creation' masterConfig={TransactionMasterConfig} onPress={(values) => createTransactionInDb(values, items, setActiveTab)} fetchData={fetchDataFromDB} />
+          <DetailBox detailConfig={TransactionDetailsConfig} onPress={handleAddItem} />
 
           <div className="">
             {items.length > 0 && (
@@ -113,7 +91,7 @@ const GRN = () => {
                 <Table>
                   <TableHeader>
                     <TableRow>
-                      {GRNDetailsConfig.map(field => (
+                      {TransactionDetailsConfig.filter(field => field.id !== 'itemId').map(field => (
                         <TableHead key={field.id}>{field.label}</TableHead>
                       ))}
                       {/* <TableHead>Edit</TableHead> */}
@@ -123,7 +101,7 @@ const GRN = () => {
                   <TableBody>
                     {items.map((item, index) => (
                       <TableRow key={index}>
-                        {GRNDetailsConfig.map(field => (
+                        {TransactionDetailsConfig.filter(field => field.id !== 'itemId').map(field => (
                           <TableCell key={field.id}>{item[field.id]}</TableCell>
                         ))}
                         <TableCell className="space-x-4">

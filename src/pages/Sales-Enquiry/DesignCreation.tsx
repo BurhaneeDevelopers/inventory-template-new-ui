@@ -1,11 +1,10 @@
-import { DynamicForm } from '@/components/constants/custom/DynamicForm'
 import PageWapper from '@/components/constants/layout/PageWapper'
 import { DataTable } from '@/components/constants/DataTable'
 import { Button } from '@/components/ui/button'
 import { ColumnDef } from '@tanstack/react-table'
 import { ArrowUpDown, Edit, Trash2 } from 'lucide-react'
 import SubTabs from '@/components/constants/SubTabs'
-import { useState } from 'react'
+import { useEffect, useState } from 'react'
 import {
   Table,
   TableBody,
@@ -14,7 +13,11 @@ import {
   TableHeader,
   TableRow,
 } from '@/components/ui/table'
-import { DesignCreationDetailsConfig, DesignCreationMasterConfig } from './DesignCreationConfig'
+import { apiService } from '@/apiService/apiService'
+import { createTransactionInDb, handleManipulateDropdown } from '@/apiService/services'
+import MasterBox from '@/components/constants/Transactions/MasterBox'
+import { TransactionDetailsConfig, TransactionMasterConfig } from '../Global/TransactionConfig'
+import DetailBox from '@/components/constants/Transactions/DetailBox'
 
 interface Section {
   title: string
@@ -23,23 +26,25 @@ interface Section {
 
 type Item = {
   [key: string]: string | number | undefined
-  ItemType: string
-  ItemDescription: string
-  Quantity: number
-  UnitOfMeasure: string
-  UnitPrice: number
-  DiscountPercentage?: number
-  TaxPercentage?: number
-  TotalPrice?: number
-  DeliveryDate?: string
-  LotNumber?: string
+  itemId: number
+  itemType: string
+  itemDescription: string
+  quantity: number
+  unitOfMeasure: string
+  unitPrice: number
+  discountPercentage?: number
+  taxPercentage?: number
+  totalPrice?: number
+  deliveryDate?: string
+  lotNumber?: string
+  sourceReferenceID?: number
 }
 
 type CreationRow = {
-  [K in (typeof DesignCreationMasterConfig)[number] as K['id']]: string
+  [K in (typeof TransactionMasterConfig)[number]as K['id']]: string
 }
 
-const columns: ColumnDef<CreationRow>[] = DesignCreationMasterConfig.map(field => ({
+const columns: ColumnDef<CreationRow>[] = TransactionMasterConfig.map(field => ({
   accessorKey: field.id,
   header: ({ column }) => (
     <Button variant="ghost" onClick={() => column.toggleSorting(column.getIsSorted() === 'asc')}>
@@ -58,55 +63,50 @@ const DesignCreation = () => {
 
   const [activeTab, setActiveTab] = useState<string>('listing')
   const [items, setItems] = useState<Item[]>([])
+  const [data, setData] = useState([])
+
+  const fetchDataFromDB = async () => {
+    try {
+      const response = await apiService.post(apiService.v1 + '/transaction-master/get-all', {})
+
+      if (response) {
+        setData(response)
+      }
+    } catch (error) {
+      console.log(error)
+    }
+  }
+
+  useEffect(() => {
+    handleManipulateDropdown("design")
+    fetchDataFromDB()
+  }, [])
 
   const handleAddItem = (newItem: Item) => {
-    setItems(prev => [...prev, newItem])
+    setItems(prev => [...prev, { ...newItem, sourceReferenceID: newItem.itemId }])
   }
 
   const handleDeleteItem = (index: number) => {
     setItems(prev => prev.filter((_, i) => i !== index))
   }
 
-  const totalQuantity = items.reduce((sum, item) => sum + Number(item.Quantity || 0), 0)
-  const totalPrice = items.reduce((sum, item) => sum + Number(item.TotalPrice || 0), 0)
+  const totalQuantity = items.reduce((sum, item) => sum + Number(item.quantity || 0), 0)
+  const totalPrice = items.reduce((sum, item) => sum + Number(item.totalPrice || 0), 0)
   return (
     <PageWapper className="!bg-transparent !shadow-none">
       <SubTabs sections={sections} activeTab={activeTab} onTabChange={setActiveTab} />
       {activeTab === 'listing' && (
         <div className="flex flex-col gap-4 bg-white p-4 rounded-lg h-fit">
-          <h1 className="text-2xl font-medium text-zinc-700 uppercase">Enquiries</h1>
+          <h1 className="text-2xl font-medium text-zinc-700 uppercase">Design</h1>
 
-          <DataTable data={[]} columns={columns} />
+          <DataTable data={data} columns={columns} />
         </div>
       )}
 
       {activeTab === 'creation' && (
         <div className="flex flex-col gap-7">
-          <div className="flex flex-col justify-between gap-4 bg-white p-4 rounded-lg flex-grow">
-            <h1 className="text-2xl font-medium text-zinc-700 text-center uppercase">
-              Design Creation
-            </h1>
-
-            <DynamicForm
-              title="Enquiry Creation"
-              fieldConfig={DesignCreationMasterConfig}
-              // onSubmit={handleSubmit}
-              submitButtonText="Save Process"
-            />
-          </div>
-
-          <div className="flex flex-col justify-between gap-4 bg-white p-4 rounded-lg flex-grow">
-            <h1 className="text-2xl font-medium text-zinc-700 text-center uppercase">
-              Design Details
-            </h1>
-
-            <DynamicForm
-              title="Process Details"
-              fieldConfig={DesignCreationDetailsConfig}
-              onSubmit={handleAddItem}
-              submitButtonText="Add Item"
-            />
-          </div>
+          <MasterBox title='Enquiry Creation' masterConfig={TransactionMasterConfig} onPress={(values) => createTransactionInDb(values, items, setActiveTab)} fetchData={fetchDataFromDB} />
+          <DetailBox detailConfig={TransactionDetailsConfig} onPress={handleAddItem} />
 
           <div className="">
             {items.length > 0 && (
@@ -115,7 +115,7 @@ const DesignCreation = () => {
                 <Table>
                   <TableHeader>
                     <TableRow>
-                      {DesignCreationDetailsConfig.map(field => (
+                      {TransactionDetailsConfig.filter(field => field.id !== 'itemId').map(field => (
                         <TableHead key={field.id}>{field.label}</TableHead>
                       ))}
                       {/* <TableHead>Edit</TableHead> */}
@@ -125,7 +125,7 @@ const DesignCreation = () => {
                   <TableBody>
                     {items.map((item, index) => (
                       <TableRow key={index}>
-                        {DesignCreationDetailsConfig.map(field => (
+                        {TransactionDetailsConfig.filter(field => field.id !== 'itemId').map(field => (
                           <TableCell key={field.id}>{item[field.id]}</TableCell>
                         ))}
                         <TableCell className="space-x-4">

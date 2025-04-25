@@ -44,15 +44,13 @@ apiClient.interceptors.response.use(
 )
 
 export const apiService = {
-  get: (endpoint: string, params: Record<string, unknown> = {}) =>
-    apiClient.get(endpoint, { params }),
+  get: (endpoint, params) => apiClient.get(endpoint, { params }),
 
-  post: (endpoint: string, data: unknown, headers: Record<string, unknown> = {}) =>
-    apiClient.post(endpoint, data, { headers }),
+  post: (endpoint, data, headers?: any) => apiClient.post(endpoint, data, { headers }),
 
-  put: (endpoint: string, data: unknown) => apiClient.put(endpoint, data),
+  put: (endpoint, data) => apiClient.put(endpoint, data),
 
-  delete: (endpoint: string) => apiClient.delete(endpoint),
+  delete: (endpoint, params) => apiClient.delete(endpoint, { params }),
 
   v1: API_V1,
 }

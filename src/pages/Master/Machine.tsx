@@ -9,9 +9,11 @@ import { Button } from '@/components/ui/button'
 import { ArrowUpDown } from 'lucide-react'
 import { useEffect, useState } from 'react'
 import { apiService } from '../../apiService/apiService'
+import { useSetAtom } from 'jotai'
+import { pathAtom } from '../../../jotai/jotaiStore'
 
 type MachineRow = {
-  [K in (typeof machineFieldsConfig)[number] as K['id']]: string
+  [K in (typeof machineFieldsConfig)[number]as K['id']]: string
 }
 
 const columns: ColumnDef<MachineRow>[] = machineFieldsConfig.map(field => ({
@@ -27,6 +29,7 @@ const columns: ColumnDef<MachineRow>[] = machineFieldsConfig.map(field => ({
 
 const Machine = () => {
   const [data, setData] = useState([])
+  const setEditPath = useSetAtom(pathAtom)
 
   const fetchDataFromDB = async () => {
     try {
@@ -52,6 +55,9 @@ const Machine = () => {
 
   useEffect(() => {
     fetchDataFromDB()
+    setEditPath("/machine-master")
+
+    // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [])
 
   return (
@@ -61,7 +67,7 @@ const Machine = () => {
           title="Add New Machine"
           description="Fill in all the details to add a new machine"
           triggerButtonText="Add New Machine"
-          // onSubmit={handleSubmit}
+        // onSubmit={handleSubmit}
         >
           <DynamicForm
             title="Machine Details"
@@ -72,7 +78,7 @@ const Machine = () => {
           />
         </FormModal>
       </PageTitileBar>
-      <DataTable data={data} columns={columns} />
+      <DataTable data={data} columns={columns} fieldConfig={machineFieldsConfig} />
     </PageWapper>
   )
 }

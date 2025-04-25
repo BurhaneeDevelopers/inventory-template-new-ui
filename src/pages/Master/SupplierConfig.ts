@@ -1,16 +1,5 @@
 import * as Yup from 'yup'
-
-export type FieldType = 'text' | 'number' | 'textarea' | 'select' | 'date' | 'checkbox'
-
-export interface FieldConfig {
-  id: string
-  label: string
-  type: FieldType
-  required: boolean
-  options?: string[]
-  initialValue: string | number | boolean
-  validation: Yup.AnySchema
-}
+import { FieldConfig } from './ItemsConfig'
 
 const supplierFieldsConfig: FieldConfig[] = [
   {

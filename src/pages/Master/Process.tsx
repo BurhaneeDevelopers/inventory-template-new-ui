@@ -9,9 +9,11 @@ import { ColumnDef } from '@tanstack/react-table'
 import { ArrowUpDown } from 'lucide-react'
 import { useEffect, useState } from 'react'
 import { apiService } from '../../apiService/apiService'
+import { pathAtom } from '../../../jotai/jotaiStore'
+import { useSetAtom } from 'jotai'
 
 type ProcessRow = {
-  [K in (typeof processFieldsConfig)[number] as K['id']]: string
+  [K in (typeof processFieldsConfig)[number]as K['id']]: string
 }
 
 const columns: ColumnDef<ProcessRow>[] = processFieldsConfig.map(field => ({
@@ -27,6 +29,7 @@ const columns: ColumnDef<ProcessRow>[] = processFieldsConfig.map(field => ({
 
 const Process = () => {
   const [data, setData] = useState([])
+  const setEditPath = useSetAtom(pathAtom)
 
   const fetchDataFromDB = async () => {
     try {
@@ -52,6 +55,9 @@ const Process = () => {
 
   useEffect(() => {
     fetchDataFromDB()
+    setEditPath("/process-master")
+    
+    // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [])
   return (
     <PageWapper>
@@ -70,7 +76,7 @@ const Process = () => {
           />
         </FormModal>
       </PageTitileBar>
-      <DataTable data={data} columns={columns} />
+      <DataTable data={data} columns={columns} fieldConfig={processFieldsConfig} />
     </PageWapper>
   )
 }

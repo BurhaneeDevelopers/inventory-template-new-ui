@@ -23,9 +23,9 @@ const designMasterFieldsConfig: FieldConfig[] = [
     id: 'creationDate',
     label: 'Creation Date',
     type: 'date',
-    required: true,
+    required: false,
     initialValue: '',
-    validation: Yup.string().required('Creation Date is required'),
+    validation: Yup.string()
   },
   {
     id: 'designOwner',
@@ -48,16 +48,17 @@ const designMasterFieldsConfig: FieldConfig[] = [
     id: 'designFiles',
     label: 'Design Files',
     type: 'file',
-    required: true,
+    required: false,
     initialValue: '',
-    validation: Yup.string().required('Design File is required'),
+    validation: Yup.string()
   },
   {
-    id: 'customerId',
+    id: 'customerID',
     label: 'Customer Id',
-    type: 'text',
+    type: 'select',
     required: true,
     initialValue: '',
+    options: [],
     validation: Yup.string().required('customer Id is required'),
   },
   {
@@ -70,38 +71,12 @@ const designMasterFieldsConfig: FieldConfig[] = [
     validation: Yup.string().required('Status is required'),
   },
   {
-    id: 'season',
-    label: 'Season',
-    type: 'text',
-    required: false,
-    initialValue: '',
-    validation: Yup.string(),
-  },
-  {
-    id: 'sizes',
-    label: 'Sizes',
-    type: 'select',
-    required: true,
-    options: ['sm', 'lg', 'xl', 'xxl', 'xxxl'],
-    initialValue: 'sm',
-    validation: Yup.string().required('Size is required'),
-  },
-  {
-    id: 'category',
-    label: 'Category',
-    type: 'select',
-    required: true,
-    options: ['yarn', 'silk', 'cotton', 'jute', 'wool'],
-    initialValue: 'Yarn',
-    validation: Yup.string().required('category is required'),
-  },
-  {
     id: 'artName',
     label: 'Art Name',
     type: 'text',
     required: false,
     initialValue: '',
-    validation: Yup.string().required('Art Name is required'),
+    validation: Yup.string()
   },
 ]
 

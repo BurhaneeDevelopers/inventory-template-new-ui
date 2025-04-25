@@ -9,9 +9,11 @@ import { Button } from '@/components/ui/button'
 import { ArrowUpDown } from 'lucide-react'
 import { apiService } from '../../apiService/apiService'
 import { useEffect, useState } from 'react'
+import { useSetAtom } from 'jotai'
+import { pathAtom } from '../../../jotai/jotaiStore'
 
 type ItemRow = {
-  [K in (typeof itemFieldsConfig)[number] as K['id']]: string
+  [K in (typeof itemFieldsConfig)[number]as K['id']]: string
 }
 
 const columns: ColumnDef<ItemRow>[] = itemFieldsConfig.map(field => ({
@@ -27,6 +29,7 @@ const columns: ColumnDef<ItemRow>[] = itemFieldsConfig.map(field => ({
 
 const Items = () => {
   const [data, setData] = useState([])
+  const setEditPath = useSetAtom(pathAtom)
 
   const fetchDataFromDB = async () => {
     try {
@@ -53,6 +56,9 @@ const Items = () => {
 
   useEffect(() => {
     fetchDataFromDB()
+    setEditPath("/item")
+    
+    // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [])
 
   return (
@@ -62,7 +68,7 @@ const Items = () => {
           title="Create New Item"
           description="Fill in all the details to create a new inventory item"
           triggerButtonText="Add New Item"
-          // onSubmit={handleSubmit}
+        // onSubmit={handleSubmit}
         >
           <DynamicForm
             title="Item Details"
@@ -74,7 +80,7 @@ const Items = () => {
         </FormModal>
       </PageTitileBar>
 
-      <DataTable data={data} columns={columns} />
+      <DataTable data={data} columns={columns} fieldConfig={itemFieldsConfig} />
     </PageWapper>
   )
 }

@@ -9,9 +9,11 @@ import { ArrowUpDown } from 'lucide-react'
 import { ColumnDef } from '@tanstack/react-table'
 import { apiService } from '@/apiService/apiService'
 import { useEffect, useState } from 'react'
+import { useSetAtom } from 'jotai'
+import { pathAtom } from '../../../jotai/jotaiStore'
 
 type SupplierRow = {
-  [K in (typeof supplierFieldsConfig)[number] as K['id']]: string
+  [K in (typeof supplierFieldsConfig)[number]as K['id']]: string
 }
 
 const columns: ColumnDef<SupplierRow>[] = supplierFieldsConfig.map(field => ({
@@ -27,6 +29,7 @@ const columns: ColumnDef<SupplierRow>[] = supplierFieldsConfig.map(field => ({
 
 const Supplier = () => {
   const [data, setData] = useState([])
+  const setEditPath = useSetAtom(pathAtom)
 
   const fetchDataFromDB = async () => {
     try {
@@ -52,6 +55,9 @@ const Supplier = () => {
 
   useEffect(() => {
     fetchDataFromDB()
+    setEditPath("/supplier-master")
+    
+    // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [])
 
   return (
@@ -61,7 +67,7 @@ const Supplier = () => {
           title="Add New Supplier"
           description="Fill in all the details to add a new supplier"
           triggerButtonText="Add New Supplier"
-          // onSubmit={handleSubmit}
+        // onSubmit={handleSubmit}
         >
           <DynamicForm
             title="Supplier Details"
@@ -72,7 +78,7 @@ const Supplier = () => {
           />
         </FormModal>
       </PageTitileBar>
-      <DataTable data={data} columns={columns} />
+      <DataTable data={data} columns={columns} fieldConfig={supplierFieldsConfig} />
     </PageWapper>
   )
 }

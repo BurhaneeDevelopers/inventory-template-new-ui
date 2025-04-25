@@ -1,7 +1,6 @@
 // import React, { useEffect } from 'react'
 import { BrowserRouter, Route, Routes } from 'react-router'
 import '../../index.css'
-import Reports from '@/pages/archive/Inventory/Reports'
 import PlaceholderPage from '../PlaceholderPage'
 import Signin from '@/pages/Auth/SignIn'
 import ProtectedRoute from '../ProtectedRoute'
@@ -15,12 +14,14 @@ import BOM from '@/pages/Master/BOM'
 import Customer from '@/pages/Master/Customer'
 import Supplier from '@/pages/Master/Supplier'
 import Creation from '@/pages/Sales-Enquiry/Creation'
-import DesignCreation from '@/pages/Sales-Enquiry/DesignCreation'
+// import DesignCreation from '@/pages/Sales-Enquiry/DesignCreation'
 import Quotation from '@/pages/Sales-Enquiry/Quotation'
 import POGeneration from '@/pages/Procurement/POGeneration'
-import SOGeneration from '@/pages/Procurement/SOGeneration'
-import CheckInventory from '@/pages/Procurement/CheckInventory'
 import GRN from '@/pages/Procurement/GRN'
+import PurchaseInvoice from '@/pages/Procurement/PurchaseInvoice'
+import Common from '@/pages/Master/Common'
+import SOGeneration from '@/pages/Sales-Enquiry/SOGeneration'
+import Reports from '@/pages/Home/Reports'
 // import PurchaseInvoice from '@/pages/Procurement/PurchaseInvoice'
 // import { apiService } from './../../apiService/apiService';
 
@@ -91,23 +92,24 @@ const ProtectedRoutes = () => {
               <Route path="/master/bom" element={<BOM />} />
               <Route path="/master/customer" element={<Customer />} />
               <Route path="/master/supplier" element={<Supplier />} />
+              <Route path="/master/commons" element={<Common />} />
 
               {/* Sales Enquiry module */}
               <Route path="/sales-enquiry" element={<PlaceholderPage title="Sales Enquiry" />} />
               <Route path="/sales-enquiry/creation" element={<Creation />} />
-              <Route path="/sales-enquiry/design-creation" element={<DesignCreation />} />
+              <Route path="/sales-enquiry/sales-order-generation" element={<SOGeneration />} />
+              {/* <Route path="/sales-enquiry/design-creation" element={<DesignCreation />} /> */}
               <Route path="/sales-enquiry/quotation" element={<Quotation />} />
 
               {/* Procurement module */}
               <Route path="/procurement" element={<PlaceholderPage title="Procurement" />} />
               <Route path="/procurement/po-generation" element={<POGeneration />} />
-              <Route path="/procurement/sales-order-generation" element={<SOGeneration />} />
-              <Route path="/procurement/check-inventory" element={<CheckInventory />} />
+              {/* <Route path="/procurement/check-inventory" element={<CheckInventory />} /> */}
               <Route path="/procurement/grn" element={<GRN />} />
-              {/* <Route
+              <Route
                 path="/procurement/purchase-invoice"
                 element={<PurchaseInvoice />}
-              /> */}
+              />
 
               {/* In-house Production module */}
               <Route

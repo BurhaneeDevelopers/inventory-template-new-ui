@@ -16,6 +16,7 @@ import {
 } from '@/components/ui/table'
 import bomFieldsConfig, { bomDetailFieldsConfig } from './BOMConfig'
 import { apiService } from '@/apiService/apiService'
+import { fetchDesignFromDB, fetchItemsFromDB } from '@/apiService/services'
 
 interface Section {
   title: string
@@ -37,7 +38,7 @@ type Item = {
 }
 
 type BOMRow = {
-  [K in (typeof bomFieldsConfig)[number] as K['id']]: string
+  [K in (typeof bomFieldsConfig)[number]as K['id']]: string
 }
 
 const columns: ColumnDef<BOMRow>[] = bomFieldsConfig.map(field => ({
@@ -100,8 +101,33 @@ const Creation = () => {
     }
   }
 
+  const fetchAndSetItemsInDropdown = async () => {
+    try {
+      const data = await fetchItemsFromDB()
+      const designs = await fetchDesignFromDB()
+
+      bomFieldsConfig.forEach((bom, i) => {
+        if (bom.id == 'itemId') {
+          bomFieldsConfig[i].options = data.map((item: { itemName: string, id: number }) => ({ label: item.itemName, value: item.id }))
+        }
+        if (bom.id == 'designId') {
+          bomFieldsConfig[i].options = designs.map((item: { designName: string, id: number }) => ({ label: item.designName, value: item.id }))
+        }
+      })
+      bomDetailFieldsConfig.forEach((bom, i) => {
+        if (bom.id == 'itemId') {
+          bomDetailFieldsConfig[i].options = data.map((item: { itemName: string, id: number }) => ({ label: item.itemName, value: item.id }))
+        }
+      })
+
+    } catch (error) {
+      console.log(error)
+    }
+  }
+
   useEffect(() => {
     fetchDataFromDB()
+    fetchAndSetItemsInDropdown()
   }, [])
   return (
     <PageWapper className="!bg-transparent !shadow-none">

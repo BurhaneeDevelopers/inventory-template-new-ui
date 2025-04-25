@@ -9,9 +9,12 @@ import { Button } from '@/components/ui/button'
 import { ArrowUpDown } from 'lucide-react'
 import { apiService } from '@/apiService/apiService'
 import { useEffect, useState } from 'react'
+import { useSetAtom } from 'jotai'
+import { pathAtom } from '../../../jotai/jotaiStore'
+import { fetchCustomerFromDB } from '@/apiService/services'
 
 type DesignRow = {
-  [K in (typeof designMasterFieldsConfig)[number] as K['id']]: string
+  [K in (typeof designMasterFieldsConfig)[number]as K['id']]: string
 }
 
 const columns: ColumnDef<DesignRow>[] = designMasterFieldsConfig.map(field => ({
@@ -27,6 +30,7 @@ const columns: ColumnDef<DesignRow>[] = designMasterFieldsConfig.map(field => ({
 
 const DesignMaster = () => {
   const [data, setData] = useState([])
+  const setEditPath = useSetAtom(pathAtom)
 
   const fetchDataFromDB = async () => {
     try {
@@ -50,8 +54,27 @@ const DesignMaster = () => {
     }
   }
 
+  const handleManipulateDropdown = async () => {
+    try {
+      const data = await fetchCustomerFromDB()
+
+      designMasterFieldsConfig.forEach((bom, i) => {
+        if (bom.id == 'customerID') {
+          designMasterFieldsConfig[i].options = data.map((item: { customer_Name: string, id: number }) => ({ label: item.customer_Name, value: item.id }))
+        }
+      })
+
+    } catch (error) {
+      console.log(error)
+    }
+  }
+
   useEffect(() => {
+    handleManipulateDropdown()
     fetchDataFromDB()
+    setEditPath("/design-master")
+
+    // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [])
   return (
     <PageWapper>
@@ -60,7 +83,7 @@ const DesignMaster = () => {
           title="Add New Design"
           description="Fill in all the details to add a new design"
           triggerButtonText="Add New Design"
-          // onSubmit={handleSubmit}
+        // onSubmit={handleSubmit}
         >
           <DynamicForm
             title="Design Details"
@@ -71,7 +94,7 @@ const DesignMaster = () => {
           />
         </FormModal>
       </PageTitileBar>
-      <DataTable data={data} columns={columns} />
+      <DataTable data={data} columns={columns} fieldConfig={designMasterFieldsConfig} />
     </PageWapper>
   )
 }

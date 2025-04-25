@@ -61,24 +61,32 @@ const items = [
         title: 'Supplier',
         url: '/master/supplier',
       },
+      {
+        title: 'Common Masters',
+        url: '/master/commons',
+      },
     ],
   },
   {
-    menu: 'Sales Enquiry',
+    menu: 'Order Generation',
     url: '/sales-enquiry',
     icon: WarehouseIcon,
     items: [
       {
-        title: 'Creation',
+        title: 'Sales enquiry',
         url: '/sales-enquiry/creation',
       },
-      {
-        title: 'Design Creation',
-        url: '/sales-enquiry/design-creation',
-      },
+      // {
+      //   title: 'Design Creation',
+      //   url: '/sales-enquiry/design-creation',
+      // },
       {
         title: 'Quotation',
         url: '/sales-enquiry/quotation',
+      },
+      {
+        title: 'Order Generation',
+        url: '/sales-enquiry/sales-order-generation',
       },
     ],
   },
@@ -90,10 +98,6 @@ const items = [
       {
         title: 'Purchase Order Generation',
         url: '/procurement/po-generation',
-      },
-      {
-        title: 'Sales Order Generation',
-        url: '/procurement/sales-order-generation',
       },
       // {
       //   title: 'Check Inventory',

@@ -8,7 +8,7 @@ const machineFieldsConfig: FieldConfig[] = [
     type: 'text',
     required: true,
     initialValue: '',
-    validation: Yup.string().required('Machine Name is required'),
+    validation: Yup.string().required('Machine Type is required'),
   },
   {
     id: 'machineType',
@@ -47,25 +47,25 @@ const machineFieldsConfig: FieldConfig[] = [
     id: 'modelNumber',
     label: 'Model Number',
     type: 'text',
-    required: true,
+    required: false,
     initialValue: '',
-    validation: Yup.string().required('Model Number is required'),
+    validation: Yup.string()
   },
   {
     id: 'serialNumber',
     label: 'Serial Number',
     type: 'text',
-    required: true,
+    required: false,
     initialValue: '',
-    validation: Yup.string().required('Serial Number is required'),
+    validation: Yup.string()
   },
   {
     id: 'manufacturer',
     label: 'Manufacturer',
     type: 'text',
-    required: true,
+    required: false,
     initialValue: '',
-    validation: Yup.string().required('Manufacturer is required'),
+    validation: Yup.string()
   },
   {
     id: 'dimensionSpecifications',

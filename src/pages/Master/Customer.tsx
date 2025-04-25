@@ -9,9 +9,11 @@ import { ArrowUpDown } from 'lucide-react'
 import { ColumnDef } from '@tanstack/react-table'
 import { useEffect, useState } from 'react'
 import { apiService } from '../../apiService/apiService'
+import { pathAtom } from '../../../jotai/jotaiStore'
+import { useSetAtom } from 'jotai'
 
 type CustomerRow = {
-  [K in (typeof customerFieldsConfig)[number] as K['id']]: string
+  [K in (typeof customerFieldsConfig)[number]as K['id']]: string
 }
 
 const columns: ColumnDef<CustomerRow>[] = customerFieldsConfig.map(field => ({
@@ -27,6 +29,7 @@ const columns: ColumnDef<CustomerRow>[] = customerFieldsConfig.map(field => ({
 
 const Customer = () => {
   const [data, setData] = useState([])
+  const setEditPath = useSetAtom(pathAtom)
 
   const fetchDataFromDB = async () => {
     try {
@@ -53,6 +56,9 @@ const Customer = () => {
 
   useEffect(() => {
     fetchDataFromDB()
+    setEditPath("/customer-master")
+
+    // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [])
 
   return (
@@ -62,7 +68,7 @@ const Customer = () => {
           title="Add New Customer"
           description="Fill in all the details to add a new customer"
           triggerButtonText="Add New Customer"
-          // onSubmit={handleSubmit}
+        // onSubmit={handleSubmit}
         >
           <DynamicForm
             title="Customer Details"
@@ -73,7 +79,7 @@ const Customer = () => {
           />
         </FormModal>
       </PageTitileBar>
-      <DataTable data={data} columns={columns} />
+      <DataTable data={data} columns={columns} fieldConfig={customerFieldsConfig} />
     </PageWapper>
   )
 }

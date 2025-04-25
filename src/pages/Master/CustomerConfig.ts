@@ -54,10 +54,10 @@ const customerFieldsConfig: FieldConfig[] = [
     id: 'customerCategory',
     label: 'Customer Category',
     type: 'select',
-    required: true,
+    required: false,
     options: ['Retail', 'Wholesale', 'Corporate', 'Government', 'Other'],
     initialValue: '',
-    validation: Yup.string().required('Customer Category is required'),
+    validation: Yup.string()
   },
   {
     id: 'taxInformation',
@@ -75,7 +75,14 @@ const customerFieldsConfig: FieldConfig[] = [
     initialValue: '',
     validation: Yup.date().required('Customer Since date is required'),
   },
-
+  {
+    id: 'shortCode',
+    label: 'Short Code',
+    type: 'text',
+    required: true,
+    initialValue: '',
+    validation: Yup.string().required('Banking Details is required'),
+  },
   {
     id: 'bankingDetails',
     label: 'Banking Details',
@@ -84,55 +91,6 @@ const customerFieldsConfig: FieldConfig[] = [
     initialValue: '',
     validation: Yup.string().required('Banking Details is required'),
   },
-  // {
-  //   id: 'bankName',
-  //   label: 'Bank Name',
-  //   type: 'text',
-  //   required: false,
-  //   initialValue: '',
-  //   validation: Yup.string(),
-  // },
-  // {
-  //   id: 'accountNumber',
-  //   label: 'Account Number',
-  //   type: 'text',
-  //   required: false,
-  //   initialValue: '',
-  //   validation: Yup.string(),
-  // },
-  // {
-  //   id: 'ifscCode',
-  //   label: 'IFSC Code',
-  //   type: 'text',
-  //   required: false,
-  //   initialValue: '',
-  //   validation: Yup.string(),
-  // },
-  // {
-  //   id: 'creditLimit',
-  //   label: 'Credit Limit',
-  //   type: 'number',
-  //   required: false,
-  //   initialValue: '',
-  //   validation: Yup.number().min(0, 'Credit Limit must be non-negative'),
-  // },
-  // {
-  //   id: 'paymentTerms',
-  //   label: 'Payment Terms',
-  //   type: 'text',
-  //   required: false,
-  //   initialValue: '',
-  //   validation: Yup.string(),
-  // },
-  // {
-  //   id: 'status',
-  //   label: 'Status',
-  //   type: 'select',
-  //   required: true,
-  //   options: ['Active', 'Inactive', 'On Hold', 'Blacklisted'],
-  //   initialValue: 'Active',
-  //   validation: Yup.string().required('Status is required'),
-  // },
 ]
 
 export default customerFieldsConfig

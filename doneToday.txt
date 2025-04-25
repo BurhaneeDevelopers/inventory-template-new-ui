@@ -1,0 +1,11 @@
+Created optimised method to make Customer DD hidden in purchase
+Created optimised method to make Supplier DD hidden in Sales
+Shifted Sales Order from procurement to sales enquiry
+renamed sales enquiry to "order generation"
+Integrated API in sales Creation
+Integrated API in sales Order Creation
+Integrated API in Quotation
+Set Types for typescript for transaction fields
+Added ShortCode Field in Customer Config
+did changes in Transaction Config as per mentioned by ali bhai
+removed ItemType field from transaction detail
