@@ -78,7 +78,7 @@ const Machine = () => {
           />
         </FormModal>
       </PageTitileBar>
-      <DataTable data={data} columns={columns} fieldConfig={machineFieldsConfig} />
+      <DataTable data={data} columns={columns} fieldConfig={machineFieldsConfig} setData={setData} />
     </PageWapper>
   )
 }

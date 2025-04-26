@@ -2,6 +2,34 @@ import { TransactionDetailsConfig, TransactionMasterConfig } from '@/pages/Globa
 import { apiService } from './apiService'
 import { Item } from '@/pages/Sales-Enquiry/Creation'
 
+export const fetchTransactionsFromDB = async (type: number, setData: (value: any) => void) => {
+  try {
+    const response = await apiService.post(apiService.v1 + '/transaction-master/get-all', { transactionType: type })
+
+    if (response) {
+      setData(response)
+    }
+  } catch (error) {
+    console.log(error)
+  }
+}
+
+export const fetchSingleTransactionForEdit = async (id: number, setTransaction: any, setActiveTab: any) => {
+  try {
+    const response = await apiService.get(apiService.v1 + '/transaction-master/get', { id: id })
+
+    if (response) {
+      setTransaction(response)
+      setActiveTab('edit')
+      return response
+    } else {
+      return
+    }
+  } catch (error) {
+    console.log(error)
+  }
+}
+
 export const fetchItemsFromDB = async () => {
   try {
     const response = await apiService.post(apiService.v1 + '/item/get-all', {})
@@ -133,7 +161,7 @@ export const handleManipulateDropdown = async (transactionType: number, isPurcha
   }
 }
 
-export const createTransactionInDb = async (values: { [key: string]: string | number | boolean }, items: Item[], setActiveTab: (value: string) => void) => {
+export const createTransactionInDb = async (values: { [key: string]: string | number | boolean }, items: Item[], setActiveTab: (value: string) => void, fetchData: () => void) => {
   try {
     const payload = {
       ...values,
@@ -142,7 +170,27 @@ export const createTransactionInDb = async (values: { [key: string]: string | nu
 
     const response = await apiService.post(apiService.v1 + '/transaction-master/save', payload)
     if (response) {
+      fetchData()
       setActiveTab("listing")
+      return response
+    }
+  } catch (error) {
+    console.log(error)
+  }
+}
+
+export const updateTransactionInDb = async (values: { [key: string]: string | number | boolean }, items: Item[], setActiveTab: (value: string) => void, setIsEditing: (value: boolean) => void, fetchData: () => void) => {
+  try {
+    const payload = {
+      ...values,
+      detail: items
+    }
+
+    const response = await apiService.post(apiService.v1 + '/transaction-master/update', payload)
+    if (response) {
+      fetchData()
+      setActiveTab("listing")
+      setIsEditing(false)
       return response
     }
   } catch (error) {

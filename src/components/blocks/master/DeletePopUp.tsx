@@ -17,19 +17,22 @@ import { DialogClose } from '@radix-ui/react-dialog'
 
 interface DeleteProps {
     id: number
+    isTransaction: boolean
     // useGlobalAtom?: boolean
     // title: string
     // description: string
     // children: React.ReactNode
 }
 
-export function DeletePopUp({ id }: DeleteProps) {
+export function DeletePopUp({ id, isTransaction }: DeleteProps) {
     const [open, setOpen] = useState(false)
     const apiPath = useAtomValue(pathAtom)
 
+    console.log(isTransaction)
+
     const deleteData = async () => {
         try {
-            const response = await apiService.delete(apiService.v1 + `${apiPath}/delete`, { id: id })
+            const response = await apiService.delete(apiService.v1 + `${isTransaction ? "/transaction-master" : apiPath}/delete`, { id: id })
 
             if (response) {
                 window.location.reload()

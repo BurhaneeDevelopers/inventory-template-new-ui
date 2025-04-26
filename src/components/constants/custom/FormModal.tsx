@@ -17,12 +17,13 @@ interface FormModalProps {
   description: string
   triggerButtonText: string
   Trigger?: any
+  localOpen?: boolean
+  setLocalOpen?: (values: boolean) => void
   children: React.ReactNode
 }
 
-export function FormModal({ useGlobalAtom = true, title, description, triggerButtonText, Trigger, children }: FormModalProps) {
+export function FormModal({ useGlobalAtom = true, title, description, triggerButtonText, Trigger, localOpen, setLocalOpen, children }: FormModalProps) {
   const [globalOpen, setGlobalOpen] = useAtom(formModalAtom)
-  const [localOpen, setLocalOpen] = useState(false)
 
   const open = useGlobalAtom ? globalOpen : localOpen
   const setOpen = useGlobalAtom ? setGlobalOpen : setLocalOpen

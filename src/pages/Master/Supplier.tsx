@@ -56,7 +56,7 @@ const Supplier = () => {
   useEffect(() => {
     fetchDataFromDB()
     setEditPath("/supplier-master")
-    
+
     // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [])
 
@@ -78,7 +78,7 @@ const Supplier = () => {
           />
         </FormModal>
       </PageTitileBar>
-      <DataTable data={data} columns={columns} fieldConfig={supplierFieldsConfig} />
+      <DataTable data={data} columns={columns} fieldConfig={supplierFieldsConfig} setData={setData} />
     </PageWapper>
   )
 }

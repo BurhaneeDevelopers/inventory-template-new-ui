@@ -18,6 +18,7 @@ const DetailBox: React.FC<DetailBoxProps> = ({ detailConfig, onPress }) => {
                 fieldConfig={detailConfig}
                 onSubmit={onPress}
                 submitButtonText="Add Item"
+                isTransaction={true}
             />
         </div>
     )

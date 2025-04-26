@@ -56,7 +56,7 @@ const Process = () => {
   useEffect(() => {
     fetchDataFromDB()
     setEditPath("/process-master")
-    
+
     // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [])
   return (
@@ -76,7 +76,7 @@ const Process = () => {
           />
         </FormModal>
       </PageTitileBar>
-      <DataTable data={data} columns={columns} fieldConfig={processFieldsConfig} />
+      <DataTable data={data} columns={columns} fieldConfig={processFieldsConfig} setData={setData} />
     </PageWapper>
   )
 }

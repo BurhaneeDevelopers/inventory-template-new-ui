@@ -11,7 +11,7 @@ import {
   getSortedRowModel,
   useReactTable,
 } from '@tanstack/react-table'
-import { ChevronDown, } from 'lucide-react'
+import { ChevronDown, Edit, } from 'lucide-react'
 import { Button } from '@/components/ui/button'
 import {
   DropdownMenu,
@@ -30,14 +30,17 @@ import {
 } from '@/components/ui/table'
 import EditMasterPopUp from '../blocks/master/EditMasterPopUp'
 import { DeletePopUp } from '../blocks/master/DeletePopUp'
+import { useAtom } from 'jotai'
+import { editRowAtom, isEditingAtom } from '../../../jotai/jotaiStore'
 
 interface DataTableProps<TData> {
   columns: ColumnDef<TData, unknown>[]
   data: TData[]
-  fieldConfig: object
+  fieldConfig?: object
+  setData?: (values: any) => void
 }
 
-export function DataTable<TData>({ columns, data, fieldConfig }: DataTableProps<TData>) {
+export function DataTable<TData>({ columns, data, fieldConfig, setData }: DataTableProps<TData>) {
   const [sorting, setSorting] = React.useState<SortingState>([])
   const [columnFilters, setColumnFilters] = React.useState<ColumnFiltersState>([])
   const [columnVisibility, setColumnVisibility] = React.useState<VisibilityState>(
@@ -46,6 +49,8 @@ export function DataTable<TData>({ columns, data, fieldConfig }: DataTableProps<
     ),
   )
   const [rowSelection, setRowSelection] = React.useState({})
+  const [, setIsEditing] = useAtom(isEditingAtom)
+  const [, setEditRowId] = useAtom(editRowAtom)
 
   const table = useReactTable({
     data,
@@ -131,8 +136,18 @@ export function DataTable<TData>({ columns, data, fieldConfig }: DataTableProps<
                   ))}
 
                   <TableCell key={row.id} className='flex gap-2'>
-                    <EditMasterPopUp data={row.original} fieldConfig={fieldConfig} />
-                    <DeletePopUp id={row.original.id} />
+                    {!fieldConfig ? <Button className="bg-orange-500"
+                      onClick={
+                        () => {
+                          setIsEditing(true);
+                          setEditRowId(row.original);
+                        }
+                      }>
+                      <Edit color="#fff" size={18} />
+                    </Button> :
+                      <EditMasterPopUp data={row.original} fieldConfig={fieldConfig} setData={setData} />
+                    }
+                    <DeletePopUp id={row.original.id} isTransaction={fieldConfig ? false : true} />
                   </TableCell>
                 </TableRow>
               ))

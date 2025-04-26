@@ -99,7 +99,7 @@ const Users = () => {
           />
         </FormModal>
       </PageTitileBar>
-      <DataTable data={data} columns={columns} />
+      <DataTable data={data} columns={columns} setData={setData} />
     </PageWapper>
   )
 }

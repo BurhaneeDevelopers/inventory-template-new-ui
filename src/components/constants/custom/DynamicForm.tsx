@@ -25,6 +25,9 @@ interface DynamicFormProps {
   fetchDataAfterSubmit?: () => void
   initialFields?: { [key: string]: string | number | boolean | undefined }
   submitButtonText?: string
+  isTransaction?: boolean
+  disabled?: boolean
+  setLocalOpen?: (values: boolean) => void
 }
 
 export function DynamicForm({
@@ -35,6 +38,9 @@ export function DynamicForm({
   fetchDataAfterSubmit,
   initialFields,
   submitButtonText = 'Submit',
+  isTransaction,
+  disabled,
+  setLocalOpen,
 }: DynamicFormProps) {
   // Formik setup with initialValues and validationSchema
   const [, setOpen] = useAtom(formModalAtom)
@@ -59,29 +65,31 @@ export function DynamicForm({
           if (fetchDataAfterSubmit) {
             fetchDataAfterSubmit()
           }
-          toast('Task Done Successfully')
           setOpen(false)
+          setLocalOpen(false)
+          toast.success('Task Done Successfully')
         }
       }
     },
   })
 
   useEffect(() => {
-    const quantity = Number(formik.values.quantity)
-    const unitPrice = Number(formik.values.unitPrice)
-    const discountPercentage = Number(formik.values.discountPercentage)
-    const taxPercentage = Number(formik.values.taxPercentage)
+    if (isTransaction) {
+      const quantity = Number(formik.values.quantity)
+      const unitPrice = Number(formik.values.unitPrice)
+      const discountPercentage = Number(formik.values.discountPercentage)
+      const taxPercentage = Number(formik.values.taxPercentage)
 
-    if (formik.values.quantity) {
-      const discountedPricePerUnit = unitPrice * (1 - Number(discountPercentage) / 100);
-      const subtotal = discountedPricePerUnit * quantity;
-      const taxAmount = Number((subtotal * (Number(taxPercentage) / 100)).toFixed(2));
-      const totalPrice = Number((subtotal + taxAmount).toFixed(0));
+      if (formik.values.quantity) {
+        const discountedPricePerUnit = unitPrice * (1 - discountPercentage / 100);
+        const subtotal = discountedPricePerUnit * quantity;
+        const taxAmount = (subtotal * (taxPercentage / 100)).toFixed(2)
+        const totalPrice = (Number(subtotal) + Number(taxAmount)).toFixed(0)
 
-      formik.setFieldValue("taxAmount", taxAmount)
-      formik.setFieldValue("totalPrice", totalPrice)
+        formik.setFieldValue("taxAmount", taxAmount)
+        formik.setFieldValue("totalPrice", totalPrice)
+      }
     }
-
     // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [formik.values])
 
@@ -192,7 +200,7 @@ export function DynamicForm({
         </div>
 
         <div className="flex">
-          <Button type="submit">{submitButtonText}</Button>
+          <Button type="submit" disabled={disabled}>{submitButtonText}</Button>
         </div>
       </form>
     </div>

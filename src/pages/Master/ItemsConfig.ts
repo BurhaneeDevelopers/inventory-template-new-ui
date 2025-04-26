@@ -15,7 +15,7 @@ export interface FieldConfig {
   label: string
   type: FieldType
   required: boolean
-  options?: { value: string | number | null, label: string | number | null }[] | string[]
+  options?: { value: string | number | null, label: string | number | null }[] | string[] | number[]
   initialValue: string | number | boolean | object | null
   validation?: Yup.AnySchema
   readOnly?: boolean

@@ -3,17 +3,19 @@ import { DynamicForm } from '@/components/constants/custom/DynamicForm'
 import { FormModal } from '@/components/constants/custom/FormModal'
 import { Button } from '@/components/ui/button'
 import { Edit } from 'lucide-react'
-import React from 'react'
+import React, { useState } from 'react'
 import { pathAtom } from '../../../../jotai/jotaiStore';
 import { useAtomValue } from 'jotai'
 
 interface EditMasterPopUpProps {
     data: any
     fieldConfig: any
+    setData?: (values: any) => void
 }
 
-const EditMasterPopUp: React.FC<EditMasterPopUpProps> = ({ data, fieldConfig, }) => {
+const EditMasterPopUp: React.FC<EditMasterPopUpProps> = ({ data, fieldConfig, setData }) => {
     const updatePath = useAtomValue(pathAtom)
+    const [localOpen, setLocalOpen] = useState(false)
 
     const updateData = async (values: any) => {
         try {
@@ -23,14 +25,25 @@ const EditMasterPopUp: React.FC<EditMasterPopUpProps> = ({ data, fieldConfig, })
             }
 
             const response = await apiService.post(apiService.v1 + `${updatePath}/update`, payload)
-
             return response
         } catch (error) {
             console.log(error)
         }
     }
 
-    const fetchData = () => { }
+    const fetchDataFromDB = async () => {
+        try {
+            const response = await apiService.post(apiService.v1 + `${updatePath}/get-all`, {})
+
+            if (response) {
+                setData(response)
+                return response
+            }
+        } catch (error) {
+            console.log(error)
+        }
+    }
+
     return (
         <FormModal
             title={`Edit Data`}
@@ -42,14 +55,17 @@ const EditMasterPopUp: React.FC<EditMasterPopUpProps> = ({ data, fieldConfig, })
                     <Edit color="#fff" size={18} />
                 </Button>
             }
+            localOpen={localOpen}
+            setLocalOpen={setLocalOpen}
         >
             <DynamicForm
                 initialFields={data}
                 title="Edit Details"
                 fieldConfig={fieldConfig}
                 handleSubmit={updateData}
-                fetchDataAfterSubmit={fetchData}
-                submitButtonText="Save Item"
+                fetchDataAfterSubmit={fetchDataFromDB}
+                submitButtonText="Update"
+                setLocalOpen={setLocalOpen}
             />
         </FormModal>
     )

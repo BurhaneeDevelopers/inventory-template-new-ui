@@ -94,7 +94,7 @@ const DesignMaster = () => {
           />
         </FormModal>
       </PageTitileBar>
-      <DataTable data={data} columns={columns} fieldConfig={designMasterFieldsConfig} />
+      <DataTable data={data} columns={columns} fieldConfig={designMasterFieldsConfig} setData={setData} />
     </PageWapper>
   )
 }
