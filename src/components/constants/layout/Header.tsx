@@ -16,8 +16,8 @@ export function Header() {
         <h1 className="text-base font-medium">Apparel Kingdom</h1>
       </div>
 
-      <div className="">
-        {/* <img src="/image.png" alt="Apparel Kingdom" className="w-16 h-12" /> */}
+      <div className="flex gap-4 pr-4">
+        <img src="/image.png" alt="Apparel Kingdom" className="w-16 h-12" />
         <Popover>
           <PopoverTrigger className="cursor-pointer">
             <Avatar>

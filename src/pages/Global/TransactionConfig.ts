@@ -41,7 +41,7 @@ export const TransactionMasterConfig: FieldConfig[] = [
     id: 'supplierID',
     label: 'Supplier',
     type: 'select',
-    required: true,
+    required: false,
     options: [],
     initialValue: null,
   },
@@ -60,7 +60,7 @@ export const TransactionMasterConfig: FieldConfig[] = [
     required: true,
     options: ['Open', 'Approved', 'Close', 'other'],
     initialValue: 'Open',
-    validation: Yup.string(),
+    validation: Yup.string().required('Status is required'),
   },
   {
     id: 'madeBy',
@@ -145,8 +145,8 @@ export const TransactionDetailsConfig: FieldConfig[] = [
     label: 'Tax Percentage',
     type: 'select',
     required: false,
-    initialValue: '18',
     options: ['10', '12', '18', '22'],
+    initialValue: '18',
     validation: Yup.string(),
   },
   {
@@ -154,8 +154,7 @@ export const TransactionDetailsConfig: FieldConfig[] = [
     label: 'Tax Amount',
     type: 'number',
     required: false,
-    initialValue: '0',
-    validation: Yup.string(),
+    initialValue: 0,
     readOnly: true
   },
   {
@@ -163,8 +162,7 @@ export const TransactionDetailsConfig: FieldConfig[] = [
     label: 'Total Price',
     type: 'number',
     required: false,
-    initialValue: '0',
-    validation: Yup.string(),
+    initialValue: 0,
     readOnly: true
   },
   {

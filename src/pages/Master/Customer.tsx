@@ -79,7 +79,7 @@ const Customer = () => {
           />
         </FormModal>
       </PageTitileBar>
-      <DataTable data={data} columns={columns} fieldConfig={customerFieldsConfig} />
+      <DataTable data={data} columns={columns} fieldConfig={customerFieldsConfig} setData={setData} />
     </PageWapper>
   )
 }

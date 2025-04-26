@@ -120,7 +120,7 @@ const Common = () => {
                     return <CommonButtons value={item.value} title={item.label} activeType={activeType} setActiveType={setActiveType} />
                 })}
             </div>
-            <DataTable data={data} columns={columns} fieldConfig={commonFieldsConfig} />
+            <DataTable data={data} columns={columns} fieldConfig={commonFieldsConfig} setData={setData} />
         </PageWapper>
     )
 }

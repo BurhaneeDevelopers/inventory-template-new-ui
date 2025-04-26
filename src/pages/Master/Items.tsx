@@ -34,7 +34,6 @@ const Items = () => {
   const fetchDataFromDB = async () => {
     try {
       const response = await apiService.post(apiService.v1 + '/item/get-all', {})
-      console.log(response)
 
       if (response) {
         setData(response)
@@ -80,7 +79,7 @@ const Items = () => {
         </FormModal>
       </PageTitileBar>
 
-      <DataTable data={data} columns={columns} fieldConfig={itemFieldsConfig} />
+      <DataTable data={data} columns={columns} fieldConfig={itemFieldsConfig} setData={setData} />
     </PageWapper>
   )
 }

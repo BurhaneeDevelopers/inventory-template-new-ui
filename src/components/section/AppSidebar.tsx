@@ -20,7 +20,7 @@ import {
   SidebarMenuSubItem,
 } from '@/components/ui/sidebar'
 import { Collapsible, CollapsibleContent, CollapsibleTrigger } from '../ui/collapsible'
-import { Link } from 'react-router'
+import { Link, useLocation } from 'react-router'
 
 // Menu items.
 const items = [
@@ -203,11 +203,9 @@ const items = [
   },
 ]
 
-// const location = useLocation()
-
 function AppSidebar() {
-  // const navigate = useNavigate()
-
+  const location = useLocation();
+  const isDashboardActive = location.pathname === '/';
   return (
     <Sidebar>
       <SidebarContent className="p-2 flex flex-col gap-4 border-r border-gray-300">
@@ -219,7 +217,7 @@ function AppSidebar() {
             <Link to={'/'}>
               <SidebarMenuButton asChild>
                 {/* <MenuIcon size={24} color="#000" /> */}
-                <span className="text-base font-semibold">Dashboard</span>
+                <span className={isDashboardActive ? "text-primary font-semibold bg-gray-200 w-full rounded p-1" : "text-muted-foreground"}>Dashboard</span>
               </SidebarMenuButton>
             </Link>
           </SidebarMenuItem>
@@ -235,15 +233,17 @@ function AppSidebar() {
                 </CollapsibleTrigger>
                 <CollapsibleContent>
                   <SidebarMenuSub>
-                    {item.items?.map(subItem => (
-                      <SidebarMenuSubItem key={subItem.title}>
+                    {item.items?.map(subItem => {
+                      const isActive = location.pathname === subItem.url;
+
+                      return <SidebarMenuSubItem key={subItem.title}>
                         <SidebarMenuSubButton asChild>
                           <Link to={subItem.url}>
-                            <span className="">{subItem.title}</span>
+                            <span className={isActive ? "text-primary font-semibold bg-gray-200 w-full rounded p-1" : "text-muted-foreground"}>{subItem.title}</span>
                           </Link>
                         </SidebarMenuSubButton>
                       </SidebarMenuSubItem>
-                    ))}
+                    })}
                   </SidebarMenuSub>
                 </CollapsibleContent>
               </SidebarMenuItem>

@@ -8,6 +8,7 @@ import { Toaster } from './ui/sonner'
 function Layout() {
   return (
     <>
+      <Toaster position="top-center" duration={3000} richColors />
       <SidebarProvider>
         <AppSidebar />
         <SidebarInset>
@@ -16,7 +17,6 @@ function Layout() {
             <Separator />
             <Outlet />
             <Separator />
-            <Toaster />
           </main>
         </SidebarInset>
       </SidebarProvider>
