@@ -1,12 +1,12 @@
 import React from 'react'
 import { createTransactionInDb } from '@/apiService/services';
-import DetailBox from './DetailBox';
+import DetailBox from '../Global/DetailBox';
 import { TransactionDetailsConfig, TransactionMasterConfig } from '@/pages/Global/TransactionConfig';
 import { Table, TableBody, TableCell, TableHead, TableHeader, TableRow } from '@/components/ui/table';
 import { Button } from '@/components/ui/button';
 import { Edit, Trash2 } from 'lucide-react';
 import { Item } from '@/pages/Sales-Enquiry/Creation';
-import MasterBox from './MasterBox';
+import MasterBox from '../Global/MasterBox';
 
 const CreateBox = ({ setActiveTab, items, setItems, fetchData, type, title }) => {
 

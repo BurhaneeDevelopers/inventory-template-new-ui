@@ -1,54 +1,41 @@
 import React from 'react'
-import { updateTransactionInDb } from '@/apiService/services';
-import DetailBox from '../Global/DetailBox';
-import { TransactionDetailsConfig, TransactionMasterConfig } from '@/pages/Global/TransactionConfig';
 import { Table, TableBody, TableCell, TableHead, TableHeader, TableRow } from '@/components/ui/table';
 import { Button } from '@/components/ui/button';
 import { Edit, Trash2 } from 'lucide-react';
 import { Item } from '@/pages/Sales-Enquiry/Creation';
 import MasterBox from '../Global/MasterBox';
-import { useAtom } from 'jotai';
-import { editRowAtom } from '../../../../jotai/jotaiStore';
+import DetailBox from '../Global/DetailBox';
 
-const EditBox = ({ setActiveTab, transaction, setTransaction, setIsEditing, fetchData }) => {
-    const [editRow] = useAtom(editRowAtom)
+const CreateBox = ({ detailConfig, masterConfig, onPress, items, setItems, fetchData, title }) => {
 
     const handleAddItem = (newItem: Item) => {
-        setTransaction(prev => [...prev, { ...newItem, sourceReferenceID: null }])
+        setItems(prev => [...prev, newItem])
     }
 
     const handleDeleteItem = (index: number) => {
-        setTransaction(prev => prev.filter((_, i) => i !== index))
+        setItems(prev => prev.filter((_, i) => i !== index))
     }
 
-    const totalQuantity = transaction.detail.reduce((sum, item) => sum + Number(item.quantity || 0), 0)
-    const totalPrice = transaction.detail.reduce((sum, item) => sum + Number(item.totalPrice || 0), 0)
+    const totalQuantity = items.reduce((sum, item) => sum + Number(item.inputQty || 0), 0)
     return (
         <div className="flex flex-col gap-7">
-            <MasterBox title='Edit Purchase Order'
-                masterConfig={TransactionMasterConfig}
-                onPress={(values) => {
-                    const payload = {
-                        ...values,
-                        id: editRow.id,
-                        referenceID: editRow.referenceID
-                    }
-                    updateTransactionInDb(payload, transaction.detail, setActiveTab, setIsEditing, fetchData);
-                }}
+            <MasterBox
+                title={title}
+                masterConfig={masterConfig}
+                onPress={onPress}
                 fetchData={fetchData}
-                disabled={transaction?.detail.length === 0}
-                initialFields={transaction}
+                disabled={items.length === 0}
             />
-            <DetailBox detailConfig={TransactionDetailsConfig} onPress={handleAddItem} />
+            <DetailBox detailConfig={detailConfig} onPress={handleAddItem} />
 
             <div className="">
-                {transaction?.detail.length > 0 && (
+                {items.length > 0 && (
                     <div className="bg-white p-4 rounded-lg">
                         <h2 className="text-xl font-semibold mb-4">Added Items</h2>
                         <Table>
                             <TableHeader>
                                 <TableRow>
-                                    {TransactionDetailsConfig.filter(field => field.id !== 'itemId').map(field => (
+                                    {detailConfig.filter(field => field.id !== 'itemId').map(field => (
                                         <TableHead key={field.id}>{field.label}</TableHead>
                                     ))}
                                     {/* <TableHead>Edit</TableHead> */}
@@ -56,9 +43,9 @@ const EditBox = ({ setActiveTab, transaction, setTransaction, setIsEditing, fetc
                                 </TableRow>
                             </TableHeader>
                             <TableBody>
-                                {transaction.detail.map((item, index) => (
+                                {items.map((item, index) => (
                                     <TableRow key={index}>
-                                        {TransactionDetailsConfig.filter(field => field.id !== 'itemId').map(field => (
+                                        {detailConfig.filter(field => field.id !== 'itemId').map(field => (
                                             <TableCell key={field.id}>{item[field.id]}</TableCell>
                                         ))}
                                         <TableCell className="space-x-4">
@@ -85,14 +72,14 @@ const EditBox = ({ setActiveTab, transaction, setTransaction, setIsEditing, fetc
                         <h4 className="text-base">Total QTY:</h4>
                         <h3 className="text-2xl font-medium">{totalQuantity}</h3>
                     </div>
-                    <div className="flex items-end gap-2">
+                    {/* <div className="flex items-end gap-2">
                         <h4 className="text-base">Total Price:</h4>
                         <h3 className="text-2xl font-medium">{totalPrice}</h3>
-                    </div>
+                    </div> */}
                 </div>
             </div>
         </div>
     )
 }
 
-export default EditBox
+export default CreateBox

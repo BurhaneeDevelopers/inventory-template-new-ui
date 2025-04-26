@@ -62,7 +62,7 @@ const Creation = () => {
 
   const sections: Section[] = [
     { title: 'Enquiry Creation Listing', key: 'listing' },
-    { title: 'Enquiry Creation Creation', key: 'creation' },
+    { title: 'Enquiry Creation', key: 'creation' },
     ...(isEditing ? [{ title: `Edit Enquiry - ${transaction?.transactionNumber}`, key: 'edit' }] : []),
   ]
 
