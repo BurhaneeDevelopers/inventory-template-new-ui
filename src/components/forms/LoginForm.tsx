@@ -1,14 +1,15 @@
-import { useState } from 'react'
-import * as Yup from 'yup'
-import { ErrorMessage, Field, Form, Formik } from 'formik'
 import { LoginData } from '@/api/services/service.types'
+import tokenService from '@/api/services/tokenService'
+import { Button } from '@/components/ui/button'
 import { Input } from '@/components/ui/input'
 import { Label } from '@/components/ui/label'
-import { Button } from '@/components/ui/button'
-import { apiService } from '../../apiService/apiService'
-import { userAtom } from '../../../jotai/jotaiStore'
+import { ErrorMessage, Field, Form, Formik } from 'formik'
 import { useAtom } from 'jotai'
+import { useState } from 'react'
 import { useNavigate } from 'react-router'
+import * as Yup from 'yup'
+import { userAtom } from '../../../jotai/jotaiStore'
+import { apiService } from '../../apiService/apiService'
 
 // Validation schema
 const SignInSchema = Yup.object().shape({
@@ -36,8 +37,8 @@ const LoginForm = () => {
         // Assuming response contains accessToken and refreshToken
         const { AccessToken, RefreshToken } = response
 
-        localStorage.setItem('accessToken', AccessToken)
-        localStorage.setItem('refreshToken', RefreshToken)
+        tokenService.setAccessToken(AccessToken)
+        tokenService.setRefreshToken(RefreshToken)
 
         setUser(response) // from your userAtom
         navigate('/')
