@@ -22,20 +22,16 @@ import PurchaseInvoice from '@/pages/Procurement/PurchaseInvoice'
 import Common from '@/pages/Master/Common'
 import SOGeneration from '@/pages/Sales-Enquiry/SOGeneration'
 import Reports from '@/pages/Home/Reports'
+import InternalOrder from '@/pages/Material-Management/InternalOrder'
+import MaterialIssued from '@/pages/Material-Management/Material-Issue'
+import MaterialRequisition from '@/pages/Material-Management/Material-Requisition'
+import JobCard from '@/pages/Material-Management/JobCard'
+import ProductionSlip from '@/pages/Material-Management/ProductionSlip'
 // import PurchaseInvoice from '@/pages/Procurement/PurchaseInvoice'
 // import { apiService } from './../../apiService/apiService';
 
 // Dashboard
 const Dashboard = () => <Reports />
-
-// In House Production pages
-const InHouseInternalOrder = () => <PlaceholderPage title="Internal Order Generation" />
-const InHouseMaterialIssue = () => <PlaceholderPage title="Material Issue from store" />
-const InHouseMaterialRequisition = () => (
-  <PlaceholderPage title="Material Requisition by Production" />
-)
-const InHouseJobCard = () => <PlaceholderPage title="Job Card" />
-const InHouseProductionSlip = () => <PlaceholderPage title="Production Slip" />
 
 // External Production pages
 const ExternalJobWork = () => <PlaceholderPage title="Create Job Work" />
@@ -49,7 +45,7 @@ const SalesChallan = () => <PlaceholderPage title="Sales Challan" />
 const SalesInvoice = () => <PlaceholderPage title="Sales Invoice" />
 const SalesReturn = () => <PlaceholderPage title="Sales Return" />
 
-const ProtectedRoutes = () => {
+const GlobalRoutes = () => {
   // useEffect(() => {
   //     const refreshSession = async () => {
   //         const refreshToken = localStorage.getItem("refreshToken");
@@ -113,25 +109,25 @@ const ProtectedRoutes = () => {
 
               {/* In-house Production module */}
               <Route
-                path="/in-house-production"
-                element={<PlaceholderPage title="In House Production" />}
+                path="/material-management"
+                element={<PlaceholderPage title="Material Management" />}
               />
               <Route
-                path="/in-house-production/internal-order"
-                element={<InHouseInternalOrder />}
+                path="/material-management/internal-order"
+                element={<InternalOrder />}
               />
               <Route
-                path="/in-house-production/material-issue"
-                element={<InHouseMaterialIssue />}
+                path="/material-management/material-issue"
+                element={<MaterialIssued />}
               />
               <Route
-                path="/in-house-production/material-requisition"
-                element={<InHouseMaterialRequisition />}
+                path="/material-management/material-requisition"
+                element={<MaterialRequisition />}
               />
-              <Route path="/in-house-production/job-card" element={<InHouseJobCard />} />
+              <Route path="/material-management/job-card" element={<JobCard />} />
               <Route
-                path="/in-house-production/production-slip"
-                element={<InHouseProductionSlip />}
+                path="/material-management/production-slip"
+                element={<ProductionSlip />}
               />
 
               {/* External Production module */}
@@ -164,4 +160,4 @@ const ProtectedRoutes = () => {
   )
 }
 
-export default ProtectedRoutes
+export default GlobalRoutes

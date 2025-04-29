@@ -1,5 +1,7 @@
+BACKEND -
 Validate Duplicate value
 Currency Master - In Common Masters - Customer Master - Single Currency for one customer
+Incremental Transaction Number
 
 FRONT - 
 6 digits number for LOT
@@ -7,3 +9,8 @@ show particular Design & Currency related to customer
 Material Management  - New item in sidebar - Transaction
 1) Material Issue from store
 2) Material Issue To store
+
+
+
+TO BE DONE - 
+Complete BOM Edit
