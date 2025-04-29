@@ -1,5 +1,5 @@
 import {
-  Building2,
+  Bus,
   ChevronRight,
   Database,
   GitGraphIcon,
@@ -114,29 +114,33 @@ const items = [
     ],
   },
   {
-    menu: 'In House Production',
-    url: '/in-house-production',
-    icon: Building2,
+    menu: 'Material Management',
+    url: '/material-management',
+    icon: Bus,
     items: [
       {
         title: 'Internal Order Generation',
-        url: '/in-house-production/internal-order',
-      },
-      {
-        title: 'Material Issue from store',
-        url: '/in-house-production/material-issue',
+        url: '/material-management/internal-order',
       },
       {
         title: 'Material Requisition by Production',
-        url: '/in-house-production/material-requisition',
+        url: '/material-management/material-requisition',
+      },
+      {
+        title: 'Material Issue from store',
+        url: '/material-management/material-issue',
+      },
+      {
+        title: 'Material Received',
+        url: '/material-management/production-slip',
       },
       {
         title: 'Job Card',
-        url: '/in-house-production/job-card',
+        url: '/material-management/job-card',
       },
       {
         title: 'Production Slip',
-        url: '/in-house-production/production-slip',
+        url: '/material-management/production-slip',
       },
     ],
   },

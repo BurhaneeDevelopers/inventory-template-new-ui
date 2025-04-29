@@ -34,12 +34,20 @@ const commonTypes = [
         value: 2
     },
     {
-        label: "Product Type",
+        label: "Size Master",
         value: 3
     },
     {
-        label: "Color Master",
+        label: "Product Type",
         value: 4
+    },
+    {
+        label: "Color Master",
+        value: 5
+    },
+    {
+        label: "Currency Master",
+        value: 6
     },
 ]
 
