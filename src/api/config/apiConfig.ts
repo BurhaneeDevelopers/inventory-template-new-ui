@@ -16,17 +16,17 @@ type Environments = {
 // Environment specific URLs
 const ENV: Environments = {
   dev: {
-    BASE_URL: 'https://erpakapi.bay53.com/api/1/',
+    BASE_URL: 'https://erpakapi.bay53.com/api',
     TIMEOUT: 20 * 1000,
     API_KEY: 'your-dev-api-key',
   },
   staging: {
-    BASE_URL: 'https://erpakapi.bay53.com/api/1/',
+    BASE_URL: 'https://erpakapi.bay53.com/api',
     TIMEOUT: 20 * 1000,
     API_KEY: 'your-staging-api-key',
   },
   prod: {
-    BASE_URL: 'https://botapi.airah.ai/api/1/',
+    BASE_URL: 'https://botapi.airah.ai/api',
     TIMEOUT: 20 * 1000,
     API_KEY: 'your-prod-api-key',
   },
