@@ -35,7 +35,7 @@ const LoginForm = () => {
 
       if (response) {
         // Assuming response contains accessToken and refreshToken
-        const { AccessToken, RefreshToken } = response
+        const { AccessToken, RefreshToken } = response.data
 
         tokenService.setAccessToken(AccessToken)
         tokenService.setRefreshToken(RefreshToken)
