@@ -3,7 +3,6 @@ import { BrowserRouter, Route, Routes } from 'react-router'
 import '../../index.css'
 import PlaceholderPage from '../PlaceholderPage'
 import Signin from '@/pages/Auth/SignIn'
-import ProtectedRoute from '../ProtectedRoute'
 import Layout from '../Layout'
 import Items from '@/pages/Master/Items'
 import Machine from '@/pages/Master/Machine'
@@ -27,6 +26,7 @@ import MaterialIssued from '@/pages/Material-Management/Material-Issue'
 import MaterialRequisition from '@/pages/Material-Management/Material-Requisition'
 import JobCard from '@/pages/Material-Management/JobCard'
 import ProductionSlip from '@/pages/Material-Management/ProductionSlip'
+import ProtectedRouteV2 from '../ProtectedRouteV2'
 // import PurchaseInvoice from '@/pages/Procurement/PurchaseInvoice'
 // import { apiService } from './../../apiService/apiService';
 
@@ -73,7 +73,7 @@ const GlobalRoutes = () => {
           <Route path="/signin" element={<Signin />} />
 
           {/* Protected routes */}
-          <Route element={<ProtectedRoute />}>
+          <Route element={<ProtectedRouteV2 />}>
             <Route element={<Layout />}>
               {/* Dashboard */}
               <Route path="/" element={<Dashboard />} />
@@ -102,33 +102,21 @@ const GlobalRoutes = () => {
               <Route path="/procurement/po-generation" element={<POGeneration />} />
               {/* <Route path="/procurement/check-inventory" element={<CheckInventory />} /> */}
               <Route path="/procurement/grn" element={<GRN />} />
-              <Route
-                path="/procurement/purchase-invoice"
-                element={<PurchaseInvoice />}
-              />
+              <Route path="/procurement/purchase-invoice" element={<PurchaseInvoice />} />
 
               {/* In-house Production module */}
               <Route
                 path="/material-management"
                 element={<PlaceholderPage title="Material Management" />}
               />
-              <Route
-                path="/material-management/internal-order"
-                element={<InternalOrder />}
-              />
-              <Route
-                path="/material-management/material-issue"
-                element={<MaterialIssued />}
-              />
+              <Route path="/material-management/internal-order" element={<InternalOrder />} />
+              <Route path="/material-management/material-issue" element={<MaterialIssued />} />
               <Route
                 path="/material-management/material-requisition"
                 element={<MaterialRequisition />}
               />
               <Route path="/material-management/job-card" element={<JobCard />} />
-              <Route
-                path="/material-management/production-slip"
-                element={<ProductionSlip />}
-              />
+              <Route path="/material-management/production-slip" element={<ProductionSlip />} />
 
               {/* External Production module */}
               <Route

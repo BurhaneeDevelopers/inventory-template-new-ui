@@ -2,7 +2,7 @@ import { useEffect, useState } from 'react'
 import { Navigate, Outlet } from 'react-router'
 import tokenService from '@/api/services/tokenService'
 
-function ProtectedRoute() {
+function ProtectedRouteV2() {
   const [isLoading, setIsLoading] = useState(true)
   const [isAuthenticated, setIsAuthenticated] = useState(false)
 
@@ -24,6 +24,7 @@ function ProtectedRoute() {
         tokenService.clearAccessToken()
         tokenService.clearRefreshToken()
         setIsAuthenticated(false)
+        console.error(error)
       } finally {
         setIsLoading(false)
       }
@@ -43,4 +44,4 @@ function ProtectedRoute() {
   return <Outlet />
 }
 
-export default ProtectedRoute
+export default ProtectedRouteV2

@@ -1,13 +1,14 @@
+import { authService } from '@/api/services/authService'
 import { Avatar, AvatarFallback, AvatarImage } from '@/components/ui/avatar'
 import { Button } from '@/components/ui/button'
 import { Popover, PopoverContent, PopoverTrigger } from '@/components/ui/popover'
 import { Separator } from '@/components/ui/separator'
 import { SidebarTrigger } from '@/components/ui/sidebar'
 import { LogOut } from 'lucide-react'
-import { useNavigate } from 'react-router'
+// import { useNavigate } from 'react-router'
 
 export function Header() {
-  const navigate = useNavigate()
+  // const navigate = useNavigate()
   return (
     <header className="flex h-(--header-height) shrink-0 justify-between items-center gap-2 border-b transition-[width,height] ease-linear group-has-data-[collapsible=icon]/sidebar-wrapper:h-(--header-height) p-2 bg-white">
       <div className="flex w-full items-center gap-1 px-4 lg:gap-2 lg:px-6">
@@ -30,9 +31,7 @@ export function Header() {
               className="flex"
               variant={'outline'}
               onClick={() => {
-                localStorage.removeItem('accessToken')
-                localStorage.removeItem('refreshToken')
-                navigate('/signin')
+                authService.logout()
               }}
             >
               <LogOut />
