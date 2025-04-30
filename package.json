@@ -8,7 +8,7 @@
     "build": "tsc -b && vite build",
     "lint": "eslint .",
     "preview": "vite preview",
-    "prepare": "husky && husky install"
+    "prepare": "husky || true"
   },
   "dependencies": {
     "@radix-ui/react-avatar": "^1.1.6",
