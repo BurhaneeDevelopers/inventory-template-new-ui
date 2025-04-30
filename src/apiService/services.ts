@@ -4,7 +4,7 @@ import { Item } from '@/pages/Sales-Enquiry/Creation'
 
 export const fetchTransactionsFromDB = async (type: number, setData: (value: any) => void) => {
   try {
-    const response = await apiService.post(apiService.v1 + '/transaction-master/get-all', { transactionType: type })
+    const response = await apiService.post('/transaction-master/get-all', { transactionType: type })
 
     if (response) {
       setData(response)
@@ -16,7 +16,7 @@ export const fetchTransactionsFromDB = async (type: number, setData: (value: any
 
 export const fetchSingleTransactionForEdit = async (id: number, setTransaction: any, setActiveTab: any) => {
   try {
-    const response = await apiService.get(apiService.v1 + '/transaction-master/get', { id: id })
+    const response = await apiService.get('/transaction-master/get', { id: id })
 
     if (response) {
       setTransaction(response)
@@ -32,7 +32,7 @@ export const fetchSingleTransactionForEdit = async (id: number, setTransaction: 
 
 export const fetchItemsFromDB = async () => {
   try {
-    const response = await apiService.post(apiService.v1 + '/item/get-all', {})
+    const response = await apiService.post('/item/get-all', {})
 
     if (response) {
       return response
@@ -46,7 +46,7 @@ export const fetchItemsFromDB = async () => {
 
 export const fetchDesignFromDB = async () => {
   try {
-    const response = await apiService.post(apiService.v1 + '/design-master/get-all', {})
+    const response = await apiService.post('/design-master/get-all', {})
 
     if (response) {
       return response
@@ -60,7 +60,7 @@ export const fetchDesignFromDB = async () => {
 
 export const fetchCustomerFromDB = async () => {
   try {
-    const response = await apiService.post(apiService.v1 + '/customer-master/get-all', {})
+    const response = await apiService.post('/customer-master/get-all', {})
 
     if (response) {
       return response
@@ -74,7 +74,7 @@ export const fetchCustomerFromDB = async () => {
 
 export const fetchSuppliersFromDB = async () => {
   try {
-    const response = await apiService.post(apiService.v1 + '/supplier-master/get-all', {})
+    const response = await apiService.post('/supplier-master/get-all', {})
 
     if (response) {
       return response
@@ -88,7 +88,7 @@ export const fetchSuppliersFromDB = async () => {
 
 export const fetchUsersFromDB = async () => {
   try {
-    const response = await apiService.post(apiService.v1 + '/user-master/get-all', {})
+    const response = await apiService.post('/user-master/get-all', {})
 
     if (response) {
       return response
@@ -168,7 +168,7 @@ export const createTransactionInDb = async (values: { [key: string]: string | nu
       detail: items
     }
 
-    const response = await apiService.post(apiService.v1 + '/transaction-master/save', payload)
+    const response = await apiService.post('/transaction-master/save', payload)
     if (response) {
       fetchData()
       setActiveTab("listing")
@@ -186,7 +186,7 @@ export const updateTransactionInDb = async (values: { [key: string]: string | nu
       detail: items
     }
 
-    const response = await apiService.post(apiService.v1 + '/transaction-master/update', payload)
+    const response = await apiService.post('/transaction-master/update', payload)
     if (response) {
       fetchData()
       setActiveTab("listing")

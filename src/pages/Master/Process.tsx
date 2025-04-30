@@ -33,7 +33,7 @@ const Process = () => {
 
   const fetchDataFromDB = async () => {
     try {
-      const response = await apiService.post(apiService.v1 + '/process-master/get-all', {})
+      const response = await apiService.post('/process-master/get-all', {})
 
       if (response) {
         setData(response)
@@ -45,7 +45,7 @@ const Process = () => {
 
   const createProcessInDb = async (values: { [key: string]: string | number | boolean }) => {
     try {
-      const response = await apiService.post(apiService.v1 + '/process-master/save', values)
+      const response = await apiService.post('/process-master/save', values)
 
       return response
     } catch (error) {

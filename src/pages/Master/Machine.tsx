@@ -33,7 +33,7 @@ const Machine = () => {
 
   const fetchDataFromDB = async () => {
     try {
-      const response = await apiService.post(apiService.v1 + '/machine-master/get-all', {})
+      const response = await apiService.post('/machine-master/get-all', {})
 
       if (response) {
         setData(response)
@@ -45,7 +45,7 @@ const Machine = () => {
 
   const createMachineInDb = async (values: { [key: string]: string | number | boolean }) => {
     try {
-      const response = await apiService.post(apiService.v1 + '/machine-master/save', values)
+      const response = await apiService.post('/machine-master/save', values)
 
       return response
     } catch (error) {

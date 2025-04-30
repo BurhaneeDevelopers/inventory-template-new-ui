@@ -24,7 +24,7 @@ const EditMasterPopUp: React.FC<EditMasterPopUpProps> = ({ data, fieldConfig, se
                 id: data.id
             }
 
-            const response = await apiService.post(apiService.v1 + `${updatePath}/update`, payload)
+            const response = await apiService.post(`${updatePath}/update`, payload)
             return response
         } catch (error) {
             console.log(error)
@@ -33,7 +33,7 @@ const EditMasterPopUp: React.FC<EditMasterPopUpProps> = ({ data, fieldConfig, se
 
     const fetchDataFromDB = async () => {
         try {
-            const response = await apiService.post(apiService.v1 + `${updatePath}/get-all`, {})
+            const response = await apiService.post(`${updatePath}/get-all`, {})
 
             if (response) {
                 setData(response)

@@ -31,7 +31,7 @@ const LoginForm = () => {
   const handleSubmit = async (values: LoginData) => {
     setIsSubmitting(true)
     try {
-      const response = await apiService.post(apiService.v1 + '/login', values)
+      const response = await apiService.post('/login', values)
 
       if (response) {
         // Assuming response contains accessToken and refreshToken

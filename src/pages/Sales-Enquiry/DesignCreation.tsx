@@ -67,7 +67,7 @@ const DesignCreation = () => {
 
   const fetchDataFromDB = async () => {
     try {
-      const response = await apiService.post(apiService.v1 + '/transaction-master/get-all', {})
+      const response = await apiService.post('/transaction-master/get-all', {})
 
       if (response) {
         setData(response)

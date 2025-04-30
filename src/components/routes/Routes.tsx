@@ -53,7 +53,7 @@ const GlobalRoutes = () => {
 
   //         try {
   //             const res = await apiService.post(
-  //                 apiService.v1 + "/refresh-token",
+  //                 "/refresh-token",
   //                 refreshToken
   //             );
   //             localStorage.setItem("accessToken", res.data.AccessToken);

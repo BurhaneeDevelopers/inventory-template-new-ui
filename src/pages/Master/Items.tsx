@@ -33,7 +33,7 @@ const Items = () => {
 
   const fetchDataFromDB = async () => {
     try {
-      const response = await apiService.post(apiService.v1 + '/item/get-all', {})
+      const response = await apiService.post('/item/get-all', {})
 
       if (response) {
         setData(response)
@@ -45,7 +45,7 @@ const Items = () => {
 
   const createItemInDb = async (values: { [key: string]: string | number | boolean }) => {
     try {
-      const response = await apiService.post(apiService.v1 + '/item/save', values)
+      const response = await apiService.post('/item/save', values)
 
       return response
     } catch (error) {

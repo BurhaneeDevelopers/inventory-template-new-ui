@@ -32,7 +32,7 @@ export function DeletePopUp({ id, isTransaction }: DeleteProps) {
 
     const deleteData = async () => {
         try {
-            const response = await apiService.delete(apiService.v1 + `${isTransaction ? "/transaction-master" : apiPath}/delete`, { id: id })
+            const response = await apiService.delete(`${isTransaction ? "/transaction-master" : apiPath}/delete`, { id: id })
 
             if (response) {
                 window.location.reload()

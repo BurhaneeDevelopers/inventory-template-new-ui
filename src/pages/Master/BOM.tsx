@@ -57,7 +57,7 @@ const Creation = () => {
 
   const fetchDataFromDB = async () => {
     try {
-      const response = await apiService.post(apiService.v1 + '/bom-master/get-all', {})
+      const response = await apiService.post('/bom-master/get-all', {})
 
       if (response) {
         setData(response)
@@ -75,7 +75,7 @@ const Creation = () => {
         ...values,
         detail: items,
       }
-      const response = await apiService.post(apiService.v1 + '/bom-master/save', payload)
+      const response = await apiService.post('/bom-master/save', payload)
       setActiveTab('listing')
       return response
     } catch (error) {
