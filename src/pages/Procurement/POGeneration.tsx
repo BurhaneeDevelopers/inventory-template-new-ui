@@ -5,7 +5,11 @@ import { ColumnDef } from '@tanstack/react-table'
 import { ArrowUpDown } from 'lucide-react'
 import SubTabs from '@/components/constants/SubTabs'
 import { useEffect, useState } from 'react'
-import { fetchSingleTransactionForEdit, fetchTransactionsFromDB, handleManipulateDropdown } from '@/apiService/services'
+import {
+  fetchSingleTransactionForEdit,
+  fetchTransactionsFromDB,
+  handleManipulateDropdown,
+} from '@/apiService/services'
 import { TransactionMasterConfig } from '../Global/TransactionConfig'
 import { Item, Row, Section } from '../Sales-Enquiry/Creation'
 import { editRowAtom, isEditingAtom } from '../../../jotai/jotaiStore'
@@ -13,7 +17,7 @@ import { useAtom } from 'jotai'
 import EditBox from '@/components/constants/Transactions/EditBox'
 import CreateBox from '@/components/constants/Transactions/CreateBox'
 
-const excludedFields = ['customerName'];
+const excludedFields = ['customerName']
 
 const columns: ColumnDef<Row>[] = TransactionMasterConfig
   // .filter(field => !excludedFields.includes(field.id))
@@ -27,7 +31,7 @@ const columns: ColumnDef<Row>[] = TransactionMasterConfig
       </Button>
     ),
     cell: ({ row }) => <div>{row.getValue(field.id)}</div>,
-  }));
+  }))
 
 const POGeneration = () => {
   const [isEditing, setIsEditing] = useAtom(isEditingAtom)
@@ -52,12 +56,20 @@ const POGeneration = () => {
     if (isEditing) {
       fetchSingleTransactionForEdit(editRow.id, setTransaction, setActiveTab)
     }
-
     // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [isEditing])
 
+  const handleCreatePDF = () => {
+    // Implement PDF creation logic here
+  }
+
   return (
     <PageWapper className="!bg-transparent !shadow-none">
+      <div className="flex justify-end">
+        <Button onClick={handleCreatePDF} className="mb-4">
+          Create PDF
+        </Button>
+      </div>
       <SubTabs sections={sections} activeTab={activeTab} onTabChange={setActiveTab} />
       {activeTab === 'listing' && (
         <div className="flex flex-col gap-4 bg-white p-4 rounded-lg h-fit">
@@ -66,10 +78,9 @@ const POGeneration = () => {
           <DataTable data={data} columns={columns} />
         </div>
       )}
-
       {activeTab === 'creation' && (
         <CreateBox
-          title={"Purchase Order Creation"}
+          title={'Purchase Order Creation'}
           setActiveTab={setActiveTab}
           items={items}
           setItems={setItems}
@@ -77,7 +88,6 @@ const POGeneration = () => {
           fetchData={() => fetchTransactionsFromDB(7, setData)}
         />
       )}
-
       {activeTab === 'edit' && (
         <EditBox
           title={`Edit Purchase Order - ${transaction?.transactionNumber}`}

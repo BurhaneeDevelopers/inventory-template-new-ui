@@ -58,7 +58,7 @@ const Common = () => {
 
     const fetchDataFromDB = async () => {
         try {
-            const response = await apiService.post(apiService.v1 + '/common-master/get-all', { masterType: activeType })
+            const response = await apiService.post('/common-master/get-all', { masterType: activeType })
             console.log(response)
 
             if (response) {
@@ -72,7 +72,7 @@ const Common = () => {
     const createCsutomerInDb = async (values: { [key: string]: string | number | boolean }) => {
         try {
             console.log(values)
-            const response = await apiService.post(apiService.v1 + '/common-master/save', values)
+            const response = await apiService.post('/common-master/save', values)
 
             return response
         } catch (error) {

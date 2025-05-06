@@ -33,7 +33,7 @@ const Customer = () => {
 
   const fetchDataFromDB = async () => {
     try {
-      const response = await apiService.post(apiService.v1 + '/customer-master/get-all', {})
+      const response = await apiService.post('/customer-master/get-all', {})
       console.log(response)
 
       if (response) {
@@ -46,7 +46,7 @@ const Customer = () => {
 
   const createCsutomerInDb = async (values: { [key: string]: string | number | boolean }) => {
     try {
-      const response = await apiService.post(apiService.v1 + '/customer-master/save', values)
+      const response = await apiService.post('/customer-master/save', values)
 
       return response
     } catch (error) {

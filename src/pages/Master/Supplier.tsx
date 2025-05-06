@@ -33,7 +33,7 @@ const Supplier = () => {
 
   const fetchDataFromDB = async () => {
     try {
-      const response = await apiService.post(apiService.v1 + '/supplier-master/get-all', {})
+      const response = await apiService.post('/supplier-master/get-all', {})
 
       if (response) {
         setData(response)
@@ -45,7 +45,7 @@ const Supplier = () => {
 
   const createSupplierInDb = async (values: { [key: string]: string | number | boolean }) => {
     try {
-      const response = await apiService.post(apiService.v1 + '/supplier-master/save', values)
+      const response = await apiService.post('/supplier-master/save', values)
 
       return response
     } catch (error) {

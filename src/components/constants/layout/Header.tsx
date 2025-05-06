@@ -1,3 +1,4 @@
+import { authService } from '@/api/services/authService'
 import { Avatar, AvatarFallback, AvatarImage } from '@/components/ui/avatar'
 import { Button } from '@/components/ui/button'
 import { Popover, PopoverContent, PopoverTrigger } from '@/components/ui/popover'
@@ -30,9 +31,8 @@ export function Header() {
               className="flex"
               variant={'outline'}
               onClick={() => {
-                localStorage.removeItem('accessToken')
-                localStorage.removeItem('refreshToken')
-                navigate('/signin')
+                authService.logout()
+                navigate('/login')
               }}
             >
               <LogOut />

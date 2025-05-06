@@ -45,7 +45,7 @@ const Users = () => {
 
   const fetchDataFromDB = async () => {
     try {
-      const response = await apiService.post(apiService.v1 + '/user-master/get-all', {})
+      const response = await apiService.post('/user-master/get-all', {})
 
       if (response) {
         setData(response)
@@ -57,7 +57,7 @@ const Users = () => {
 
   const createUserInDb = async (values: { [key: string]: string | number | boolean }) => {
     try {
-      const response = await apiService.post(apiService.v1 + '/user-master/save', values)
+      const response = await apiService.post('/user-master/save', values)
 
       return response
     } catch (error) {

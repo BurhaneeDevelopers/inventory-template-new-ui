@@ -4,7 +4,7 @@ import { Item } from '@/pages/Sales-Enquiry/Creation'
 
 export const fetchTransactionsFromDB = async (type: number, setData: (value: any) => void) => {
   try {
-    const response = await apiService.post(apiService.v1 + '/transaction-master/get-all', { transactionType: type })
+    const response = await apiService.post('/transaction-master/get-all', { transactionType: type })
 
     if (response) {
       setData(response)
@@ -14,9 +14,13 @@ export const fetchTransactionsFromDB = async (type: number, setData: (value: any
   }
 }
 
-export const fetchSingleTransactionForEdit = async (id: number, setTransaction: any, setActiveTab: any) => {
+export const fetchSingleTransactionForEdit = async (
+  id: number,
+  setTransaction: any,
+  setActiveTab: any,
+) => {
   try {
-    const response = await apiService.get(apiService.v1 + '/transaction-master/get', { id: id })
+    const response = await apiService.get('/transaction-master/get', { id: id })
 
     if (response) {
       setTransaction(response)
@@ -32,7 +36,7 @@ export const fetchSingleTransactionForEdit = async (id: number, setTransaction: 
 
 export const fetchItemsFromDB = async () => {
   try {
-    const response = await apiService.post(apiService.v1 + '/item/get-all', {})
+    const response = await apiService.post('/item/get-all', {})
 
     if (response) {
       return response
@@ -74,7 +78,7 @@ export const fetchReferenceFromDB = async (type: string | number) => {
 
 export const fetchDesignFromDB = async () => {
   try {
-    const response = await apiService.post(apiService.v1 + '/design-master/get-all', {})
+    const response = await apiService.post('/design-master/get-all', {})
 
     if (response) {
       return response
@@ -88,7 +92,7 @@ export const fetchDesignFromDB = async () => {
 
 export const fetchCustomerFromDB = async () => {
   try {
-    const response = await apiService.post(apiService.v1 + '/customer-master/get-all', {})
+    const response = await apiService.post('/customer-master/get-all', {})
 
     if (response) {
       return response
@@ -102,7 +106,7 @@ export const fetchCustomerFromDB = async () => {
 
 export const fetchSuppliersFromDB = async () => {
   try {
-    const response = await apiService.post(apiService.v1 + '/supplier-master/get-all', {})
+    const response = await apiService.post('/supplier-master/get-all', {})
 
     if (response) {
       return response
@@ -116,7 +120,7 @@ export const fetchSuppliersFromDB = async () => {
 
 export const fetchUsersFromDB = async () => {
   try {
-    const response = await apiService.post(apiService.v1 + '/user-master/get-all', {})
+    const response = await apiService.post('/user-master/get-all', {})
 
     if (response) {
       return response
@@ -128,8 +132,11 @@ export const fetchUsersFromDB = async () => {
   }
 }
 
-
-export const handleManipulateDropdown = async (transactionType: number, isPurchase?: boolean, isSales?: boolean) => {
+export const handleManipulateDropdown = async (
+  transactionType: number,
+  isPurchase?: boolean,
+  isSales?: boolean,
+) => {
   try {
     const items = await fetchItemsFromDB()
     const customers = await fetchCustomerFromDB()
@@ -139,7 +146,7 @@ export const handleManipulateDropdown = async (transactionType: number, isPurcha
 
     TransactionMasterConfig.forEach((field, i) => {
       if (field.id === 'transactionType') {
-        TransactionMasterConfig[i].initialValue = transactionType;
+        TransactionMasterConfig[i].initialValue = transactionType
       }
 
       switch (field.id) {
@@ -155,44 +162,51 @@ export const handleManipulateDropdown = async (transactionType: number, isPurcha
 
         case 'customerID':
           if (customers) {
-            TransactionMasterConfig[i].options = customers.map((item: { customer_Name: string, id: number }) => ({
-              label: item.customer_Name,
-              value: item.id,
-            }));
+            TransactionMasterConfig[i].options = customers.map(
+              (item: { customer_Name: string; id: number }) => ({
+                label: item.customer_Name,
+                value: item.id,
+              }),
+            )
             TransactionMasterConfig[i].hidden = isPurchase
           }
-          break;
+          break
 
         case 'supplierID':
           if (suppliers) {
-            TransactionMasterConfig[i].options = suppliers.map((item: { supplier_Name: string, id: number }) => ({
-              label: item.supplier_Name,
-              value: item.id,
-            }));
+            TransactionMasterConfig[i].options = suppliers.map(
+              (item: { supplier_Name: string; id: number }) => ({
+                label: item.supplier_Name,
+                value: item.id,
+              }),
+            )
             TransactionMasterConfig[i].hidden = isSales
           }
-          break;
+          break
 
         case 'madeBy':
         case 'approvedBy':
           if (users) {
-            TransactionMasterConfig[i].options = users.map((item: { name: string, id: number }) => ({
-              label: item.name,
-              value: item.id,
-            }));
+            TransactionMasterConfig[i].options = users.map(
+              (item: { name: string; id: number }) => ({
+                label: item.name,
+                value: item.id,
+              }),
+            )
           }
-          break;
+          break
 
         default:
           // Do nothing
-          break;
+          break
       }
-    });
-
+    })
 
     TransactionDetailsConfig.forEach((field, i) => {
       if (field.id == 'itemId' && items) {
-        TransactionDetailsConfig[i].options = items.map((item: { itemName: string, id: number }) => ({ label: item.itemName, value: item.id }))
+        TransactionDetailsConfig[i].options = items.map(
+          (item: { itemName: string; id: number }) => ({ label: item.itemName, value: item.id }),
+        )
       }
     })
   } catch (error) {
@@ -200,17 +214,22 @@ export const handleManipulateDropdown = async (transactionType: number, isPurcha
   }
 }
 
-export const createTransactionInDb = async (values: { [key: string]: string | number | boolean }, items: Item[], setActiveTab: (value: string) => void, fetchData: () => void) => {
+export const createTransactionInDb = async (
+  values: { [key: string]: string | number | boolean },
+  items: Item[],
+  setActiveTab: (value: string) => void,
+  fetchData: () => void,
+) => {
   try {
     const payload = {
       ...values,
-      detail: items
+      detail: items,
     }
 
-    const response = await apiService.post(apiService.v1 + '/transaction-master/save', payload)
+    const response = await apiService.post('/transaction-master/save', payload)
     if (response) {
       fetchData()
-      setActiveTab("listing")
+      setActiveTab('listing')
       return response
     }
   } catch (error) {
@@ -218,17 +237,23 @@ export const createTransactionInDb = async (values: { [key: string]: string | nu
   }
 }
 
-export const updateTransactionInDb = async (values: { [key: string]: string | number | boolean }, items: Item[], setActiveTab: (value: string) => void, setIsEditing: (value: boolean) => void, fetchData: () => void) => {
+export const updateTransactionInDb = async (
+  values: { [key: string]: string | number | boolean },
+  items: Item[],
+  setActiveTab: (value: string) => void,
+  setIsEditing: (value: boolean) => void,
+  fetchData: () => void,
+) => {
   try {
     const payload = {
       ...values,
-      detail: items
+      detail: items,
     }
 
-    const response = await apiService.post(apiService.v1 + '/transaction-master/update', payload)
+    const response = await apiService.post('/transaction-master/update', payload)
     if (response) {
       fetchData()
-      setActiveTab("listing")
+      setActiveTab('listing')
       setIsEditing(false)
       return response
     }
