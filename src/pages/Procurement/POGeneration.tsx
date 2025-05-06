@@ -55,7 +55,6 @@ const POGeneration = () => {
     if (isEditing) {
       fetchSingleTransactionForEdit(editRow.id, setTransaction, setActiveTab)
     }
-
     // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [isEditing])
 

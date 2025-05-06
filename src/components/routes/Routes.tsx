@@ -117,6 +117,8 @@ const GlobalRoutes = () => {
               />
               <Route path="/material-management/job-card" element={<JobCard />} />
               <Route path="/material-management/production-slip" element={<ProductionSlip />} />
+              <Route path="/material-management/job-card" element={<JobCard />} />
+              <Route path="/material-management/production-slip" element={<ProductionSlip />} />
 
               {/* External Production module */}
               <Route

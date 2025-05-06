@@ -13,7 +13,7 @@ import { useSetAtom } from 'jotai'
 import { pathAtom } from '../../../jotai/jotaiStore'
 
 type ItemRow = {
-  [K in (typeof itemFieldsConfig)[number]as K['id']]: string
+  [K in (typeof itemFieldsConfig)[number] as K['id']]: string
 }
 
 const columns: ColumnDef<ItemRow>[] = itemFieldsConfig.map(field => ({
@@ -55,8 +55,8 @@ const Items = () => {
 
   useEffect(() => {
     fetchDataFromDB()
-    setEditPath("/item")
-    
+    setEditPath('/item')
+
     // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [])
 
@@ -67,7 +67,7 @@ const Items = () => {
           title="Create New Item"
           description="Fill in all the details to create a new inventory item"
           triggerButtonText="Add New Item"
-        // onSubmit={handleSubmit}
+          // onSubmit={handleSubmit}
         >
           <DynamicForm
             title="Item Details"
