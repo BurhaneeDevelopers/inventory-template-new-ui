@@ -28,6 +28,7 @@ import MaterialRequisition from '@/pages/Material-Management/Material-Requisitio
 import JobCard from '@/pages/Material-Management/JobCard'
 import ProductionSlip from '@/pages/Material-Management/ProductionSlip'
 import MaterialReceived from '@/pages/Material-Management/Material-Received'
+import OpeningStock from '@/pages/Inventory/Opening-Stock'
 // import PurchaseInvoice from '@/pages/Procurement/PurchaseInvoice'
 // import { apiService } from './../../apiService/apiService';
 
@@ -133,6 +134,11 @@ const GlobalRoutes = () => {
               <Route
                 path="/material-management/production-slip"
                 element={<ProductionSlip />}
+              />
+
+              <Route
+                path="/inventory/opening-stock"
+                element={<OpeningStock />}
               />
 
               {/* External Production module */}

@@ -203,7 +203,7 @@ export const TransactionDetailsConfig: FieldConfig[] = [
   },
   {
     id: 'totalPrice',
-    label: 'Total Price',
+    label: 'Amount',
     type: 'number',
     required: false,
     initialValue: 0,

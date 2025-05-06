@@ -13,4 +13,7 @@ Material Management  - New item in sidebar - Transaction
 
 
 TO BE DONE - 
-Complete BOM Edit
+ItemSubTotal will be the 
+remove tax amount from totalprice per item
+GST percent and gst amount
+

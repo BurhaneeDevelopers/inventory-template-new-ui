@@ -1,11 +1,17 @@
 import {
+  Building,
+  Building2,
   Bus,
   ChevronRight,
   Database,
+  Factory,
   GitGraphIcon,
+  Menu,
   TrendingUp,
+  Truck,
   User,
   Users,
+  Warehouse,
   WarehouseIcon,
 } from 'lucide-react'
 import {
@@ -68,7 +74,7 @@ const items = [
   {
     menu: 'Order Generation',
     url: '/sales-enquiry',
-    icon: WarehouseIcon,
+    icon: Building2,
     items: [
       {
         title: 'Sales enquiry',
@@ -139,6 +145,17 @@ const items = [
       {
         title: 'Production Slip',
         url: '/material-management/production-slip',
+      },
+    ],
+  },
+  {
+    menu: 'Inventory',
+    url: '/inventory',
+    icon: Warehouse,
+    items: [
+      {
+        title: 'Opening Stock',
+        url: '/inventory/opening-stock',
       },
     ],
   },
