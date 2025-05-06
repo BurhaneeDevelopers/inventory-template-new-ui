@@ -12,6 +12,7 @@ import { editRowAtom, isEditingAtom } from '../../../jotai/jotaiStore'
 import { useAtom } from 'jotai'
 import EditBox from '@/components/constants/Transactions/EditBox'
 import CreateBox from '@/components/constants/Transactions/CreateBox'
+import PrintButton from '@/components/blocks/PrintButton'
 
 // const excludedFields = ['transactionType'];
 
@@ -59,6 +60,9 @@ const InternalOrder = () => {
     return (
         <PageWapper className="!bg-transparent !shadow-none">
             <SubTabs sections={sections} activeTab={activeTab} onTabChange={setActiveTab} />
+            {activeTab === 'creation' &&
+                <PrintButton />
+            }
             {activeTab === 'listing' && (
                 <div className="flex flex-col gap-4 bg-white p-4 rounded-lg h-fit">
                     <h1 className="text-2xl font-medium text-zinc-1000 uppercase">Internal Order</h1>
