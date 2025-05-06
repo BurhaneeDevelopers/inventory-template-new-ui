@@ -44,6 +44,34 @@ export const fetchItemsFromDB = async () => {
   }
 }
 
+export const fetchPendingFromDB = async (type: string | number, customerId: string | number, supplierId: string | number) => {
+  try {
+    const response = await apiService.post(apiService.v1 + '/transaction-master/pending', { transactionType: type, customerId: customerId || null, supplierID: supplierId || null })
+
+    if (response) {
+      return response
+    } else {
+      return
+    }
+  } catch (error) {
+    console.log(error)
+  }
+}
+
+export const fetchReferenceFromDB = async (type: string | number) => {
+  try {
+    const response = await apiService.get(apiService.v1 + '/transaction-master/setup-info', { transactionType: type })
+
+    if (response) {
+      return response.againstTypes
+    } else {
+      return
+    }
+  } catch (error) {
+    console.log(error)
+  }
+}
+
 export const fetchDesignFromDB = async () => {
   try {
     const response = await apiService.post(apiService.v1 + '/design-master/get-all', {})
@@ -106,6 +134,7 @@ export const handleManipulateDropdown = async (transactionType: number, isPurcha
     const items = await fetchItemsFromDB()
     const customers = await fetchCustomerFromDB()
     const suppliers = await fetchSuppliersFromDB()
+    const references = await fetchReferenceFromDB(transactionType)
     const users = await fetchUsersFromDB()
 
     TransactionMasterConfig.forEach((field, i) => {
@@ -114,6 +143,16 @@ export const handleManipulateDropdown = async (transactionType: number, isPurcha
       }
 
       switch (field.id) {
+        case 'referenceID':
+          if (references) {
+            TransactionMasterConfig[i].options = references.map((item: { name: string, id: number }) => ({
+              label: item.name,
+              value: item.id,
+            }));
+            TransactionMasterConfig[i].hidden = isPurchase
+          }
+          break;
+
         case 'customerID':
           if (customers) {
             TransactionMasterConfig[i].options = customers.map((item: { customer_Name: string, id: number }) => ({

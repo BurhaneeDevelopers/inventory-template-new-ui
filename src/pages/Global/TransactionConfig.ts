@@ -10,25 +10,18 @@ export const TransactionMasterConfig: FieldConfig[] = [
     initialValue: '',
     validation: Yup.string(),
     readOnly: true,
-    hidden: true
+    hidden: true,
+    notToBeShown: true
   },
   {
     id: 'transactionNumber',
     label: 'Transaction Number',
     type: 'text',
-    required: true,
+    required: false,
     initialValue: '',
-    validation: Yup.string().required('This Field is required'),
+    validation: Yup.string(),
+    notToBeSent: true
   },
-  // {
-  //   id: 'referenceId',
-  //   label: 'Reference',
-  //   type: 'number',
-  //   required: true,
-  //   // options: [],
-  //   initialValue: '',
-  //   validation: Yup.string().required('Reference is required')
-  // },
   {
     id: 'customerID',
     label: 'Customer',
@@ -36,6 +29,16 @@ export const TransactionMasterConfig: FieldConfig[] = [
     required: false,
     options: [],
     initialValue: null,
+    notToBeShown: true
+  },
+  {
+    id: 'customerName',
+    label: 'Customer Name',
+    type: 'select',
+    required: false,
+    options: [],
+    initialValue: null,
+    notToBeSent: true
   },
   {
     id: 'supplierID',
@@ -44,6 +47,26 @@ export const TransactionMasterConfig: FieldConfig[] = [
     required: false,
     options: [],
     initialValue: null,
+    notToBeShown: true
+  },
+  {
+    id: 'supplierName',
+    label: 'Supplier Name',
+    type: 'select',
+    required: false,
+    options: [],
+    initialValue: null,
+    notToBeSent: true
+  },
+  {
+    id: 'referenceID',
+    label: 'Reference',
+    type: 'select',
+    required: false,
+    initialValue: '',
+    validation: Yup.string(),
+    options: [],
+    notToBeShown: true
   },
   {
     id: 'transactionDate',
@@ -69,7 +92,18 @@ export const TransactionMasterConfig: FieldConfig[] = [
     required: false,
     options: [],
     initialValue: '',
-    validation: Yup.string()
+    validation: Yup.string(),
+    notToBeShown: true
+  },
+  {
+    id: 'madeByName',
+    label: 'Made By',
+    type: 'select',
+    required: false,
+    options: [],
+    initialValue: '',
+    validation: Yup.string(),
+    notToBeSent: true
   },
   {
     id: 'approvedBy',
@@ -78,6 +112,16 @@ export const TransactionMasterConfig: FieldConfig[] = [
     required: false,
     options: [],
     initialValue: null,
+    notToBeShown: true
+  },
+  {
+    id: 'approvedByName',
+    label: 'Approved By',
+    type: 'select',
+    required: false,
+    options: [],
+    initialValue: null,
+    notToBeSent: true
   },
   {
     id: 'remarks',
@@ -137,7 +181,7 @@ export const TransactionDetailsConfig: FieldConfig[] = [
     label: 'Discount Percentage',
     type: 'text',
     required: false,
-    initialValue: '',
+    initialValue: '0',
     validation: Yup.string(),
   },
   {

@@ -32,6 +32,7 @@ import EditMasterPopUp from '../blocks/master/EditMasterPopUp'
 import { DeletePopUp } from '../blocks/master/DeletePopUp'
 import { useAtom } from 'jotai'
 import { editRowAtom, isEditingAtom } from '../../../jotai/jotaiStore'
+import moment from 'moment'
 
 interface DataTableProps<TData> {
   columns: ColumnDef<TData, unknown>[]
@@ -129,11 +130,20 @@ export function DataTable<TData>({ columns, data, fieldConfig, setData }: DataTa
             {table.getRowModel().rows?.length ? (
               table.getRowModel().rows.map(row => (
                 <TableRow key={row.id} data-state={row.getIsSelected() && 'selected'}>
-                  {row.getVisibleCells().map(cell => (
-                    <TableCell key={cell.id}>
-                      {flexRender(cell.column.columnDef.cell, cell.getContext())}
-                    </TableCell>
-                  ))}
+                  {row.getVisibleCells().map(cell => {
+                    const value = cell.getValue();
+                    const isTransactionDate = cell.column.id === 'transactionDate';
+
+                    return (
+                      <TableCell key={cell.id}>
+                        {value != null
+                          ? isTransactionDate
+                            ? moment(value).format("DD MMM YYYY")
+                            : flexRender(cell.column.columnDef.cell, cell.getContext())
+                          : "NA"}
+                      </TableCell>
+                    );
+                  })}
 
                   <TableCell key={row.id} className='flex gap-2'>
                     {!fieldConfig ? <Button className="bg-orange-500"

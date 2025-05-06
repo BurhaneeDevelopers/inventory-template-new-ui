@@ -21,6 +21,8 @@ import {
 } from '@/components/ui/sidebar'
 import { Collapsible, CollapsibleContent, CollapsibleTrigger } from '../ui/collapsible'
 import { Link, useLocation } from 'react-router'
+import { useSetAtom } from 'jotai'
+import { isEditingAtom } from '../../../jotai/jotaiStore'
 
 // Menu items.
 const items = [
@@ -41,10 +43,6 @@ const items = [
         title: 'Process',
         url: '/master/process',
       },
-      // {
-      //   title: 'Users/Roles/Right',
-      //   url: '/master/users-roles',
-      // },
       {
         title: 'Design Master',
         url: '/master/design-master',
@@ -132,7 +130,7 @@ const items = [
       },
       {
         title: 'Material Received',
-        url: '/material-management/production-slip',
+        url: '/material-management/material-received',
       },
       {
         title: 'Job Card',
@@ -208,6 +206,7 @@ const items = [
 ]
 
 function AppSidebar() {
+  const setIsEditing = useSetAtom(isEditingAtom)
   const location = useLocation();
   const isDashboardActive = location.pathname === '/';
   return (
@@ -241,7 +240,7 @@ function AppSidebar() {
                       const isActive = location.pathname === subItem.url;
 
                       return <SidebarMenuSubItem key={subItem.title}>
-                        <SidebarMenuSubButton asChild>
+                        <SidebarMenuSubButton asChild onClick={() => setIsEditing(false)}>
                           <Link to={subItem.url}>
                             <span className={isActive ? "text-primary font-semibold bg-gray-200 w-full rounded p-1" : "text-muted-foreground"}>{subItem.title}</span>
                           </Link>

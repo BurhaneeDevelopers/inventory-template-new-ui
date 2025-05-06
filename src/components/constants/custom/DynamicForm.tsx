@@ -1,4 +1,4 @@
-import React, { useEffect } from 'react'
+import React, { useEffect, useState } from 'react'
 import { useFormik } from 'formik'
 import { Input } from '@/components/ui/input'
 import { Textarea } from '@/components/ui/textarea'
@@ -14,8 +14,9 @@ import { Button } from '@/components/ui/button'
 import { type FieldConfig } from '@/pages/Master/ItemsConfig'
 import { generateInitialValues, generateValidationSchema } from '@/lib/helperFunctions'
 import { toast } from 'sonner'
-import { formModalAtom } from '../../../../jotai/jotaiStore'
-import { useAtom } from 'jotai'
+import { formModalAtom, selectedCustomerAtom, selectedSupplierAtom } from '../../../../jotai/jotaiStore'
+import { useAtom, useAtomValue, useSetAtom } from 'jotai'
+import { ReferenceModal } from './ReferenceModal'
 
 interface DynamicFormProps {
   title: string
@@ -44,6 +45,11 @@ export function DynamicForm({
 }: DynamicFormProps) {
   // Formik setup with initialValues and validationSchema
   const [, setOpen] = useAtom(formModalAtom)
+  const [openReferenceModal, setOpenReferenceModal] = useState(false)
+  const [referenceId, setReferenceId] = useState(null)
+  const setSelectedCustomer = useSetAtom(selectedCustomerAtom)
+  const setSelectedSupplier = useSetAtom(selectedSupplierAtom)
+
   const formik = useFormik({
     initialValues: generateInitialValues(fieldConfig, initialFields),
     validationSchema: generateValidationSchema(fieldConfig),
@@ -81,10 +87,16 @@ export function DynamicForm({
       const taxPercentage = Number(formik.values.taxPercentage)
 
       if (formik.values.quantity) {
-        const discountedPricePerUnit = unitPrice * (1 - discountPercentage / 100);
-        const subtotal = discountedPricePerUnit * quantity;
-        const taxAmount = (subtotal * (taxPercentage / 100)).toFixed(2)
-        const totalPrice = (Number(subtotal) + Number(taxAmount)).toFixed(0)
+        // Step 1: Calculate total price before discount
+        const price = quantity * unitPrice;
+
+        // Step 2: Calculate discount amount
+        const discountAmount = (discountPercentage / 100) * price;
+
+        // Step 3: Price after discount
+        const priceAfterDiscount = price - discountAmount;
+        const taxAmount = (priceAfterDiscount * (taxPercentage / 100)).toFixed(2)
+        const totalPrice = (Number(priceAfterDiscount) - Number(taxAmount)).toFixed(0)
 
         formik.setFieldValue("taxAmount", taxAmount)
         formik.setFieldValue("totalPrice", totalPrice)
@@ -97,6 +109,14 @@ export function DynamicForm({
   return (
     <div>
       <h2 className="text-lg font-semibold mb-4">{title}</h2>
+
+      {/* <ReferenceModal
+        title=''
+        description=''
+        open={openReferenceModal}
+        setOpen={setOpenReferenceModal}
+      /> */}
+
       <form onSubmit={formik.handleSubmit} className="space-y-6">
         <div className="flex flex-wrap gap-4">
           {fieldConfig.map(field => (
@@ -167,30 +187,74 @@ export function DynamicForm({
               )}
 
               {field.type === 'select' && field.options && (
-                <Select
-                  onValueChange={(value) => {
-                    const parsedValue = isNaN(Number(value)) ? value : Number(value);
-                    formik.setFieldValue(field.id, parsedValue);
-                  }}
-                  defaultValue={formik.values[field.id]?.toString()}
-                >
-                  <SelectTrigger className="w-full !border-gray-300 min-w-72">
-                    <SelectValue placeholder={`Select ${field.label}`} />
-                  </SelectTrigger>
-                  <SelectContent>
-                    {/* CONVERT THE VALUE TO STRING  */}
-                    {/* CHECK WEATHER THE VALUE IS SIMPLE ARRAY WITH JUST STRINGS OR ARRAY OF OBJECTS  */}
-                    {field.options.map(option => (
-                      <SelectItem
-                        key={typeof option === 'string' ? option : (option?.value ?? '').toString()}
-                        value={typeof option === 'string' ? option : (option?.value ?? '').toString()}
-                      >
-                        {typeof option === 'string' ? option : (option.label ?? '')}
-                      </SelectItem>
-                    ))}
-                  </SelectContent>
-                </Select>
+                field.id === 'referenceID' ? (
+                  <div>
+                    {/* Render the reference modal content here */}
+                    <ReferenceModal
+                      title="Pending Transactions Details"
+                      description="Check the checkboxes for the details you want to add"
+                      open={openReferenceModal}
+                      setOpen={setOpenReferenceModal}
+                      referenceId={referenceId}
+                      Trigger={
+                        <Select
+                          onValueChange={(value) => {
+                            const parsedValue = isNaN(Number(value)) ? value : Number(value);
+                            setReferenceId(parsedValue)
+                            setOpenReferenceModal(true); // not strictly needed since DialogTrigger handles it
+                          }}
+                          defaultValue={formik.values[field.id]?.toString()}
+                        >
+                          <SelectTrigger className="w-full !border-gray-300 min-w-72">
+                            <SelectValue placeholder={`Select ${field.label}`} />
+                          </SelectTrigger>
+                          <SelectContent>
+                            {field.options.map(option => {
+                              const val = typeof option === 'string' ? option : (option?.value ?? '').toString();
+                              const label = typeof option === 'string' ? option : (option.label ?? '');
+                              return (
+                                <SelectItem key={val} value={val}>
+                                  {label}
+                                </SelectItem>
+                              );
+                            })}
+                          </SelectContent>
+                        </Select>
+                      }
+                    />
+                  </div>
+                ) : (
+                  <Select
+                    onValueChange={(value) => {
+                      const parsedValue = isNaN(Number(value)) ? value : Number(value);
+                      formik.setFieldValue(field.id, parsedValue);
+
+                      if (field.id === "customerID") {
+                        setSelectedCustomer(parsedValue)
+                      } else if (field.id === "supplierID") {
+                        setSelectedSupplier(parsedValue)
+                      }
+                    }}
+                    defaultValue={formik.values[field.id]?.toString()}
+                  >
+                    <SelectTrigger className="w-full !border-gray-300 min-w-72">
+                      <SelectValue placeholder={`Select ${field.label}`} />
+                    </SelectTrigger>
+                    <SelectContent>
+                      {field.options.map(option => {
+                        const val = typeof option === 'string' ? option : (option?.value ?? '').toString();
+                        const label = typeof option === 'string' ? option : (option.label ?? '');
+                        return (
+                          <SelectItem key={val} value={val}>
+                            {label}
+                          </SelectItem>
+                        );
+                      })}
+                    </SelectContent>
+                  </Select>
+                )
               )}
+
 
               {formik.touched[field.id] && formik.errors[field.id] ? (
                 <div className="text-red-500 text-sm">{formik.errors[field.id]}</div>

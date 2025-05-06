@@ -27,6 +27,7 @@ import MaterialIssued from '@/pages/Material-Management/Material-Issue'
 import MaterialRequisition from '@/pages/Material-Management/Material-Requisition'
 import JobCard from '@/pages/Material-Management/JobCard'
 import ProductionSlip from '@/pages/Material-Management/ProductionSlip'
+import MaterialReceived from '@/pages/Material-Management/Material-Received'
 // import PurchaseInvoice from '@/pages/Procurement/PurchaseInvoice'
 // import { apiService } from './../../apiService/apiService';
 
@@ -123,6 +124,10 @@ const GlobalRoutes = () => {
               <Route
                 path="/material-management/material-requisition"
                 element={<MaterialRequisition />}
+              />
+              <Route
+                path="/material-management/material-received"
+                element={<MaterialReceived />}
               />
               <Route path="/material-management/job-card" element={<JobCard />} />
               <Route

@@ -37,10 +37,11 @@ export type Row = {
   [K in (typeof TransactionMasterConfig)[number]as K['id']]: string
 }
 
-const excludedFields = ['transactionType', 'supplierID'];
+const excludedFields = ['supplierName'];
 
 const columns: ColumnDef<Row>[] = TransactionMasterConfig
-  .filter(field => !excludedFields.includes(field.id))
+  // .filter(field => !excludedFields.includes(field.id))
+  .filter(field => !excludedFields.includes(field.id) && !field.notToBeShown)
   .map(field => ({
     accessorKey: field.id,
     header: ({ column }) => (
@@ -101,7 +102,9 @@ const Quotation = () => {
       )}
 
       {activeTab === 'edit' && (
-        <EditBox setActiveTab={setActiveTab}
+        <EditBox
+          title={`Edit Quotation - ${transaction?.transactionNumber}`}
+          setActiveTab={setActiveTab}
           transaction={transaction}
           setTransaction={setTransaction}
           setIsEditing={setIsEditing}

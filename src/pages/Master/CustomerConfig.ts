@@ -60,6 +60,15 @@ const customerFieldsConfig: FieldConfig[] = [
     validation: Yup.string()
   },
   {
+    id: 'currency',
+    label: 'Currency',
+    type: 'select',
+    required: false,
+    options: [],
+    initialValue: '',
+    validation: Yup.string()
+  },
+  {
     id: 'taxInformation',
     label: 'Tax Information (GST/VAT)',
     type: 'text',

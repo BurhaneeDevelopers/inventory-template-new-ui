@@ -20,6 +20,8 @@ export interface FieldConfig {
   validation?: Yup.AnySchema
   readOnly?: boolean
   hidden?: boolean
+  notToBeSent?: boolean
+  notToBeShown?: boolean
 }
 
 // FOR FORMS

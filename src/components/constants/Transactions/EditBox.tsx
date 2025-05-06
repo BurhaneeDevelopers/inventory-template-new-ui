@@ -10,7 +10,7 @@ import MasterBox from '../Global/MasterBox';
 import { useAtom } from 'jotai';
 import { editRowAtom } from '../../../../jotai/jotaiStore';
 
-const EditBox = ({ setActiveTab, transaction, setTransaction, setIsEditing, fetchData }) => {
+const EditBox = ({ setActiveTab, transaction, setTransaction, setIsEditing, fetchData, title }) => {
     const [editRow] = useAtom(editRowAtom)
 
     const handleAddItem = (newItem: Item) => {
@@ -25,7 +25,7 @@ const EditBox = ({ setActiveTab, transaction, setTransaction, setIsEditing, fetc
     const totalPrice = transaction.detail.reduce((sum, item) => sum + Number(item.totalPrice || 0), 0)
     return (
         <div className="flex flex-col gap-7">
-            <MasterBox title='Edit Purchase Order'
+            <MasterBox title={title ? title : 'Edit'}
                 masterConfig={TransactionMasterConfig}
                 onPress={(values) => {
                     const payload = {

@@ -13,10 +13,11 @@ import { useAtom } from 'jotai'
 import EditBox from '@/components/constants/Transactions/EditBox'
 import CreateBox from '@/components/constants/Transactions/CreateBox'
 
-const excludedFields = ['transactionType', 'customerID'];
+// const excludedFields = ['transactionType'];
 
 const columns: ColumnDef<Row>[] = TransactionMasterConfig
-  .filter(field => !excludedFields.includes(field.id))
+  // .filter(field => !excludedFields.includes(field.id))
+  .filter(field => !field.notToBeShown)
   .map(field => ({
     accessorKey: field.id,
     header: ({ column }) => (
@@ -43,7 +44,7 @@ const MaterialReceived = () => {
   ]
 
   useEffect(() => {
-    handleManipulateDropdown(13, true)
+    handleManipulateDropdown(13, true, false)
     fetchTransactionsFromDB(13, setData)
   }, [])
 
@@ -78,7 +79,9 @@ const MaterialReceived = () => {
       )}
 
       {activeTab === 'edit' && (
-        <EditBox setActiveTab={setActiveTab}
+        <EditBox
+          title={`Edit Material Received - ${transaction?.transactionNumber}`}
+          setActiveTab={setActiveTab}
           transaction={transaction}
           setTransaction={setTransaction}
           setIsEditing={setIsEditing}
