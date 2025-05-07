@@ -9,7 +9,7 @@ export const editRowAtom = atom<any>({});
 export const selectedCustomerAtom = atom<any>(null);
 export const selectedSupplierAtom = atom<any>(null);
 
-export const selectedDetailsAtom = atom<any[]>(null);
+export const selectedDetailsAtom = atom<any[]>([]);
 export const selectedTransactionAtom = atom<any[]>([]);
 
 export const finalCalculationsAtom = atom<any>({});

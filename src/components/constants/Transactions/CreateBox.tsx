@@ -1,4 +1,4 @@
-import React, { useEffect } from 'react'
+import React from 'react'
 import { createTransactionInDb } from '@/apiService/services';
 import DetailBox from '../Global/DetailBox';
 import { TransactionDetailsConfig, TransactionMasterConfig } from '@/pages/Global/TransactionConfig';
@@ -18,40 +18,9 @@ const CreateBox = ({ setActiveTab, items, setItems, fetchData, type, title }) =>
         setItems(prev => prev.filter((_, i) => i !== index))
     }
 
-    const totalTaxAmount = items.reduce((sum, item) => sum + Number(item.taxAmount || 0), 0)
+    const totalTax = items.reduce((sum, item) => sum + Number(item.totalTaxAmount || 0), 0)
     const totalPrice = items.reduce((sum, item) => sum + Number(item.totalPrice || 0), 0)
-
-    const manipulateTotalPrices = () => {
-        TransactionMasterConfig.forEach((field, i) => {
-            switch (field.id) {
-                case 'itemSubTotal':
-                    TransactionMasterConfig[i].initialValue = totalPrice
-                    break;
-
-                case 'totalTaxAmount':
-                    TransactionMasterConfig[i].initialValue = totalTaxAmount
-                    break;
-
-                case 'grandTotal':
-                    TransactionMasterConfig[i].initialValue = totalPrice + totalTaxAmount
-                    break;
-
-                default:
-                    // Do nothing
-                    break;
-            }
-        }
-        )
-        // TransactionMasterConfig["itemSubTotal"].initialValue = totalPrice
-        // TransactionMasterConfig["totalTaxAmount"].initialValue = totalPrice
-        // TransactionMasterConfig["grandTotal"].initialValue = totalPrice + totalTaxAmount
-    }
-
-    useEffect(() => {
-        manipulateTotalPrices()
-        // eslint-disable-next-line react-hooks/exhaustive-deps
-    }, [totalPrice, totalTaxAmount])
-
+    const grandTotal = totalPrice + totalTax
     return (
         <div className="flex flex-col gap-7">
             <MasterBox
@@ -108,6 +77,21 @@ const CreateBox = ({ setActiveTab, items, setItems, fetchData, type, title }) =>
                         </Table>
                     </div>
                 )}
+
+                <div className="flex flex-row ml-auto p-4 gap-4 bg-white mt-4 w-fit rounded-lg">
+                    <div className="flex items-end gap-2">
+                        <h4 className="text-base">Total Tax Amount</h4>
+                        <h3 className="text-2xl font-medium">{totalTax}</h3>
+                    </div>
+                    <div className="flex items-end gap-2">
+                        <h4 className="text-base">Total Price:</h4>
+                        <h3 className="text-2xl font-medium">{totalPrice}</h3>
+                    </div>
+                    <div className="flex items-end gap-2">
+                        <h4 className="text-base">Grand Total:</h4>
+                        <h3 className="text-2xl font-medium">{grandTotal}</h3>
+                    </div>
+                </div>
             </div>
         </div>
     )
