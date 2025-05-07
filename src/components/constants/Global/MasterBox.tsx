@@ -1,4 +1,4 @@
-import React from 'react'
+import React, { useEffect } from 'react'
 import { DynamicForm } from '../custom/DynamicForm'
 
 interface MasterBoxProps {
@@ -12,6 +12,7 @@ interface MasterBoxProps {
 
 const MasterBox: React.FC<MasterBoxProps> = ({ masterConfig, onPress, fetchData, title, disabled, initialFields }) => {
     const filteredFields = masterConfig.filter(field => !field?.notToBeSent)
+    
     return (
         <div className="flex flex-col justify-between gap-4 bg-white p-4 rounded-lg flex-grow">
             <h1 className="text-2xl font-medium text-zinc-700 uppercase">

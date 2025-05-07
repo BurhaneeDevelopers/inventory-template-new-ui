@@ -49,6 +49,8 @@ export function DynamicForm({
   const [referenceId, setReferenceId] = useState(null)
   const setSelectedCustomer = useSetAtom(selectedCustomerAtom)
   const setSelectedSupplier = useSetAtom(selectedSupplierAtom)
+  const selectedValue = ''
+
 
   const formik = useFormik({
     initialValues: generateInitialValues(fieldConfig, initialFields),
@@ -79,6 +81,7 @@ export function DynamicForm({
     },
   })
 
+
   useEffect(() => {
     if (isTransaction) {
       const quantity = Number(formik.values.quantity)
@@ -96,7 +99,7 @@ export function DynamicForm({
         // Step 3: Price after discount
         const priceAfterDiscount = price - discountAmount;
         const taxAmount = (priceAfterDiscount * (taxPercentage / 100)).toFixed(2)
-        const totalPrice = (Number(priceAfterDiscount) - Number(taxAmount)).toFixed(0)
+        const totalPrice = Number(priceAfterDiscount).toFixed(0)
 
         formik.setFieldValue("taxAmount", taxAmount)
         formik.setFieldValue("totalPrice", totalPrice)
@@ -104,7 +107,6 @@ export function DynamicForm({
     }
     // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [formik.values])
-
 
   return (
     <div>
@@ -198,12 +200,16 @@ export function DynamicForm({
                       referenceId={referenceId}
                       Trigger={
                         <Select
+                          value={selectedValue}
                           onValueChange={(value) => {
-                            const parsedValue = isNaN(Number(value)) ? value : Number(value);
-                            setReferenceId(parsedValue)
-                            setOpenReferenceModal(true); // not strictly needed since DialogTrigger handles it
+                            // If the value changes, update Formik
+                            if (value !== selectedValue) {
+                              const parsedValue = isNaN(Number(value)) ? value : Number(value);
+                              setReferenceId(parsedValue);
+                              formik.setFieldValue(field.id, parsedValue); // Update Formik state
+                              setOpenReferenceModal(true); // Open the modal (if necessary)
+                            }
                           }}
-                          defaultValue={formik.values[field.id]?.toString()}
                         >
                           <SelectTrigger className="w-full !border-gray-300 min-w-72">
                             <SelectValue placeholder={`Select ${field.label}`} />

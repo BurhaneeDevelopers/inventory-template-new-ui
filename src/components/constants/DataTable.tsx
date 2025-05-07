@@ -11,7 +11,7 @@ import {
   getSortedRowModel,
   useReactTable,
 } from '@tanstack/react-table'
-import { ChevronDown, Edit, } from 'lucide-react'
+import { ChevronDown, Edit, Printer, } from 'lucide-react'
 import { Button } from '@/components/ui/button'
 import {
   DropdownMenu,
@@ -158,6 +158,9 @@ export function DataTable<TData>({ columns, data, fieldConfig, setData }: DataTa
                       <EditMasterPopUp data={row.original} fieldConfig={fieldConfig} setData={setData} />
                     }
                     <DeletePopUp id={row.original.id} isTransaction={fieldConfig ? false : true} />
+                    <Button className="bg-indigo-500">
+                      <Printer color="#fff" size={18} />
+                    </Button>
                   </TableCell>
                 </TableRow>
               ))

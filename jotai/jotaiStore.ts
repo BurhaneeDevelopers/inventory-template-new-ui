@@ -11,3 +11,5 @@ export const selectedSupplierAtom = atom<any>(null);
 
 export const selectedDetailsAtom = atom<any[]>(null);
 export const selectedTransactionAtom = atom<any[]>([]);
+
+export const finalCalculationsAtom = atom<any>({});

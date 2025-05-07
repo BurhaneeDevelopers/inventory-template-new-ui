@@ -59,16 +59,6 @@ export const TransactionMasterConfig: FieldConfig[] = [
     notToBeSent: true
   },
   {
-    id: 'referenceID',
-    label: 'Reference',
-    type: 'select',
-    required: false,
-    initialValue: '',
-    validation: Yup.string(),
-    options: [],
-    notToBeShown: true
-  },
-  {
     id: 'transactionDate',
     label: 'Transaction Date',
     type: 'date',
@@ -112,6 +102,16 @@ export const TransactionMasterConfig: FieldConfig[] = [
     required: false,
     options: [],
     initialValue: null,
+    notToBeShown: true
+  },
+  {
+    id: 'referenceID',
+    label: 'Reference',
+    type: 'select',
+    required: false,
+    initialValue: '',
+    validation: Yup.string(),
+    options: [],
     notToBeShown: true
   },
   {
