@@ -15,8 +15,8 @@ import { type FieldConfig } from '@/pages/Master/ItemsConfig'
 import { generateInitialValues, generateValidationSchema } from '@/lib/helperFunctions'
 import { toast } from 'sonner'
 import { formModalAtom, selectedCustomerAtom, selectedSupplierAtom } from '../../../../jotai/jotaiStore'
-import { useAtom, useAtomValue, useSetAtom } from 'jotai'
-import { ReferenceModal } from './ReferenceModal'
+import { useAtom, useSetAtom } from 'jotai'
+import { ReferenceModal } from './Modal/ReferenceModal'
 
 interface DynamicFormProps {
   title: string

@@ -7,11 +7,12 @@ import {
     DialogTitle,
     DialogTrigger,
 } from '@/components/ui/dialog'
-import { PendingTable } from './Table/PendingTable'
 import { fetchPendingFromDB } from '@/apiService/services'
 import { useAtomValue } from 'jotai'
-import { selectedSupplierAtom } from '../../../../jotai/jotaiStore'
-import { selectedCustomerAtom } from '../../../../jotai/jotaiStore';
+import { selectedSupplierAtom, selectedTransactionAtom } from '../../../../../jotai/jotaiStore';
+import { selectedCustomerAtom } from '../../../../../jotai/jotaiStore';
+import { PendingTransactionTable } from '../Table/PendingTransactionTable'
+import { PendingDetailsTable } from '../Table/PendingDetailsTable';
 
 interface ReferenceModalProps {
     title: string
@@ -26,6 +27,7 @@ export function ReferenceModal({ title, description, Trigger, open, setOpen, ref
     const selectedSupplier = useAtomValue(selectedSupplierAtom)
     const selectedCustomer = useAtomValue(selectedCustomerAtom)
     const [pendingTransactions, setPendingTransactions] = useState([])
+    const selectedTransaction = useAtomValue(selectedTransactionAtom)
 
     const FetchPendingTransactionDetail = async () => {
         try {
@@ -57,7 +59,12 @@ export function ReferenceModal({ title, description, Trigger, open, setOpen, ref
                         <DialogDescription className='text-center'>{description}</DialogDescription>
                     </DialogHeader>
 
-                    <PendingTable data={pendingTransactions} />
+                    {selectedTransaction.length === 0 ?
+                        <PendingTransactionTable data={pendingTransactions} />
+                        :
+                        <PendingDetailsTable data={selectedTransaction} setOpen={setOpen} />
+                    }
+
                 </div>
             </DialogContent>
         </Dialog>

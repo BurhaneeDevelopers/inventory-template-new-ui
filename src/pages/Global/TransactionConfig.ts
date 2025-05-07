@@ -131,6 +131,33 @@ export const TransactionMasterConfig: FieldConfig[] = [
     initialValue: '',
     validation: Yup.string()
   },
+  {
+    id: 'grandTotal',
+    label: 'Grand Total',
+    type: 'text',
+    required: false,
+    initialValue: '',
+    readOnly: true,
+    validation: Yup.string(),
+  },
+  {
+    id: 'itemSubTotal',
+    label: 'Item Sub Total',
+    type: 'text',
+    required: false,
+    initialValue: '',
+    readOnly: true,
+    validation: Yup.string(),
+  },
+  {
+    id: 'totalTaxAmount',
+    label: 'Total Tax Amount',
+    type: 'text',
+    required: false,
+    initialValue: '',
+    readOnly: true,
+    validation: Yup.string(),
+  },
 ]
 
 export const TransactionDetailsConfig: FieldConfig[] = [
@@ -199,15 +226,17 @@ export const TransactionDetailsConfig: FieldConfig[] = [
     type: 'number',
     required: false,
     initialValue: 0,
-    readOnly: true
+    readOnly: true,
+    hidden: true,
   },
   {
     id: 'totalPrice',
-    label: 'Amount',
+    label: 'Total Price',
     type: 'number',
     required: false,
     initialValue: 0,
-    readOnly: true
+    readOnly: true,
+    hidden: true,
   },
   {
     id: 'deliveryDate',
@@ -225,12 +254,4 @@ export const TransactionDetailsConfig: FieldConfig[] = [
     initialValue: '',
     validation: Yup.string(),
   },
-  // {
-  //   id: 'sourceReferenceID',
-  //   label: 'Source Reference',
-  //   type: 'text',
-  //   required: false,
-  //   initialValue: '',
-  //   validation: Yup.string(),
-  // },
 ]

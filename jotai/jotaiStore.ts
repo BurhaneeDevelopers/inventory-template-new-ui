@@ -10,3 +10,4 @@ export const selectedCustomerAtom = atom<any>(null);
 export const selectedSupplierAtom = atom<any>(null);
 
 export const selectedDetailsAtom = atom<any[]>(null);
+export const selectedTransactionAtom = atom<any[]>([]);
