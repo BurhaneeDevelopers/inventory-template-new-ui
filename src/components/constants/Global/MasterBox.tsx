@@ -28,6 +28,7 @@ const MasterBox: React.FC<MasterBoxProps> = ({ masterConfig, onPress, fetchData,
                 isTransaction={true}
                 initialFields={initialFields}
                 disabled={disabled}
+                isSaveBottom={false}
             />
         </div>
     )

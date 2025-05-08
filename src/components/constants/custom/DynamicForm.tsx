@@ -43,7 +43,7 @@ export function DynamicForm({
   isTransaction,
   disabled,
   setLocalOpen,
-  isSaveBottom = false
+  isSaveBottom = true
 }: DynamicFormProps) {
   // Formik setup with initialValues and validationSchema
   const [, setOpen] = useAtom(formModalAtom)
