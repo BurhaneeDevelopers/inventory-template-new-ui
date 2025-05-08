@@ -33,7 +33,7 @@ export function PendingDetailsTable({ data, setOpen }) {
         const selectedArray = Object.values(selectedItems).filter(Boolean);
         setSelectedDetails(selectedArray);
         console.log(selectedArray)
-        setOpen(false)
+        // setOpen(false)
     };
 
     return (

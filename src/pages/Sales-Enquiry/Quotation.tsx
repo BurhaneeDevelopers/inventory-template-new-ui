@@ -89,8 +89,8 @@ const Quotation = () => {
   }
 
   const sections: Section[] = [
-    { title: 'Quotation Creation Listing', key: 'listing' },
-    { title: 'Quotation Creation Creation', key: 'creation' },
+    { title: 'Quotation Listing', key: 'listing' },
+    { title: 'Quotation Creation ', key: 'creation' },
     ...(isEditing ? [{ title: `Edit Quotation - ${transaction?.transactionNumber}`, key: 'edit' }] : []),
   ]
 

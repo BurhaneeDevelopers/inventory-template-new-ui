@@ -9,16 +9,17 @@ interface DetailBoxProps {
 const DetailBox: React.FC<DetailBoxProps> = ({ detailConfig, onPress }) => {
     return (
         <div className="flex flex-col justify-between gap-4 bg-white p-4 rounded-lg flex-grow">
-            <h1 className="text-2xl font-medium text-zinc-700 uppercase">
+            {/* <h1 className="text-2xl font-medium text-zinc-700 uppercase">
                 Details
-            </h1>
+            </h1> */}
 
             <DynamicForm
-                title=""
+                title={"Details"}
                 fieldConfig={detailConfig}
                 onSubmit={onPress}
                 submitButtonText="Add Item"
                 isTransaction={true}
+                isSaveBottom={true}
             />
         </div>
     )

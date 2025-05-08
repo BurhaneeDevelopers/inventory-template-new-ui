@@ -1,19 +1,9 @@
-BACKEND -
-Validate Duplicate value
-Currency Master - In Common Masters - Customer Master - Single Currency for one customer
-Incremental Transaction Number
+TODO - 
+Module name from order generation to order management
+Order Generatation to - Order Booking
 
-FRONT - 
-6 digits number for LOT
-show particular Design & Currency related to customer
-Material Management  - New item in sidebar - Transaction
-1) Material Issue from store
-2) Material Issue To store
-
-
-
-TO BE DONE - 
-ItemSubTotal will be the 
-remove tax amount from totalprice per item
-GST percent and gst amount
-
+Remove internal order generation,
+remove LOT Number
+Delivery date in Transaction
+reference Module in Material and Procurement
+Reference Number in Transaction

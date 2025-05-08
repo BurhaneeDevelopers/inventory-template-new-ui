@@ -29,6 +29,7 @@ interface DynamicFormProps {
   isTransaction?: boolean
   disabled?: boolean
   setLocalOpen?: (values: boolean) => void
+  isSaveBottom?: boolean
 }
 
 export function DynamicForm({
@@ -42,6 +43,7 @@ export function DynamicForm({
   isTransaction,
   disabled,
   setLocalOpen,
+  isSaveBottom = false
 }: DynamicFormProps) {
   // Formik setup with initialValues and validationSchema
   const [, setOpen] = useAtom(formModalAtom)
@@ -110,7 +112,16 @@ export function DynamicForm({
 
   return (
     <div>
-      <h2 className="text-lg font-semibold mb-4">{title}</h2>
+
+      <div className="flex justify-between items-center mb-10">
+        <h2 className="text-2xl font-medium text-zinc-700 uppercase">{title}</h2>
+
+        {!isSaveBottom &&
+          <div className="flex">
+            <Button type="submit" disabled={disabled} onClick={formik.handleSubmit}>{submitButtonText}</Button>
+          </div>
+        }
+      </div>
 
       {/* <ReferenceModal
         title=''
@@ -119,7 +130,7 @@ export function DynamicForm({
         setOpen={setOpenReferenceModal}
       /> */}
 
-      <form onSubmit={formik.handleSubmit} className="space-y-6">
+      <div className="space-y-6">
         <div className="flex flex-wrap gap-4">
           {fieldConfig.map(field => (
             <div key={field.id} className={`flex flex-col gap-2 ${field.hidden ? 'hidden' : ''}`}>
@@ -237,7 +248,8 @@ export function DynamicForm({
 
                       if (field.id === "customerID") {
                         setSelectedCustomer(parsedValue)
-                      } else if (field.id === "supplierID") {
+                      }
+                      if (field.id === "supplierID") {
                         setSelectedSupplier(parsedValue)
                       }
                     }}
@@ -269,10 +281,12 @@ export function DynamicForm({
           ))}
         </div>
 
-        <div className="flex">
-          <Button type="submit" disabled={disabled}>{submitButtonText}</Button>
-        </div>
-      </form>
+        {isSaveBottom &&
+          <div className="flex justify-end">
+            <Button type="submit" disabled={disabled} onClick={formik.handleSubmit}>{submitButtonText}</Button>
+          </div>
+        }
+      </div>
     </div>
   )
 }

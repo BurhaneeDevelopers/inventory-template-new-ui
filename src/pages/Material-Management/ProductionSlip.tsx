@@ -60,7 +60,7 @@ const ProductionSlip = () => {
   return (
     <PageWapper className="!bg-transparent !shadow-none">
       <SubTabs sections={sections} activeTab={activeTab} onTabChange={setActiveTab} />
-      {activeTab === 'creation' &&
+      {activeTab === 'edit' &&
         <PrintButton />
       }
       {activeTab === 'listing' && (
