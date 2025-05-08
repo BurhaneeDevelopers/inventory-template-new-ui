@@ -44,12 +44,40 @@ export const fetchItemsFromDB = async () => {
   }
 }
 
+export const fetchSingleItemFromDB = async (id) => {
+  try {
+    const response = await apiService.get(apiService.v1 + '/item/get', { id: id })
+
+    if (response) {
+      return response
+    } else {
+      return
+    }
+  } catch (error) {
+    console.log(error)
+  }
+}
+
+export const fetchSeasonsFromDB = async () => {
+  try {
+    const response = await apiService.post(apiService.v1 + '/common-master/get-all', { masterType: 1 })
+
+    if (response) {
+      return response
+    } else {
+      return
+    }
+  } catch (error) {
+    console.log(error)
+  }
+}
+
 export const fetchPendingFromDB = async (type: string | number, customerId: string | number, supplierId: string | number) => {
   try {
     if (!customerId && !supplierId) {
       return;
     }
-    
+
     const response = await apiService.post(apiService.v1 + '/transaction-master/pending', { transactionType: type, customerID: customerId || null, supplierID: supplierId || null })
 
     if (response) {

@@ -4,7 +4,7 @@ import * as Yup from 'yup'
 // Helper functions to generate initialValues and validationSchema
 export const generateInitialValues = (
   fieldConfig: FieldConfig[] = [],
-  initialFields: { [key: string]: any } = {}
+  initialFields: any
 ) => {
   // const initialValues: Record<string, string | number | boolean> = { initialFields }
   const initialValues: Record<string, string | number | boolean> = {}
@@ -12,7 +12,7 @@ export const generateInitialValues = (
   // if initialFields is present then insert the values in the initialValues object
   if (initialFields) {
     fieldConfig.forEach(field => {
-      initialValues[field.id] = initialFields[field.id]
+      initialValues[field.id] = initialFields[field.id].initialValue
     })
   } else {
     fieldConfig.forEach(field => {

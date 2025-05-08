@@ -77,7 +77,7 @@ const items = [
     icon: Building2,
     items: [
       {
-        title: 'Sales enquiry',
+        title: 'Sales Enquiry',
         url: '/sales-enquiry/creation',
       },
       // {
@@ -100,7 +100,7 @@ const items = [
     icon: Users,
     items: [
       {
-        title: 'Purchase Order Generation',
+        title: 'PO Creation',
         url: '/procurement/po-generation',
       },
       // {
@@ -123,11 +123,11 @@ const items = [
     icon: Bus,
     items: [
       {
-        title: 'Material Requisition by Production',
+        title: 'Material Requisition',
         url: '/material-management/material-requisition',
       },
       {
-        title: 'Material Issue from store',
+        title: 'Material Issue from Store',
         url: '/material-management/material-issue',
       },
       {

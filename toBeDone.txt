@@ -7,3 +7,8 @@ remove LOT Number
 Delivery date in Transaction
 reference Module in Material and Procurement
 Reference Number in Transaction
+
+
+DesignID, seasonID, currencyShortCode, 
+
+DesignID and seasonID only in enquiry, 

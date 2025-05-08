@@ -55,6 +55,8 @@ const columns: ColumnDef<Row>[] = TransactionMasterConfig
     cell: ({ row }) => <div>{row.getValue(field.id)}</div>,
   }));
 
+const unnecessaryMasterConfig = [{ id: "referenceID" }]
+
 const Quotation = () => {
   const [isEditing, setIsEditing] = useAtom(isEditingAtom)
   const [editRow] = useAtom(editRowAtom)
@@ -87,6 +89,7 @@ const Quotation = () => {
       console.log("No data found")
     }
   }
+
 
   const sections: Section[] = [
     { title: 'Quotation Listing', key: 'listing' },
@@ -128,6 +131,7 @@ const Quotation = () => {
         <CreateBox
           title={"Quotation Creation"}
           setActiveTab={setActiveTab}
+          unnecessaryMasterConfig={unnecessaryMasterConfig}
           items={items}
           setItems={setItems}
           type={2}
