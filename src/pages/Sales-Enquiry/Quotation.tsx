@@ -13,6 +13,7 @@ import EditBox from '@/components/constants/Transactions/EditBox'
 import CreateBox from '@/components/constants/Transactions/CreateBox'
 import PrintButton from '@/components/blocks/PrintButton'
 import { printService } from '@/apiService/printService.api'
+import * as Yup from 'yup'
 
 export interface Section {
   title: string
@@ -54,6 +55,29 @@ const columns: ColumnDef<Row>[] = TransactionMasterConfig
     ),
     cell: ({ row }) => <div>{row.getValue(field.id)}</div>,
   }));
+
+const additionalMasterConfig = [
+  {
+    id: 'designId',
+    label: 'Design',
+    type: 'select',
+    required: false,
+    options: [],
+    initialValue: '',
+    validation: Yup.string(),
+    notToBeShown: true
+  },
+  {
+    id: 'seasonId',
+    label: 'Season',
+    type: 'select',
+    required: false,
+    options: [],
+    initialValue: '',
+    validation: Yup.string(),
+    notToBeShown: true
+  },
+]
 
 const unnecessaryMasterConfig = [{ id: "referenceID" }]
 
@@ -129,6 +153,7 @@ const Quotation = () => {
 
       {activeTab === 'creation' && (
         <CreateBox
+          additionalMasterConfig={additionalMasterConfig}
           title={"Quotation Creation"}
           setActiveTab={setActiveTab}
           unnecessaryMasterConfig={unnecessaryMasterConfig}
