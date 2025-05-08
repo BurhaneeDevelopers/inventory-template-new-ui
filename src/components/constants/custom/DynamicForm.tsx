@@ -29,6 +29,7 @@ interface DynamicFormProps {
   isTransaction?: boolean
   disabled?: boolean
   setLocalOpen?: (values: boolean) => void
+  isSaveBottom?: boolean
 }
 
 export function DynamicForm({
@@ -42,6 +43,7 @@ export function DynamicForm({
   isTransaction,
   disabled,
   setLocalOpen,
+  isSaveBottom = false
 }: DynamicFormProps) {
   // Formik setup with initialValues and validationSchema
   const [, setOpen] = useAtom(formModalAtom)
@@ -49,6 +51,8 @@ export function DynamicForm({
   const [referenceId, setReferenceId] = useState(null)
   const setSelectedCustomer = useSetAtom(selectedCustomerAtom)
   const setSelectedSupplier = useSetAtom(selectedSupplierAtom)
+  const selectedValue = ''
+
 
   const formik = useFormik({
     initialValues: generateInitialValues(fieldConfig, initialFields),
@@ -79,6 +83,7 @@ export function DynamicForm({
     },
   })
 
+
   useEffect(() => {
     if (isTransaction) {
       const quantity = Number(formik.values.quantity)
@@ -96,7 +101,7 @@ export function DynamicForm({
         // Step 3: Price after discount
         const priceAfterDiscount = price - discountAmount;
         const taxAmount = (priceAfterDiscount * (taxPercentage / 100)).toFixed(2)
-        const totalPrice = (Number(priceAfterDiscount) - Number(taxAmount)).toFixed(0)
+        const totalPrice = Number(priceAfterDiscount).toFixed(0)
 
         formik.setFieldValue("taxAmount", taxAmount)
         formik.setFieldValue("totalPrice", totalPrice)
@@ -105,10 +110,18 @@ export function DynamicForm({
     // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [formik.values])
 
-
   return (
     <div>
-      <h2 className="text-lg font-semibold mb-4">{title}</h2>
+
+      <div className="flex justify-between items-center mb-10">
+        <h2 className="text-2xl font-medium text-zinc-700 uppercase">{title}</h2>
+
+        {!isSaveBottom &&
+          <div className="flex">
+            <Button type="submit" disabled={disabled} onClick={formik.handleSubmit}>{submitButtonText}</Button>
+          </div>
+        }
+      </div>
 
       {/* <ReferenceModal
         title=''
@@ -117,7 +130,7 @@ export function DynamicForm({
         setOpen={setOpenReferenceModal}
       /> */}
 
-      <form onSubmit={formik.handleSubmit} className="space-y-6">
+      <div className="space-y-6">
         <div className="flex flex-wrap gap-4">
           {fieldConfig.map(field => (
             <div key={field.id} className={`flex flex-col gap-2 ${field.hidden ? 'hidden' : ''}`}>
@@ -198,12 +211,16 @@ export function DynamicForm({
                       referenceId={referenceId}
                       Trigger={
                         <Select
+                          value={selectedValue}
                           onValueChange={(value) => {
-                            const parsedValue = isNaN(Number(value)) ? value : Number(value);
-                            setReferenceId(parsedValue)
-                            setOpenReferenceModal(true); // not strictly needed since DialogTrigger handles it
+                            // If the value changes, update Formik
+                            if (value !== selectedValue) {
+                              const parsedValue = isNaN(Number(value)) ? value : Number(value);
+                              setReferenceId(parsedValue);
+                              formik.setFieldValue(field.id, parsedValue); // Update Formik state
+                              setOpenReferenceModal(true); // Open the modal (if necessary)
+                            }
                           }}
-                          defaultValue={formik.values[field.id]?.toString()}
                         >
                           <SelectTrigger className="w-full !border-gray-300 min-w-72">
                             <SelectValue placeholder={`Select ${field.label}`} />
@@ -231,7 +248,8 @@ export function DynamicForm({
 
                       if (field.id === "customerID") {
                         setSelectedCustomer(parsedValue)
-                      } else if (field.id === "supplierID") {
+                      }
+                      if (field.id === "supplierID") {
                         setSelectedSupplier(parsedValue)
                       }
                     }}
@@ -263,10 +281,12 @@ export function DynamicForm({
           ))}
         </div>
 
-        <div className="flex">
-          <Button type="submit" disabled={disabled}>{submitButtonText}</Button>
-        </div>
-      </form>
+        {isSaveBottom &&
+          <div className="flex justify-end">
+            <Button type="submit" disabled={disabled} onClick={formik.handleSubmit}>{submitButtonText}</Button>
+          </div>
+        }
+      </div>
     </div>
   )
 }

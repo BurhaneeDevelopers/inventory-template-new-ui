@@ -4,7 +4,7 @@ export const printService = {
     GetTransactionById
 }
 
-async function GetTransactionById (id: number)  {
+async function GetTransactionById(id: number) {
     try {
         const response = await apiService.get(apiService.v1 + '/transaction-master/print', { id: id })
         if (response) {

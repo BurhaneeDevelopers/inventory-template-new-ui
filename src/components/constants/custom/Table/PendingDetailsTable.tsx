@@ -32,7 +32,8 @@ export function PendingDetailsTable({ data, setOpen }) {
     const handleSubmit = () => {
         const selectedArray = Object.values(selectedItems).filter(Boolean);
         setSelectedDetails(selectedArray);
-        setOpen(false)
+        console.log(selectedArray)
+        // setOpen(false)
     };
 
     return (

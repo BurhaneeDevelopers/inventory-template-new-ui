@@ -1,4 +1,4 @@
-import React from 'react'
+import React, { useEffect } from 'react'
 import { createTransactionInDb } from '@/apiService/services';
 import DetailBox from '../Global/DetailBox';
 import { TransactionDetailsConfig, TransactionMasterConfig } from '@/pages/Global/TransactionConfig';
@@ -7,8 +7,11 @@ import { Button } from '@/components/ui/button';
 import { Edit, Trash2 } from 'lucide-react';
 import { Item } from '@/pages/Sales-Enquiry/Creation';
 import MasterBox from '../Global/MasterBox';
+import { useAtomValue } from 'jotai';
+import { selectedDetailsAtom } from '../../../../jotai/jotaiStore';
 
 const CreateBox = ({ setActiveTab, items, setItems, fetchData, type, title }) => {
+    const selectedDetails = useAtomValue(selectedDetailsAtom)
 
     const handleAddItem = (newItem: Item) => {
         setItems(prev => [...prev, { ...newItem, sourceReferenceID: null }])
@@ -18,8 +21,17 @@ const CreateBox = ({ setActiveTab, items, setItems, fetchData, type, title }) =>
         setItems(prev => prev.filter((_, i) => i !== index))
     }
 
-    const totalQuantity = items.reduce((sum, item) => sum + Number(item.quantity || 0), 0)
+    const totalTax = items.reduce((sum, item) => sum + Number(item.taxAmount || 0), 0)
     const totalPrice = items.reduce((sum, item) => sum + Number(item.totalPrice || 0), 0)
+    const grandTotal = totalPrice + totalTax
+
+    useEffect(() => {
+        if (selectedDetails.length !== 0) {
+            setItems(selectedDetails)
+        }
+
+        // eslint-disable-next-line react-hooks/exhaustive-deps
+    }, [selectedDetails])
     return (
         <div className="flex flex-col gap-7">
             <MasterBox
@@ -79,12 +91,16 @@ const CreateBox = ({ setActiveTab, items, setItems, fetchData, type, title }) =>
 
                 <div className="flex flex-row ml-auto p-4 gap-4 bg-white mt-4 w-fit rounded-lg">
                     <div className="flex items-end gap-2">
-                        <h4 className="text-base">Total QTY:</h4>
-                        <h3 className="text-2xl font-medium">{totalQuantity}</h3>
+                        <h4 className="text-base">Total Tax Amount</h4>
+                        <h3 className="text-2xl font-medium">{totalTax}</h3>
                     </div>
                     <div className="flex items-end gap-2">
                         <h4 className="text-base">Total Price:</h4>
                         <h3 className="text-2xl font-medium">{totalPrice}</h3>
+                    </div>
+                    <div className="flex items-end gap-2">
+                        <h4 className="text-base">Grand Total:</h4>
+                        <h3 className="text-2xl font-medium">{grandTotal}</h3>
                     </div>
                 </div>
             </div>

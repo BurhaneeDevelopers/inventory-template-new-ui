@@ -46,6 +46,10 @@ export const fetchItemsFromDB = async () => {
 
 export const fetchPendingFromDB = async (type: string | number, customerId: string | number, supplierId: string | number) => {
   try {
+    if (!customerId && !supplierId) {
+      return;
+    }
+    
     const response = await apiService.post(apiService.v1 + '/transaction-master/pending', { transactionType: type, customerID: customerId || null, supplierID: supplierId || null })
 
     if (response) {

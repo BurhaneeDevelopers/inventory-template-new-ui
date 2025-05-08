@@ -63,8 +63,8 @@ const SOGeneration = () => {
   const [transaction, setTransaction] = useState(null)
 
   const sections: Section[] = [
-    { title: 'Sales Order Creation Listing', key: 'listing' },
-    { title: 'Sales Order Creation Creation', key: 'creation' },
+    { title: 'Sales Order Listing', key: 'listing' },
+    { title: 'Sales Order Creation', key: 'creation' },
     ...(isEditing ? [{ title: `Edit Sales Order - ${transaction?.transactionNumber}`, key: 'edit' }] : []),
   ]
 
@@ -83,7 +83,7 @@ const SOGeneration = () => {
   return (
     <PageWapper className="!bg-transparent !shadow-none">
       <SubTabs sections={sections} activeTab={activeTab} onTabChange={setActiveTab} />
-      {activeTab === 'creation' &&
+      {activeTab === 'edit' &&
         <PrintButton />
       }
       {activeTab === 'listing' && (

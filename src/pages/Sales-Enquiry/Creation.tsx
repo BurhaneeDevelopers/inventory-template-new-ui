@@ -63,7 +63,7 @@ const Creation = () => {
   const [transaction, setTransaction] = useState(null)
 
   const sections: Section[] = [
-    { title: 'Enquiry Creation Listing', key: 'listing' },
+    { title: 'Enquiry Listing', key: 'listing' },
     { title: 'Enquiry Creation', key: 'creation' },
     ...(isEditing ? [{ title: `Edit Enquiry - ${transaction?.transactionNumber}`, key: 'edit' }] : []),
   ]
@@ -83,7 +83,7 @@ const Creation = () => {
   return (
     <PageWapper className="!bg-transparent !shadow-none">
       <SubTabs sections={sections} activeTab={activeTab} onTabChange={setActiveTab} />
-      {activeTab === 'creation' &&
+      {activeTab === 'edit' &&
         <PrintButton />
       }
       {activeTab === 'listing' && (
