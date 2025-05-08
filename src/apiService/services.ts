@@ -153,7 +153,6 @@ export const handleManipulateDropdown = async (transactionType: number, isPurcha
               label: item.name,
               value: item.id,
             }));
-            TransactionMasterConfig[i].hidden = isPurchase
           }
           break;
 

@@ -139,6 +139,7 @@ export const TransactionMasterConfig: FieldConfig[] = [
     initialValue: '',
     readOnly: true,
     validation: Yup.string(),
+    hidden: true
   },
   {
     id: 'itemSubTotal',
@@ -148,6 +149,7 @@ export const TransactionMasterConfig: FieldConfig[] = [
     initialValue: '',
     readOnly: true,
     validation: Yup.string(),
+    hidden: true
   },
   {
     id: 'totalTaxAmount',
@@ -157,6 +159,7 @@ export const TransactionMasterConfig: FieldConfig[] = [
     initialValue: '',
     readOnly: true,
     validation: Yup.string(),
+    hidden: true
   },
 ]
 

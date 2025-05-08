@@ -25,6 +25,8 @@ const CreateBox = ({ setActiveTab, items, setItems, fetchData, type, title }) =>
     const totalPrice = items.reduce((sum, item) => sum + Number(item.totalPrice || 0), 0)
     const grandTotal = totalPrice + totalTax
 
+    
+
     useEffect(() => {
         if (selectedDetails.length !== 0) {
             setItems(selectedDetails)

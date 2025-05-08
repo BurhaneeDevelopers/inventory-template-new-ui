@@ -14,7 +14,7 @@ import { Button } from '@/components/ui/button'
 import { type FieldConfig } from '@/pages/Master/ItemsConfig'
 import { generateInitialValues, generateValidationSchema } from '@/lib/helperFunctions'
 import { toast } from 'sonner'
-import { formModalAtom, selectedCustomerAtom, selectedSupplierAtom } from '../../../../jotai/jotaiStore'
+import { formModalAtom, selectedCustomerAtom, selectedDetailsAtom, selectedSupplierAtom } from '../../../../jotai/jotaiStore'
 import { useAtom, useSetAtom } from 'jotai'
 import { ReferenceModal } from './Modal/ReferenceModal'
 
@@ -49,6 +49,7 @@ export function DynamicForm({
   const [, setOpen] = useAtom(formModalAtom)
   const [openReferenceModal, setOpenReferenceModal] = useState(false)
   const [referenceId, setReferenceId] = useState(null)
+  const setSelectedDetails = useSetAtom(selectedDetailsAtom)
   const setSelectedCustomer = useSetAtom(selectedCustomerAtom)
   const setSelectedSupplier = useSetAtom(selectedSupplierAtom)
   const selectedValue = ''
@@ -60,6 +61,7 @@ export function DynamicForm({
     onSubmit: async values => {
       if (onSubmit) {
         onSubmit(values)
+        formik.resetForm()
       } else if (handleSubmit) {
         // IF VALUE IS YES THEN IT SHOULD PASS TRUE BOOLEAN VICE VERCA
         const res = await handleSubmit(
@@ -77,6 +79,8 @@ export function DynamicForm({
           }
           setOpen(false)
           setLocalOpen(false)
+          formik.resetForm()
+          setSelectedDetails([])
           toast.success('Task Done Successfully')
         }
       }

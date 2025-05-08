@@ -28,7 +28,7 @@ import {
 import { Collapsible, CollapsibleContent, CollapsibleTrigger } from '../ui/collapsible'
 import { Link, useLocation } from 'react-router'
 import { useSetAtom } from 'jotai'
-import { isEditingAtom } from '../../../jotai/jotaiStore'
+import { isEditingAtom, selectedDetailsAtom } from '../../../jotai/jotaiStore'
 
 // Menu items.
 const items = [
@@ -72,7 +72,7 @@ const items = [
     ],
   },
   {
-    menu: 'Order Generation',
+    menu: 'Order Management',
     url: '/sales-enquiry',
     icon: Building2,
     items: [
@@ -89,7 +89,7 @@ const items = [
         url: '/sales-enquiry/quotation',
       },
       {
-        title: 'Order Generation',
+        title: 'Order Creation',
         url: '/sales-enquiry/sales-order-generation',
       },
     ],
@@ -122,10 +122,6 @@ const items = [
     url: '/material-management',
     icon: Bus,
     items: [
-      {
-        title: 'Internal Order Generation',
-        url: '/material-management/internal-order',
-      },
       {
         title: 'Material Requisition by Production',
         url: '/material-management/material-requisition',
@@ -224,6 +220,7 @@ const items = [
 
 function AppSidebar() {
   const setIsEditing = useSetAtom(isEditingAtom)
+  const setSelectedDetails = useSetAtom(selectedDetailsAtom)
   const location = useLocation();
   const isDashboardActive = location.pathname === '/';
   return (
@@ -257,7 +254,7 @@ function AppSidebar() {
                       const isActive = location.pathname === subItem.url;
 
                       return <SidebarMenuSubItem key={subItem.title}>
-                        <SidebarMenuSubButton asChild onClick={() => setIsEditing(false)}>
+                        <SidebarMenuSubButton asChild onClick={() => { setIsEditing(false); setSelectedDetails([]); }}>
                           <Link to={subItem.url}>
                             <span className={isActive ? "text-primary font-semibold bg-gray-200 w-full rounded p-1" : "text-muted-foreground"}>{subItem.title}</span>
                           </Link>
