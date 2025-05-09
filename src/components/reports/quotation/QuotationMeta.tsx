@@ -1,3 +1,4 @@
+import { formatDate } from '@/lib/utils'
 import React from 'react'
 
 export default function QuotationMeta (props: any) {
@@ -14,7 +15,7 @@ export default function QuotationMeta (props: any) {
           </thead>
           <tbody>
           <tr>
-            <td>{meta.transactionDate}</td>
+            <td>{formatDate(meta.transactionDate)}</td>
             <td>{'QO-'}{meta.transactionNumber}</td>
           </tr>
           </tbody>
