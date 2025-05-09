@@ -2,15 +2,11 @@ import React, { useEffect } from 'react'
 import { fetchSeasonsFromDB, fetchDesignFromDB, updateTransactionInDb } from '@/apiService/services';
 import DetailBox from '../Global/DetailBox';
 import { TransactionDetailsConfig, TransactionMasterConfig } from '@/pages/Global/TransactionConfig';
-import { Table, TableBody, TableCell, TableHead, TableHeader, TableRow } from '@/components/ui/table';
-import { Button } from '@/components/ui/button';
-import { Edit, Trash2 } from 'lucide-react';
 import { Item } from '@/pages/Sales-Enquiry/Creation';
 import MasterBox from '../Global/MasterBox';
 import { useAtom, useAtomValue } from 'jotai';
 import { editRowAtom, selectedDetailsAtom } from '../../../../jotai/jotaiStore';
 import EditBoxTable from './EditBoxTable';
-import moment from 'moment';
 
 type EditBoxProps = {
     setActiveTab: React.Dispatch<React.SetStateAction<string>>;
