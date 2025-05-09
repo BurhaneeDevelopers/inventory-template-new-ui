@@ -158,7 +158,7 @@ export function DataTable<TData>({ columns, data, fieldConfig, setData }: DataTa
                       <EditMasterPopUp data={row.original} fieldConfig={fieldConfig} setData={setData} />
                     }
                     <DeletePopUp id={row.original.id} isTransaction={fieldConfig ? false : true} />
-                    <Button className="bg-indigo-500">
+                    <Button className="bg-indigo-500" disabled>
                       <Printer color="#fff" size={18} />
                     </Button>
                   </TableCell>

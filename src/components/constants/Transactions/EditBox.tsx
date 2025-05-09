@@ -1,5 +1,5 @@
-import React from 'react'
-import { updateTransactionInDb } from '@/apiService/services';
+import React, { useEffect } from 'react'
+import { fetchSeasonsFromDB, fetchDesignFromDB, updateTransactionInDb } from '@/apiService/services';
 import DetailBox from '../Global/DetailBox';
 import { TransactionDetailsConfig, TransactionMasterConfig } from '@/pages/Global/TransactionConfig';
 import { Table, TableBody, TableCell, TableHead, TableHeader, TableRow } from '@/components/ui/table';
@@ -7,27 +7,129 @@ import { Button } from '@/components/ui/button';
 import { Edit, Trash2 } from 'lucide-react';
 import { Item } from '@/pages/Sales-Enquiry/Creation';
 import MasterBox from '../Global/MasterBox';
-import { useAtom } from 'jotai';
-import { editRowAtom } from '../../../../jotai/jotaiStore';
+import { useAtom, useAtomValue } from 'jotai';
+import { editRowAtom, selectedDetailsAtom } from '../../../../jotai/jotaiStore';
+import EditBoxTable from './EditBoxTable';
+import moment from 'moment';
 
-const EditBox = ({ setActiveTab, transaction, setTransaction, setIsEditing, fetchData, title }) => {
+type EditBoxProps = {
+    setActiveTab: React.Dispatch<React.SetStateAction<string>>;
+    transaction: any[]; // Ideally replace `any` with a specific type if you know the item shape
+    setTransaction: React.Dispatch<React.SetStateAction<any[]>>; // Also update if items are more specifically typed
+    setIsEditing: React.Dispatch<React.SetStateAction<boolean>>; // Also update if items are more specifically typed
+    fetchData: () => void | Promise<void>;
+    title: string;
+    additionalMasterConfig?: Record<string, any>; // Optional, replace with proper type if known
+    unnecessaryMasterConfig?: Record<string, any>; // Optional, replace with proper type if known
+};
+
+const EditBox: React.FC<EditBoxProps> = ({
+    setActiveTab,
+    transaction,
+    setTransaction,
+    setIsEditing,
+    fetchData, title,
+    additionalMasterConfig,
+    unnecessaryMasterConfig
+}) => {
+    // to remove particular extra config, and to add additional new config 
+    const updatedMasterConfig = [
+        // Remove unnecessary fields by matching their `id`
+        ...TransactionMasterConfig.filter(
+            field =>
+                !(
+                    Array.isArray(unnecessaryMasterConfig) &&
+                    unnecessaryMasterConfig.some(cfg => cfg.id === field.id)
+                )
+        ),
+
+        // Add additional fields if their `id` doesn't already exist in the original config
+        ...(Array.isArray(additionalMasterConfig)
+            ? additionalMasterConfig.filter(
+                newField =>
+                    !TransactionMasterConfig.some(field => field.id === newField.id)
+            )
+            : []),
+    ];
+
+    const selectedDetails = useAtomValue(selectedDetailsAtom)
+
     const [editRow] = useAtom(editRowAtom)
 
     const handleAddItem = (newItem: Item) => {
-        setTransaction(prev => [...prev, { ...newItem, sourceReferenceID: null }])
-    }
+        setTransaction(prev => ({
+            ...prev,
+            detail: [...prev.detail, { ...newItem, sourceReferenceID: null }],
+        }));
+    };
 
     const handleDeleteItem = (index: number) => {
-        setTransaction(prev => prev.filter((_, i) => i !== index))
-    }
+        setTransaction(prev => ({
+            ...prev,
+            detail: prev.detail.filter((_, i) => i !== index),
+        }));
+    };
 
     const totalTax = transaction.detail.reduce((sum, item) => sum + Number(item.taxAmount || 0), 0)
     const totalPrice = transaction.detail.reduce((sum, item) => sum + Number(item.totalPrice || 0), 0)
     const grandTotal = totalPrice + totalTax
+
+    useEffect(() => {
+        updatedMasterConfig.forEach(async (field, i) => {
+            if (
+                field.id === "designId" &&
+                field.options.length === 0
+            ) {
+                var designs = await fetchDesignFromDB()
+            }
+            if (
+                field.id === "seasonId" &&
+                field.options.length === 0
+            ) {
+                var seasons = await fetchSeasonsFromDB()
+            }
+
+            switch (field.id) {
+
+                case 'seasonId':
+                    if (seasons) {
+                        updatedMasterConfig[i].options = seasons.map((item: { name: string, id: number }) => ({
+                            label: item.name,
+                            value: item.id,
+                        }));
+                    }
+                    break;
+
+                case 'designId':
+                    if (designs) {
+                        updatedMasterConfig[i].options = designs.map((item: { designName: string, id: number }) => ({
+                            label: item.designName,
+                            value: item.id,
+                        }));
+                    }
+                    break;
+
+                default:
+                    // Do nothing
+                    break;
+            }
+        });
+
+        // eslint-disable-next-line react-hooks/exhaustive-deps
+    }, [])
+
+
+    useEffect(() => {
+        if (selectedDetails.length !== 0) {
+            setTransaction(selectedDetails)
+        }
+
+        // eslint-disable-next-line react-hooks/exhaustive-deps
+    }, [selectedDetails])
     return (
         <div className="flex flex-col gap-7">
             <MasterBox title={title ? title : 'Edit'}
-                masterConfig={TransactionMasterConfig}
+                masterConfig={updatedMasterConfig}
                 onPress={(values) => {
                     const payload = {
                         ...values,
@@ -39,63 +141,20 @@ const EditBox = ({ setActiveTab, transaction, setTransaction, setIsEditing, fetc
                 fetchData={fetchData}
                 disabled={transaction?.detail.length === 0}
                 initialFields={transaction}
+                totalPrice={totalPrice}
+                totalTax={totalTax}
+                grandTotal={grandTotal}
             />
             <DetailBox detailConfig={TransactionDetailsConfig} onPress={handleAddItem} />
 
-            <div className="">
-                {transaction?.detail.length > 0 && (
-                    <div className="bg-white p-4 rounded-lg">
-                        <h2 className="text-xl font-semibold mb-4">Added Items</h2>
-                        <Table>
-                            <TableHeader>
-                                <TableRow>
-                                    {TransactionDetailsConfig.filter(field => field.id !== 'itemId').map(field => (
-                                        <TableHead key={field.id}>{field.label}</TableHead>
-                                    ))}
-                                    {/* <TableHead>Edit</TableHead> */}
-                                    <TableHead>Actions</TableHead>
-                                </TableRow>
-                            </TableHeader>
-                            <TableBody>
-                                {transaction.detail.map((item, index) => (
-                                    <TableRow key={index}>
-                                        {TransactionDetailsConfig.filter(field => field.id !== 'itemId').map(field => (
-                                            <TableCell key={field.id}>{item[field.id]}</TableCell>
-                                        ))}
-                                        <TableCell className="space-x-4">
-                                            <Button size="icon" className="bg-indigo-500">
-                                                <Edit className="w-4 h-4" />
-                                            </Button>
-                                            <Button
-                                                variant="destructive"
-                                                size="icon"
-                                                onClick={() => handleDeleteItem(index)}
-                                            >
-                                                <Trash2 className="w-4 h-4" />
-                                            </Button>
-                                        </TableCell>
-                                    </TableRow>
-                                ))}
-                            </TableBody>
-                        </Table>
-                    </div>
-                )}
-
-                <div className="flex flex-row ml-auto p-4 gap-4 bg-white mt-4 w-fit rounded-lg">
-                    <div className="flex items-end gap-2">
-                        <h4 className="text-base">Total Tax Amount</h4>
-                        <h3 className="text-2xl font-medium">{totalTax}</h3>
-                    </div>
-                    <div className="flex items-end gap-2">
-                        <h4 className="text-base">Total Price:</h4>
-                        <h3 className="text-2xl font-medium">{totalPrice}</h3>
-                    </div>
-                    <div className="flex items-end gap-2">
-                        <h4 className="text-base">Grand Total:</h4>
-                        <h3 className="text-2xl font-medium">{grandTotal}</h3>
-                    </div>
-                </div>
-            </div>
+            <EditBoxTable
+                transaction={transaction}
+                setTransaction={setTransaction}
+                handleDeleteItem={handleDeleteItem}
+                totalPrice={totalPrice}
+                totalTax={totalTax}
+                grandTotal={grandTotal}
+            />
         </div>
     )
 }

@@ -80,7 +80,6 @@ export function DynamicForm({
             ]),
           ),
         )
-        console.log(totalPrice)
 
         if (res) {
           if (fetchDataAfterSubmit) {
@@ -97,6 +96,7 @@ export function DynamicForm({
   })
 
 
+  // TO CALCULATE TOTAL COSTING
   useEffect(() => {
     if (isTransaction) {
       const quantity = Number(formik.values.quantity)
@@ -127,6 +127,8 @@ export function DynamicForm({
     // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [formik.values])
 
+
+  // TO AUTO POPUATE DETAIL VALUES WHEN A NEW ITEM IS ADDED 
   useEffect(() => {
     if (formik.values.itemId) {
 
@@ -253,7 +255,7 @@ export function DynamicForm({
                   id={field.id}
                   name={field.id}
                   type="date"
-                  value={formik.values[field.id]?.toString()}
+                  value={moment(formik.values[field.id]).format("YYYY-MM-DD")}
                   onChange={formik.handleChange}
                   onBlur={formik.handleBlur}
                   className="!border-gray-300 min-w-72"

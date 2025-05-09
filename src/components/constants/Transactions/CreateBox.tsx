@@ -8,7 +8,27 @@ import { useAtomValue } from 'jotai';
 import { selectedDetailsAtom } from '../../../../jotai/jotaiStore';
 import CreateBoxTable from './CreateBoxTable';
 
-const CreateBox = ({ setActiveTab, items, setItems, fetchData, type, title, additionalMasterConfig, unnecessaryMasterConfig }) => {
+type CreateBoxProps = {
+    setActiveTab: React.Dispatch<React.SetStateAction<string>>;
+    items: any[]; // Ideally replace `any` with a specific type if you know the item shape
+    setItems: React.Dispatch<React.SetStateAction<any[]>>; // Also update if items are more specifically typed
+    fetchData: () => void | Promise<void>;
+    type: number;
+    title: string;
+    additionalMasterConfig?: Record<string, any>; // Optional, replace with proper type if known
+    unnecessaryMasterConfig?: Record<string, any>; // Optional, replace with proper type if known
+};
+
+const CreateBox: React.FC<CreateBoxProps> = ({
+    setActiveTab,
+    items,
+    setItems,
+    fetchData,
+    type,
+    title,
+    additionalMasterConfig,
+    unnecessaryMasterConfig,
+}) => {
 
     // to remove particular extra config, and to add additional new config 
     const updatedMasterConfig = [
@@ -46,11 +66,16 @@ const CreateBox = ({ setActiveTab, items, setItems, fetchData, type, title, addi
 
     useEffect(() => {
         updatedMasterConfig.forEach(async (field, i) => {
-
-            if (updatedMasterConfig["designId"].options.length === 0) {
+            if (
+                field.id === "designId" &&
+                field.options.length === 0
+            ) {
                 var designs = await fetchDesignFromDB()
             }
-            if (updatedMasterConfig["seasonId"].options.length === 0) {
+            if (
+                field.id === "seasonId" &&
+                field.options.length === 0
+            ) {
                 var seasons = await fetchSeasonsFromDB()
             }
 
@@ -110,7 +135,14 @@ const CreateBox = ({ setActiveTab, items, setItems, fetchData, type, title, addi
             />
             <DetailBox detailConfig={TransactionDetailsConfig} onPress={handleAddItem} />
 
-            <CreateBoxTable items={items} setItems={setItems} handleDeleteItem={handleDeleteItem} totalPrice={totalPrice} totalTax={totalTax} grandTotal={grandTotal} />
+            <CreateBoxTable
+                items={items}
+                setItems={setItems}
+                handleDeleteItem={handleDeleteItem}
+                totalPrice={totalPrice}
+                totalTax={totalTax}
+                grandTotal={grandTotal}
+            />
         </div>
     )
 }

@@ -32,6 +32,7 @@ export type Item = {
   deliveryDate?: string
   lotNumber?: string
   sourceReferenceID?: null
+  transactionNumber?: number
 }
 
 export type Row = {

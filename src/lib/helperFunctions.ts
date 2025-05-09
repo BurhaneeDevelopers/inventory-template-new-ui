@@ -12,11 +12,11 @@ export const generateInitialValues = (
   // if initialFields is present then insert the values in the initialValues object
   if (initialFields) {
     fieldConfig.forEach(field => {
-      initialValues[field.id] = initialFields[field.id].initialValue
+      initialValues[field.id] = initialFields[field.id]
     })
   } else {
     fieldConfig.forEach(field => {
-      initialValues[field.id] = field.initialValue
+      initialValues[field.id] = field?.initialValue
     })
   }
   return initialValues
