@@ -28,7 +28,7 @@ export default function QuotationEntries (props: any) {
         <tr>
             <th colSpan={4} style={{borderBottom:"0px"}}>Comments or Special Instructions</th>
             <td className="Col-total">{'SUBTOTAL'}</td>
-            <td className="Col-total">{<>&#8377;{entries?.reduce((acc: number, entry: any) => acc + entry.totalPrice - entry.taxAmount, 0).toFixed(2)}</>}</td>
+            <td className="Col-total">{<>&#8377;{entries?.reduce((acc: number, entry: any) => acc + entry.totalPrice, 0).toFixed(2)}</>}</td>
         </tr>
         <tr>
             <td colSpan={4} style={{borderBottom:"0px"}}></td>
@@ -48,7 +48,7 @@ export default function QuotationEntries (props: any) {
         <tr>
             <td colSpan={4}></td>
             <td className="Col-total">{'TOTAL'}</td>
-            <td className="Col-total">{<>&#8377;{entries?.reduce((acc: number, entry: any) => acc + entry.totalPrice, 0).toFixed(2)}</>}</td>
+            <td className="Col-total">{<>&#8377;{entries?.reduce((acc: number, entry: any) => acc + entry.totalPrice + entry.taxAmount, 0).toFixed(2)}</>}</td>
         </tr>
         </tbody>
         </table>
