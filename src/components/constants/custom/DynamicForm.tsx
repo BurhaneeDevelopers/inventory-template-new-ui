@@ -14,9 +14,11 @@ import { Button } from '@/components/ui/button'
 import { type FieldConfig } from '@/pages/Master/ItemsConfig'
 import { generateInitialValues, generateValidationSchema } from '@/lib/helperFunctions'
 import { toast } from 'sonner'
-import { formModalAtom, selectedCustomerAtom, selectedSupplierAtom } from '../../../../jotai/jotaiStore'
+import { formModalAtom, selectedCustomerAtom, selectedDetailsAtom, selectedSupplierAtom } from '../../../../jotai/jotaiStore'
 import { useAtom, useSetAtom } from 'jotai'
 import { ReferenceModal } from './Modal/ReferenceModal'
+import moment from 'moment'
+import { fetchItemsFromDB, fetchSingleItemFromDB } from '@/apiService/services'
 
 interface DynamicFormProps {
   title: string
@@ -30,6 +32,9 @@ interface DynamicFormProps {
   disabled?: boolean
   setLocalOpen?: (values: boolean) => void
   isSaveBottom?: boolean
+  totalTax?: string | number | null
+  totalPrice?: string | number | null
+  grandTotal?: string | number | null
 }
 
 export function DynamicForm({
@@ -43,12 +48,16 @@ export function DynamicForm({
   isTransaction,
   disabled,
   setLocalOpen,
-  isSaveBottom = true
+  isSaveBottom = true,
+  totalTax,
+  totalPrice,
+  grandTotal,
 }: DynamicFormProps) {
   // Formik setup with initialValues and validationSchema
   const [, setOpen] = useAtom(formModalAtom)
   const [openReferenceModal, setOpenReferenceModal] = useState(false)
   const [referenceId, setReferenceId] = useState(null)
+  const setSelectedDetails = useSetAtom(selectedDetailsAtom)
   const setSelectedCustomer = useSetAtom(selectedCustomerAtom)
   const setSelectedSupplier = useSetAtom(selectedSupplierAtom)
   const selectedValue = ''
@@ -60,6 +69,7 @@ export function DynamicForm({
     onSubmit: async values => {
       if (onSubmit) {
         onSubmit(values)
+        formik.resetForm()
       } else if (handleSubmit) {
         // IF VALUE IS YES THEN IT SHOULD PASS TRUE BOOLEAN VICE VERCA
         const res = await handleSubmit(
@@ -70,6 +80,7 @@ export function DynamicForm({
             ]),
           ),
         )
+        console.log(totalPrice)
 
         if (res) {
           if (fetchDataAfterSubmit) {
@@ -77,6 +88,8 @@ export function DynamicForm({
           }
           setOpen(false)
           setLocalOpen(false)
+          formik.resetForm()
+          setSelectedDetails([])
           toast.success('Task Done Successfully')
         }
       }
@@ -100,7 +113,11 @@ export function DynamicForm({
 
         // Step 3: Price after discount
         const priceAfterDiscount = price - discountAmount;
-        const taxAmount = (priceAfterDiscount * (taxPercentage / 100)).toFixed(2)
+        if (discountPercentage) {
+          var taxAmount = (priceAfterDiscount * (taxPercentage / 100)).toFixed(2)
+        } else {
+          var taxAmount = (price * (taxPercentage / 100)).toFixed(2)
+        }
         const totalPrice = Number(priceAfterDiscount).toFixed(0)
 
         formik.setFieldValue("taxAmount", taxAmount)
@@ -109,6 +126,62 @@ export function DynamicForm({
     }
     // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [formik.values])
+
+  useEffect(() => {
+    if (formik.values.itemId) {
+
+      fieldConfig.forEach(async (field, i) => {
+        const items = await fetchSingleItemFromDB(formik.values.itemId)
+
+        switch (field.id) {
+
+          case 'itemDescription':
+            if (items) {
+              formik.setFieldValue("itemDescription", items.description)
+            }
+            break;
+          case 'unitPrice':
+            if (items) {
+              formik.setFieldValue("unitPrice", items.basePrice || 0)
+            }
+            break;
+          case 'unitOfMeasure':
+            if (items) {
+              formik.setFieldValue("unitOfMeasure", items.unitOfMeasurement || "Kg")
+            }
+            break;
+
+          case 'quantity':
+            if (items) {
+              formik.setFieldValue("quantity", 1)
+            }
+            break;
+
+          default:
+            // Do nothing
+            break;
+        }
+      });
+    }
+
+    // eslint-disable-next-line react-hooks/exhaustive-deps
+  }, [formik.values.itemId])
+
+  useEffect(() => {
+    console.log(totalPrice)
+    if (totalTax) {
+      formik.setFieldValue("totalTaxAmount", totalTax || '')
+    }
+    if (totalPrice) {
+      formik.setFieldValue("itemSubTotal", totalPrice || '')
+    }
+    if (grandTotal) {
+      formik.setFieldValue("grandTotal", grandTotal || '')
+    }
+
+    // eslint-disable-next-line react-hooks/exhaustive-deps
+  }, [totalPrice])
+
 
   return (
     <div>
@@ -171,7 +244,7 @@ export function DynamicForm({
                   value={formik.values[field.id]?.toString() || ''}
                   onChange={formik.handleChange}
                   onBlur={formik.handleBlur}
-                  className="!border-gray-300 min-w-72"
+                  className="!border-gray-300 min-w-72 resize-none focus:resize-y"
                 />
               )}
 
@@ -180,7 +253,7 @@ export function DynamicForm({
                   id={field.id}
                   name={field.id}
                   type="date"
-                  value={formik.values[field.id]?.toString() || ''}
+                  value={formik.values[field.id]?.toString()}
                   onChange={formik.handleChange}
                   onBlur={formik.handleBlur}
                   className="!border-gray-300 min-w-72"
@@ -226,7 +299,7 @@ export function DynamicForm({
                             <SelectValue placeholder={`Select ${field.label}`} />
                           </SelectTrigger>
                           <SelectContent>
-                            {field.options.map(option => {
+                            {field.options.length !== 0 ? field.options.map(option => {
                               const val = typeof option === 'string' ? option : (option?.value ?? '').toString();
                               const label = typeof option === 'string' ? option : (option.label ?? '');
                               return (
@@ -234,7 +307,7 @@ export function DynamicForm({
                                   {label}
                                 </SelectItem>
                               );
-                            })}
+                            }) : <p className='text-xs p-2 text-center'>Nothing to show..</p>}
                           </SelectContent>
                         </Select>
                       }
@@ -259,7 +332,7 @@ export function DynamicForm({
                       <SelectValue placeholder={`Select ${field.label}`} />
                     </SelectTrigger>
                     <SelectContent>
-                      {field.options.map(option => {
+                      {field.options.length !== 0 ? field.options.map(option => {
                         const val = typeof option === 'string' ? option : (option?.value ?? '').toString();
                         const label = typeof option === 'string' ? option : (option.label ?? '');
                         return (
@@ -267,7 +340,7 @@ export function DynamicForm({
                             {label}
                           </SelectItem>
                         );
-                      })}
+                      }) : <p className='text-xs p-2 text-center'>Nothing to show..</p>}
                     </SelectContent>
                   </Select>
                 )

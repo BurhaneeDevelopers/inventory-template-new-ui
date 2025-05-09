@@ -114,10 +114,10 @@ const GlobalRoutes = () => {
                 path="/material-management"
                 element={<PlaceholderPage title="Material Management" />}
               />
-              <Route
+              {/* <Route
                 path="/material-management/internal-order"
                 element={<InternalOrder />}
-              />
+              /> */}
               <Route
                 path="/material-management/material-issue"
                 element={<MaterialIssued />}

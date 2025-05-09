@@ -16,6 +16,7 @@ import { printService } from '@/apiService/printService.api'
 import QuotationPreview from '@/components/reports/quotation/QuotationPreview'
 import { useReactToPrint } from "react-to-print";
 import { useRef } from "react";
+import * as Yup from 'yup'
 
 
 export interface Section {
@@ -58,6 +59,31 @@ const columns: ColumnDef<Row>[] = TransactionMasterConfig
     ),
     cell: ({ row }) => <div>{row.getValue(field.id)}</div>,
   }));
+
+const additionalMasterConfig = [
+  {
+    id: 'designId',
+    label: 'Design',
+    type: 'select',
+    required: false,
+    options: [],
+    initialValue: '',
+    validation: Yup.string(),
+    notToBeShown: true
+  },
+  {
+    id: 'seasonId',
+    label: 'Season',
+    type: 'select',
+    required: false,
+    options: [],
+    initialValue: '',
+    validation: Yup.string(),
+    notToBeShown: true
+  },
+]
+
+const unnecessaryMasterConfig = [{ id: "referenceID" }]
 
 const Quotation = () => {
   const [isEditing, setIsEditing] = useAtom(isEditingAtom)
@@ -119,8 +145,10 @@ const Quotation = () => {
 
       {activeTab === 'creation' && (
         <CreateBox
+          additionalMasterConfig={additionalMasterConfig}
           title={"Quotation Creation"}
           setActiveTab={setActiveTab}
+          unnecessaryMasterConfig={unnecessaryMasterConfig}
           items={items}
           setItems={setItems}
           type={2}

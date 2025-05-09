@@ -1,4 +1,5 @@
 import { FieldConfig } from '@/pages/Master/ItemsConfig'
+import moment from 'moment'
 import * as Yup from 'yup'
 
 export const TransactionMasterConfig: FieldConfig[] = [
@@ -63,7 +64,7 @@ export const TransactionMasterConfig: FieldConfig[] = [
     label: 'Transaction Date',
     type: 'date',
     required: true,
-    initialValue: '',
+    initialValue: moment().format('YYYY-MM-DD'),
     validation: Yup.date().required('Transaction Date is required'),
   },
   {
@@ -83,7 +84,8 @@ export const TransactionMasterConfig: FieldConfig[] = [
     options: [],
     initialValue: '',
     validation: Yup.string(),
-    notToBeShown: true
+    notToBeShown: true,
+    notToBeSent: true
   },
   {
     id: 'madeByName',
@@ -139,6 +141,7 @@ export const TransactionMasterConfig: FieldConfig[] = [
     initialValue: '',
     readOnly: true,
     validation: Yup.string(),
+    hidden: true
   },
   {
     id: 'itemSubTotal',
@@ -148,6 +151,7 @@ export const TransactionMasterConfig: FieldConfig[] = [
     initialValue: '',
     readOnly: true,
     validation: Yup.string(),
+    hidden: true
   },
   {
     id: 'totalTaxAmount',
@@ -157,6 +161,7 @@ export const TransactionMasterConfig: FieldConfig[] = [
     initialValue: '',
     readOnly: true,
     validation: Yup.string(),
+    hidden: true
   },
 ]
 
@@ -191,8 +196,8 @@ export const TransactionDetailsConfig: FieldConfig[] = [
     label: 'UOM',
     type: 'select',
     required: false,
-    options: ['KG', 'Box'],
-    initialValue: 'KG',
+    options: ['Kg', 'Box'],
+    initialValue: 'Kg',
     validation: Yup.string(),
   },
   {
@@ -243,15 +248,15 @@ export const TransactionDetailsConfig: FieldConfig[] = [
     label: 'Delivery Date',
     type: 'date',
     required: false,
-    initialValue: '',
+    initialValue: moment().format('YYYY-MM-DD'),
     validation: Yup.date(),
   },
-  {
-    id: 'lotNumber',
-    label: 'Lot Number',
-    type: 'text',
-    required: false,
-    initialValue: '',
-    validation: Yup.string(),
-  },
+  // {
+  //   id: 'lotNumber',
+  //   label: 'Lot Number',
+  //   type: 'text',
+  //   required: false,
+  //   initialValue: '',
+  //   validation: Yup.string(),
+  // },
 ]
